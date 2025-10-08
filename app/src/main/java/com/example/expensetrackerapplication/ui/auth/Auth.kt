@@ -1,4 +1,4 @@
-package com.example.expensetrackerapplication.ui
+package com.example.expensetrackerapplication.ui.auth
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.expensetrackerapplication.R
 
-class MainActivity : AppCompatActivity() {
+class Auth : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
