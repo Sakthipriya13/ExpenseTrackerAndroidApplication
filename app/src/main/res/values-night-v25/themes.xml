@@ -4,8 +4,12 @@
     <style name="Base.Theme.ExpenseTrackerApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <item name="android:colorPrimary">@color/primaryColor</item>
-        <item name="android:colorSecondary">@color/secondaryColor</item>
-        <item name="android:colorAccent">@color/accentColor</item>
+
+    </style>
+
+    <style name="Theme.Application" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorSecondary">@color/colorSecondary</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 </resources>

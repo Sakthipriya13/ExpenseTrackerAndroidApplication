@@ -7,8 +7,12 @@
     </style>
 
     <style name="Theme.ExpenseTrackerApplication" parent="Base.Theme.ExpenseTrackerApplication" >
-        <item name="android:colorPrimary">@color/primaryColor</item>
-        <item name="android:colorAccent">@color/accentColor</item>
+
     </style>
 
+    <style name="Theme.Application" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+<!--        <item name="android:colorSecondary">@color/secondaryColor</item>-->
+        <item name="android:colorAccent">@color/colorAccent</item>
+    </style>
 </resources>
