@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">செலவுக் கண்காணிப்பான்</string>
+    <string name="login">நுழையுக </string>
+    <string name="noaccount">புதிய பயனரா? பதிவுசெய்யவும்</string>
+    <string name="username">பயனர் பெயர்</string>
+    <string name="password">கடவுச்சொல்</string>
+    <string name="mobileno">தொலைபேசி எண்</string>
+    <string name="email">மின்னஞ்சல்</string>
+    <string name="signup">பதிவு செய்யவும்</string>
+    <string name="alreadyaccount">ஏற்கனவே கணக்கு உள்ளதா? உள்நுழையவும்</string>
+    <string name="name_field_empty">பெயர் புலம் காலியாக உள்ளது. தயவுசெய்து நிரப்பவும்</string>
+    <string name="mobileno_field_empty">தொலைபேசி எண் புலம் காலியாக உள்ளது. தயவுசெய்து நிரப்பவும்</string>
+    <string name="password_field_empty">கடவுச்சொல் புலம் காலியாக உள்ளது. தயவுசெய்து நிரப்பவும்</string>
+    <string name="email_field_empty">மின்னஞ்சல் புலம் காலியாக உள்ளது. தயவுசெய்து நிரப்பவும்</string>
+    <string name="loginsuccess">உள் நுழைவு வெற்றிகரமாக முடிந்தது! வரவேற்கிறோம்</string>
+    <string name="invalid_name_or_password">உங்கள் பெயர் அல்லது கடவுச்சொல் தவறானது</string>
+    <string name="signupsuccess">பதிவு வெற்றிகரமாக முடிந்தது!</string>
+    <string name="nameorpassword_fields_empty">பெயர் அல்லது கடவுச்சொல் புலங்கள் காலியாக உள்ளன. தயவுசெய்து அவற்றை நிரப்புங்கள்</string>
+    <string name="nameor_mobnoor_password_fields_empty">பெயர்,தொலைபேசி எண், மின்னஞ்சல் அல்லது கடவுச்சொல் புலங்கள் காலியாக உள்ளன. தயவுசெய்து அவற்றை நிரப்புங்கள்</string>
+    <string name="select_language">மொழியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+
+    <string name="dashboard_frag">மேற்பார்வை</string>
+    <string name="reports_frag">அறிக்கைகள்</string>
+    <string name="add_expense_frag">புதிய செலவு</string>
+    <string name="category_management">வகை மேலாண்மை</string>
+    <string name="setting_frag">அமைப்பு</string>
+    <string name="profile_frag">சுயவிவரம்</string>
+    <string name="logout">வெளியேறு</string>
+
+    <string name="day">நாள்</string>
+    <string name="week">வாரம்</string>
+    <string name="month">மாதம்</string>
+
+
+    <string name="open">திற</string>
+    <string name="close">மூடு</string>
+
+    <string name="date">தேதி</string>
+    <string name="expense">செலவு</string>
+    <string name="category">செலவு வகை</string>
+    <string name="payment_type">கட்டண வகை</string>
+    <string name="remarks">கருத்துகள்</string>
+
+    <string name="select_expense_category">செலவுப் பிரிவை தேர்ந்தெடுக்கவும்</string>
+    <string name="select_paymenttype">கட்டண வகையைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="add_remarks">கருத்துகளைச் சேர்க்கவும்</string>
+    <string name="select_date">தேதியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="enter_expense">செலவுகளை உள்ளிடவும்</string>
+
+    <string-array name="language_list">
+        <item>ஆங்கிலம்</item>
+        <item>தமிழ்</item>
+    </string-array>
+
+    <string-array name="language_code">
+        <item>en</item>
+        <item>ta</item>
+    </string-array>
+
+    <string-array name="payment_types">
+        <item>பணம்</item>
+        <item>அட்டை</item>
+        <item>யுபிஐ</item>
+        <item>பகிர்</item>
+    </string-array>
+
+</resources>
