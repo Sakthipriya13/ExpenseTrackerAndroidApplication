@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.auth.fragments.Login">
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/loading"
@@ -96,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/username"
-                    android:nextFocusDown="@id/password"
+                    android:nextFocusDown="@id/idPassword"
                     android:singleLine="true"
                     android:textSize="15sp">
 
