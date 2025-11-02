@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.SplashScreenBinding
+import com.example.expensetrackerapplication.viewmodel.SplashViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +25,9 @@ class SplashScreen : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var viewModel: SplashViewModel
+    private lateinit var splashDataBinding: SplashScreenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +40,16 @@ class SplashScreen : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        splashDataBinding= DataBindingUtil.inflate(inflater,R.layout.splash_screen,container,false)
+
+        viewModel= SplashViewModel(requireContext())
+
+        splashDataBinding.splashViewModel=viewModel
+        splashDataBinding.lifecycleOwner=this
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.splash_screen, container, false)
+        return splashDataBinding.root
     }
 
     companion object {
