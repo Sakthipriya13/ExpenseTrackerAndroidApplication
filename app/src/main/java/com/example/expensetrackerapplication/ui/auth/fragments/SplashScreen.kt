@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.SplashScreenBinding
 import com.example.expensetrackerapplication.viewmodel.SplashViewModel
@@ -25,8 +31,12 @@ class SplashScreen : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var viewModel: SplashViewModel
+    private val viewModel: SplashViewModel by viewModels()
     private lateinit var splashDataBinding: SplashScreenBinding
+
+    private lateinit var topAnimation : Animation
+    private lateinit var bottomAnimation : Animation
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +53,26 @@ class SplashScreen : Fragment() {
 
         splashDataBinding= DataBindingUtil.inflate(inflater,R.layout.splash_screen,container,false)
 
-        viewModel= SplashViewModel(requireContext())
+//        viewModel= SplashViewModel(requireContext())
 
         splashDataBinding.splashViewModel=viewModel
         splashDataBinding.lifecycleOwner=this
+
+
+        topAnimation= AnimationUtils.loadAnimation(requireContext(), R.anim.top_animation)
+        bottomAnimation= AnimationUtils.loadAnimation(requireContext(),R.anim.bottom_animation)
+
+        splashDataBinding.idAppLogo.animation=topAnimation
+//        splashDataBinding.idAppName.animation=topAnimation
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.navigateToLogin.collect { shouldNavigate ->
+                if(shouldNavigate)
+                {
+                    findNavController().navigate(R.id.action_splash_to_login)
+                }
+            }
+        }
 
         // Inflate the layout for this fragment
         return splashDataBinding.root
