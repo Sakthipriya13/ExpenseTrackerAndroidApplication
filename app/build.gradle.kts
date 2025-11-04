@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id ("kotlin-kapt")
 }
 
 android {
@@ -37,6 +38,16 @@ android {
     buildFeatures{
         dataBinding = true
     }
+
+    kapt {
+        arguments {
+            // This tells Room where to export the database schema
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+            arg("room.expandProjection", "true")
+        }
+    }
+
 }
 
 dependencies {
@@ -51,4 +62,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+    // Room runtime
+    implementation (libs.androidx.room.runtime)
+
+    // Room compiler (for annotation processing)
+    kapt (libs.androidx.room.compiler.v261)   // for Kotlin
+    // or
+    annotationProcessor (libs.room.compiler)  // for Java
+
+    // Room Kotlin Extensions and Coroutines support
+    implementation (libs.androidx.room.ktx)
+
+    // Optional: Testing Room database
+    testImplementation (libs.androidx.room.testing)
+
+    // Optional: Paging support with Room
+    implementation (libs.androidx.room.paging)
 }

@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.LoginBinding
+import com.example.expensetrackerapplication.viewmodel.LoginViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +27,9 @@ class Login : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val viewModel : LoginViewModel by viewModels()
+    private lateinit var loginDataBinding : LoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +42,19 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        loginDataBinding= DataBindingUtil.inflate(inflater,R.layout.login,container,false)
+        loginDataBinding.loginViewModel=viewModel
+        loginDataBinding.lifecycleOwner=this
+
+
+
+        loginDataBinding.idGoToSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_login_to_signup)
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.login, container, false)
+        return loginDataBinding.root
     }
 
     companion object {
