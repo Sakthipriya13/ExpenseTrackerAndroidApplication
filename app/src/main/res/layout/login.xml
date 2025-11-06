@@ -96,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/username"
+                    android:text="@={loginViewModel._userName}"
                     android:nextFocusDown="@id/idPassword"
                     android:singleLine="true"
                     android:textSize="15sp"
@@ -124,6 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="61dp"
                     android:hint="@string/password"
+                    android:text="@={loginViewModel._userPassword}"
                     android:nextFocusDown="@id/idLayout"
                     android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -144,7 +146,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
                     android:layout_weight="1"
-                    android:background="@drawable/empty_btn_background"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="@string/login_cancel"
                     android:textColor="@color/colorPrimary"
@@ -214,7 +216,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/empty_btn_background"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="@string/noaccount"
                 android:textSize="20sp"

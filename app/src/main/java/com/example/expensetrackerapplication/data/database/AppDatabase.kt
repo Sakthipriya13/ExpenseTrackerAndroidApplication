@@ -19,7 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,"App_Database")
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(true) // true = drop all tables on migration mismatch
                     .build()
                 INSTANCE=instance
                 instance

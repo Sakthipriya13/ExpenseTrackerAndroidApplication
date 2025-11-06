@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.SignUpBinding
+import com.example.expensetrackerapplication.databinding.SignUpBindingImpl
+import com.example.expensetrackerapplication.viewmodel.SignUpViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +28,10 @@ class SignUp : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val signUpViewModel : SignUpViewModel by viewModels()
+
+    private lateinit var signUpDataBinding : SignUpBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,9 +43,19 @@ class SignUp : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.sign_up, container, false)
+    ): View?
+    {
+
+        signUpDataBinding= DataBindingUtil.inflate(inflater,R.layout.sign_up, container, false)
+        signUpDataBinding.lifecycleOwner=this
+        signUpDataBinding.signUpViewModel=signUpViewModel
+
+        signUpViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
+            if(ob)
+                findNavController().navigate(R.id.action_signup_to_login)
+        }
+
+        return signUpDataBinding.root
     }
 
     companion object {
