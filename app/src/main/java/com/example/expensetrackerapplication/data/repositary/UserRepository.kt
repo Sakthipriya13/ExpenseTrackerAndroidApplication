@@ -5,8 +5,12 @@ import com.example.expensetrackerapplication.data.entity.UserEntity
 
 class UserRepository(var userDao: UserDao)
 {
-    suspend fun fnInsertUserDetails(user: UserEntity)
+    suspend fun fnInsertUserDetails(user: UserEntity) : Boolean
     {
-        userDao.fnInsertUser(user)
+        val insertStatus=userDao.fnInsertUser(user)
+        if(insertStatus>0)
+            return true
+        else
+            return false
     }
 }

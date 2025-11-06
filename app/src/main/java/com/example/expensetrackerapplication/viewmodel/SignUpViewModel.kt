@@ -42,6 +42,10 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
     var _actionGoToSignUp = MutableLiveData<Boolean>()
     var actionGoToSignUp : LiveData<Boolean> = _actionGoToSignUp
 
+    var _insertStatus = MutableLiveData<Boolean>()
+    var insertStatus : LiveData<Boolean> = _insertStatus
+
+
     fun fnClearInputs()
     {
         _name.value="";
@@ -62,7 +66,8 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                 userName = name.value, userMobileNo = mobileNo.value,
                 userEmail = email.value, userPassword = password.value, userId = 0
             )
-            userRepository.fnInsertUserDetails(user)
+            val status = userRepository.fnInsertUserDetails(user)
+            _insertStatus.value=status
         }
     }
 

@@ -10,7 +10,7 @@ import com.example.expensetrackerapplication.data.entity.UserEntity
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun fnInsertUser(user: UserEntity)
+    suspend fun fnInsertUser(user: UserEntity) : Long
 
     @Query("SELECT * FROM User WHERE UserName=:name AND UserPassword=:password")
     suspend fun fnCheckUser(name:String?,password:String?): UserEntity
