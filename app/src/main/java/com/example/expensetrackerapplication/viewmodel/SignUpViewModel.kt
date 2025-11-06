@@ -1,11 +1,27 @@
 package com.example.expensetrackerapplication.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.expensetrackerapplication.data.dao.UserDao
+import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.UserEntity
+import com.example.expensetrackerapplication.data.repositary.UserRepository
+import kotlinx.coroutines.launch
 
-class SignUpViewModel: ViewModel() {
+class SignUpViewModel(application: Application) : AndroidViewModel(application) {
+
+    var userRepository: UserRepository
+
+    init {
+        val userDao= AppDatabase.getdatabase(application).userDao()
+        userRepository= UserRepository(userDao)
+
+    }
+
     //User Name
     var _name = MutableLiveData<String?>()
     var  name : LiveData<String?> = _name
@@ -41,7 +57,13 @@ class SignUpViewModel: ViewModel() {
 
     fun fnStoreUserDetails()
     {
-//        var user= UserEntity
+        viewModelScope.launch {
+            val user= UserEntity(
+                userName = name.value, userMobileNo = mobileNo.value,
+                userEmail = email.value, userPassword = password.value, userId = 0
+            )
+            userRepository.fnInsertUserDetails(user)
+        }
     }
 
 }

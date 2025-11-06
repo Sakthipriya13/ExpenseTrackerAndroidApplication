@@ -197,8 +197,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{() -> signUpViewModel.fnStoreUserDetails()}"
                     android:background="@drawable/btn_background"
-                    android:text="@string/signup"
+                    android:text= "@string/signup"
                     android:textSize="25sp" />
                 <!--                <ImageView-->
                 <!--                    android:id="@+id/nextButton"-->
