@@ -3,6 +3,7 @@ package com.example.expensetrackerapplication.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.expensetrackerapplication.data.entity.UserEntity
 
 class SignUpViewModel: ViewModel() {
     //User Name
@@ -35,9 +36,12 @@ class SignUpViewModel: ViewModel() {
 
     fun fnGoToSignUp()
     {
-        _actionGoToSignUp.value=true
+        _actionGoToSignUp.value = true
     }
 
-
+    fun fnStoreUserDetails()
+    {
+//        var user= UserEntity
+    }
 
 }

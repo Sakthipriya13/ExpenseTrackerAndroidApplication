@@ -49,9 +49,9 @@ class Login : Fragment() {
 
 
 
-        loginDataBinding.idGoToSignUp.setOnClickListener {
-            findNavController().navigate(R.id.action_login_to_signup)
-        }
+//        loginDataBinding.idGoToSignUp.setOnClickListener {
+//            findNavController().navigate(R.id.action_login_to_signup)
+//        }
 
         // Inflate the layout for this fragment
         return loginDataBinding.root

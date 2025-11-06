@@ -226,17 +226,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
-            <TextView
-                android:id="@+id/idGoToLoginPage"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:onClick="@{() -> signUpViewModel.fnGoToSignUp()}"
-                android:background="?attr/selectableItemBackground"
-                android:layout_gravity="center"
-                android:textSize="20sp"
-                android:text="@string/alreadyaccount" />
+<!--            <TextView-->
+<!--                android:id="@+id/idGoToLoginPage"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:gravity="center"-->
+<!--                android:textStyle="bold"-->
+<!--                android:onClick="@{() -> signUpViewModel.fnGoToSignUp()}"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:textSize="20sp"-->
+<!--                android:text="@string/alreadyaccount" />-->
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
