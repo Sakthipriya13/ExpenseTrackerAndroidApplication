@@ -64,7 +64,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             val user= UserEntity(
                 userName = name.value, userMobileNo = mobileNo.value,
-                userEmail = email.value, userPassword = password.value, userId = 0
+                userEmail = email.value, userPassword = password.value
             )
             val status = userRepository.fnInsertUserDetails(user)
             _insertStatus.value=status

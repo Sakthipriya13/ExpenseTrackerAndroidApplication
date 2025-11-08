@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
-                    android:text="@string/login_cancel"
+                    android:text="@string/clear"
                     android:onClick="@{() -> signUpViewModel.fnClearInputs()}"
                     android:textColor="@color/colorPrimary"
                     android:textColorLink="@color/colorPrimary"

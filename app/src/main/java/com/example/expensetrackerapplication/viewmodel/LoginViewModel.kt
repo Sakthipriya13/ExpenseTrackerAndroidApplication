@@ -8,13 +8,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class LoginViewModel: ViewModel()
 {
-    val _userName = MutableLiveData<String?>("")
-    val userName : LiveData<String?> = _userName
+    var _userName = MutableLiveData<String?>("")
+    var userName : LiveData<String?> = _userName
 
-    val _userPassword = MutableLiveData<String?>("")
-    val userPassword : LiveData<String?> = _userPassword
+    var _userPassword = MutableLiveData<String?>("")
+    var userPassword : LiveData<String?> = _userPassword
 
-    fun loginStatus(){
+    var _loginStatus = MutableLiveData<Boolean>(false)
+    var loginStatus : LiveData<Boolean> = _loginStatus
 
+    fun fnCheckUser()
+    {
+
+    }
+
+    fun fnClearValues()
+    {
+        _userName.value=""
+        _userPassword.value=""
     }
 }

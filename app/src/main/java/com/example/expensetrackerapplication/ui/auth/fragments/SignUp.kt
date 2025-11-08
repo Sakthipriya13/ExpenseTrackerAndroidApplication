@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.ui.auth.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -50,9 +51,23 @@ class SignUp : Fragment() {
         signUpDataBinding.lifecycleOwner=this
         signUpDataBinding.signUpViewModel=signUpViewModel
 
-        signUpViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
+        signUpViewModel.insertStatus.observe(viewLifecycleOwner){ ob ->
             if(ob)
+            {
+                Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
                 findNavController().navigate(R.id.action_signup_to_login)
+            }
+            else
+            {
+                Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
+
+            }
+        }
+
+        signUpViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                findNavController().navigate(R.id.action_signup_to_login)
+            }
         }
 
         return signUpDataBinding.root

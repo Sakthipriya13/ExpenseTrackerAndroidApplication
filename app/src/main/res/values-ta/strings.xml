@@ -21,7 +21,7 @@
     <string name="select_language">மொழியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
-    <string name="login_cancel">நீக்கு</string>
+    <string name="clear">நீக்கு</string>
 
     <string name="dashboard_frag">மேற்பார்வை</string>
     <string name="reports_frag">அறிக்கைகள்</string>
