@@ -1,10 +1,12 @@
 package com.example.expensetrackerapplication.ui.auth.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,7 +29,7 @@ class Login : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    val viewModel : LoginViewModel by viewModels()
+    val loginViewModel : LoginViewModel by viewModels()
     private lateinit var loginDataBinding : LoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +46,31 @@ class Login : Fragment() {
     ): View? {
 
         loginDataBinding= DataBindingUtil.inflate(inflater,R.layout.login,container,false)
-        loginDataBinding.loginViewModel=viewModel
+        loginDataBinding.loginViewModel=loginViewModel
         loginDataBinding.lifecycleOwner=this
 
 
+        loginViewModel.loginStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob)
+            {
+                findNavController().navigate(R.id.action_login_to_main)
+            }
+            else
+            {
+                Log.e("LOGIN STATUS", "Login Status Value Was False")
+            }
+        }
 
-
+        loginViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
+            if(ob)
+            {
+                findNavController().navigate(R.id.action_login_to_signup)
+            }
+            else
+            {
+                Log.e("GO TO SIGNUP", "Go To SignUp Value Was False")
+            }
+        }
 
         // Inflate the layout for this fragment
         return loginDataBinding.root
