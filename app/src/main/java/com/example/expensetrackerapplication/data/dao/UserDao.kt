@@ -1,10 +1,12 @@
 package com.example.expensetrackerapplication.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.expensetrackerapplication.data.entity.UserEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -13,5 +15,5 @@ interface UserDao {
     suspend fun fnInsertUser(user: UserEntity) : Long
 
     @Query("SELECT * FROM User WHERE UserName=:name AND UserPassword=:password")
-    suspend fun fnCheckUser(name:String?,password:String?): UserEntity
+    suspend fun fnGetUserBasedOnUserName(name:String?,password:String?): Flow<MutableList<UserEntity>>
 }

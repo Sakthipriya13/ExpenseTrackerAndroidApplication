@@ -233,7 +233,7 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:onClick="@{() -> signUpViewModel.fnGoToSignUp()}"
+                android:onClick="@{() -> signUpViewModel.fnGoToLogin()}"
                 android:background="?attr/selectableItemBackground"
                 android:layout_gravity="center"
                 android:textSize="20sp"

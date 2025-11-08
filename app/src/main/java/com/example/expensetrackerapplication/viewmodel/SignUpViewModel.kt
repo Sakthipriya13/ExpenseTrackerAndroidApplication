@@ -39,8 +39,8 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
     var password : LiveData<String?> = _password
 
     //GoToSignUp
-    var _actionGoToSignUp = MutableLiveData<Boolean>()
-    var actionGoToSignUp : LiveData<Boolean> = _actionGoToSignUp
+    var _actionGoToLogin = MutableLiveData<Boolean>()
+    var actionGoToLogin : LiveData<Boolean> = _actionGoToLogin
 
     var _insertStatus = MutableLiveData<Boolean>()
     var insertStatus : LiveData<Boolean> = _insertStatus
@@ -54,9 +54,9 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
         _email.value="";
     }
 
-    fun fnGoToSignUp()
+    fun fnGoToLogin()
     {
-        _actionGoToSignUp.value = true
+        _actionGoToLogin.value = true
     }
 
     fun fnStoreUserDetails()

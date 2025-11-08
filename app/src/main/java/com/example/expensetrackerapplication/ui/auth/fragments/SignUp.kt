@@ -64,7 +64,7 @@ class SignUp : Fragment() {
             }
         }
 
-        signUpViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
+        signUpViewModel.actionGoToLogin.observe(viewLifecycleOwner){ ob ->
             if(ob){
                 findNavController().navigate(R.id.action_signup_to_login)
             }
