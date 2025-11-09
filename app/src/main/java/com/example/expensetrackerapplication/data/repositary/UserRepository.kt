@@ -25,7 +25,7 @@ class UserRepository(var userDao: UserDao)
 
     }
 
-    suspend fun fnGetUserDetailsBasedOnUserName(name: String?, password : String?): Flow<MutableList<UserEntity>>
+    suspend fun fnGetUserDetailsBasedOnUserName(name: String?, password : String?): MutableList<UserEntity>
     {
         return try {
             userDao.fnGetUserBasedOnUserName(name,password)
@@ -36,8 +36,7 @@ class UserRepository(var userDao: UserDao)
                 "GET USER DETAILS BASED ON USERNAME",
                 "Error fetching user details: ${e.message}"
             )
-            //Return empty Flow if an exception happens
-            flowOf(mutableListOf())
+            mutableListOf()
         }
     }
 }

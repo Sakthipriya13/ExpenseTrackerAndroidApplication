@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.viewmodel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,8 +29,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application)
     var _userPassword = MutableLiveData<String?>("")
     var userPassword : LiveData<String?> = _userPassword
 
-    var _userDetailList = MutableStateFlow<MutableList<UserEntity>>(mutableListOf())
-    var userDetailList : StateFlow<MutableList<UserEntity>> = _userDetailList
+    var _userDetailList = mutableListOf<UserEntity>()
+    var userDetailList : List<UserEntity> = _userDetailList
+
     var _loginStatus = MutableLiveData<Boolean>(false)
     var loginStatus : LiveData<Boolean> = _loginStatus
 
@@ -41,11 +43,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             if(userName.value?.isNotEmpty() == true && userPassword.value?.isNotEmpty() == true)
             {
-                userRepository.fnGetUserDetailsBasedOnUserName(userName.value,
-                    userPassword.value).collect { list ->
-                    _userDetailList.value=list
-                    _loginStatus.value=true
-                }
+                _userDetailList=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
+                _loginStatus.value=_userDetailList.isNotEmpty()
+                Log.v("USER DETAILS","User Details: $userDetailList")
             }
             else
             {
@@ -63,6 +63,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application)
 
     fun fnActionGoToSignUp()
     {
-        _actionGoToSignUp.value=false
+        _actionGoToSignUp.value=true
     }
 }

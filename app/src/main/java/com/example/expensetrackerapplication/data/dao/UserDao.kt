@@ -15,5 +15,5 @@ interface UserDao {
     suspend fun fnInsertUser(user: UserEntity) : Long
 
     @Query("SELECT * FROM User WHERE UserName=:name AND UserPassword=:password")
-    suspend fun fnGetUserBasedOnUserName(name:String?,password:String?): Flow<MutableList<UserEntity>>
+    suspend fun fnGetUserBasedOnUserName(name:String?,password:String?): MutableList<UserEntity>
 }
