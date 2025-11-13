@@ -6,4 +6,6 @@
     <color name ="colorPrimary">#6C67E6</color>
     <color name="colorSecondary">#8F8CE7</color>
     <color name="colorAccent">#9F9CDC</color>
+
+    <color name="success">#008000</color>
 </resources>
