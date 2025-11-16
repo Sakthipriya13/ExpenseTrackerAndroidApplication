@@ -1,18 +1,11 @@
-package com.example.expensetrackerapplication.ui.auth.fragments
+package com.example.expensetrackerapplication.ui.main.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
-import com.example.expensetrackerapplication.databinding.LoginBinding
-import com.example.expensetrackerapplication.viewmodel.LoginViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,16 +14,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
+ * Use the [Profile.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Login : Fragment() {
+class Profile : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
-    val loginViewModel : LoginViewModel by viewModels()
-    private lateinit var loginDataBinding : LoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,37 +34,8 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        loginDataBinding= DataBindingUtil.inflate(inflater,R.layout.login,container,false)
-        loginDataBinding.loginViewModel=loginViewModel
-        loginDataBinding.lifecycleOwner=this
-
-
-        loginViewModel.loginStatus.observe(viewLifecycleOwner){ ob ->
-            if(ob)
-            {
-                findNavController().navigate(R.id.action_login_to_main)
-            }
-            else
-            {
-                Log.e("LOGIN STATUS", "Login Status Value Was False")
-            }
-        }
-
-        loginViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
-            if(ob)
-            {
-
-                findNavController().navigate(R.id.action_login_to_signup)
-            }
-            else
-            {
-                Log.e("GO TO SIGNUP", "Go To SignUp Value Was False")
-            }
-        }
-
         // Inflate the layout for this fragment
-        return loginDataBinding.root
+        return inflater.inflate(R.layout.profile, container, false)
     }
 
     companion object {
@@ -84,12 +45,12 @@ class Login : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Login.
+         * @return A new instance of fragment Profile.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Login().apply {
+            Profile().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

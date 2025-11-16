@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/dashBoard">
+
+    <fragment
+        android:id="@+id/dashBoard"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.Dashboard"
+        android:label="DashBoard">
+        <action android:id="@+id/action_dashBoard_to_reports"
+            app:destination="@id/reports"/>
+        <action android:id="@+id/action_dashBoard_to_newExpense"
+                app:destination="@id/newExpense"/>
+        <action android:id="@+id/action_dashBoard_to_settings"
+            app:destination="@id/settings"/>
+        <action android:id="@+id/action_dashBoard_to_profile"
+            app:destination="@id/profile"/>
+    </fragment>
+    <fragment
+        android:id="@+id/reports"
+        android:label="Reports"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.Reports">
+        <action
+            android:id="@+id/action_reports_to_dashBoard"
+            app:destination="@id/dashBoard"/>
+        <action android:id="@+id/action_reports_to_newExpense"
+            app:destination="@id/newExpense"/>
+        <action android:id="@+id/action_reports_to_settings"
+            app:destination="@id/settings"/>
+        <action android:id="@+id/action_reports_to_profile"
+            app:destination="@id/profile"/>
+    </fragment>
+    <fragment android:id="@+id/newExpense"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.NewExpense"
+        android:label="NewExpense">
+        <action android:id="@+id/action_newExpense_to_dashBoard"
+            app:destination="@id/dashBoard"/>
+        <action android:id="@+id/action_newExpense_to_reports"
+            app:destination="@id/reports"/>
+        <action android:id="@+id/action_newExpense_to_settings"
+            app:destination="@id/settings"/>
+        <action android:id="@+id/action_newExpense_to_profile"
+            app:destination="@id/profile"/>
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.Settings"
+        android:label="Settings">
+        <action android:id="@+id/action_settings_to_dashBoard"
+            app:destination="@id/dashBoard"/>
+        <action android:id="@+id/action_settings_to_reports"
+            app:destination="@id/reports"/>
+        <action android:id="@+id/action_settings_to_newExpense"
+            app:destination="@id/newExpense"/>
+        <action android:id="@+id/action_settings_to_profile"
+            app:destination="@id/profile"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:label="Profile"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.Profile">
+        <action android:id="@+id/action_profile_to_dashBoard"
+            app:destination="@id/dashBoard"/>
+        <action android:id="@+id/action_profile_to_reports"
+            app:destination="@id/reports"/>
+        <action android:id="@+id/action_profile_to_newExpense"
+            app:destination="@id/newExpense"/>
+        <action android:id="@+id/action_profile_to_settings"
+            app:destination="@id/settings"/>
+    </fragment>
+</navigation>

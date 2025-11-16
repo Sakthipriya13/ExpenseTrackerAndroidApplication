@@ -19,6 +19,7 @@
                     android:src="@drawable/expenselogo"
                     android:layout_weight="4"/>
             <TextView
+                android:id="@+id/success_msg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
