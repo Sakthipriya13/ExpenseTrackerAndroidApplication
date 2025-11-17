@@ -9,44 +9,84 @@
             name="mainViewModel"
             type="com.example.expensetrackerapplication.ui.main.Main" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.Main">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/idContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/idCardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.85"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/main_nav"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:defaultNavHost="true"/>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/idCardView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idContainer">
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/idBottomNav"
-                android:background="?attr/colorPrimary"
+            <com.google.android.material.bottomappbar.BottomAppBar
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:menu="@menu/main_menu"/>
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:fabCradleMargin="10dp"
+                android:id="@+id/idBottomAppBar"
+                app:fabCradleRoundedCornerRadius="50dp"
+                android:background="?attr/colorPrimary"
+                >
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:background="?attr/colorPrimary"
+                    app:menu="@menu/main_menu"
+                    app:labelVisibilityMode="labeled"
+                    />
+            </com.google.android.material.bottomappbar.BottomAppBar>
 
-        
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/email"
+            tools:ignore="MissingConstraints"
+            app:layout_anchor="@id/idBottomAppBar"
+            app:maxImageSize="40dp"
+            android:tint="@color/white"/>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
+
+
+
+
+<!--<androidx.fragment.app.FragmentContainerView-->
+<!--android:id="@+id/idContainer"-->
+<!--android:name="androidx.navigation.fragment.NavHostFragment"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="450dp"-->
+<!--app:defaultNavHost="true"-->
+<!--app:navGraph="@navigation/main_nav" />-->
+
+<!--<androidx.cardview.widget.CardView-->
+<!--android:id="@+id/idCardView"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="100dp"-->
+<!--app:cardCornerRadius="20dp"-->
+<!--app:cardElevation="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginStart="5dp"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_gravity="bottom">-->
+<!--<com.google.android.material.bottomappbar.BottomAppBar-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:id="@+id/idBottomAppBar"-->
+<!--    android:background="?attr/colorPrimary"-->
+<!--    app:fabCradleMargin="10dp"-->
+<!--    app:fabCradleRoundedCornerRadius="50dp"-->
+<!--    tools:ignore="BottomAppBar">-->
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/idBottomNav"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        app:menu="@menu/main_menu"/>-->
+<!--</com.google.android.material.bottomappbar.BottomAppBar>-->
+
+<!--</androidx.cardview.widget.CardView>-->
