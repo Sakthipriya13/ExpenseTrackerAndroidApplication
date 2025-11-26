@@ -7,47 +7,230 @@
     <data>
         <variable
             name="mainViewModel"
-            type="com.example.expensetrackerapplication.ui.main.Main" />
+            type="com.example.expensetrackerapplication.viewmodel.MainViewModel" />
     </data>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/main"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.Main">
+        android:layout_height="match_parent">
 
-            <com.google.android.material.bottomappbar.BottomAppBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:fabCradleMargin="10dp"
-                android:id="@+id/idBottomAppBar"
-                app:fabCradleRoundedCornerRadius="50dp"
-                android:background="?attr/colorPrimary"
-                >
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:background="?attr/colorPrimary"
-                    app:menu="@menu/main_menu"
-                    app:labelVisibilityMode="labeled"
-                    />
-            </com.google.android.material.bottomappbar.BottomAppBar>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/idContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:navGraph="@navigation/main_nav"
+            app:defaultNavHost="true"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/idTransparentBg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#66000000"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/email"
-            tools:ignore="MissingConstraints"
-            app:layout_anchor="@id/idBottomAppBar"
-            app:maxImageSize="40dp"
-            android:tint="@color/white"/>
+            android:minHeight="50dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp">
 
 
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/idMenuFab"
+                app:maxImageSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:tint="@color/white"
+                app:shapeAppearanceOverlay="@style/FabCustomShape"/>
+
+
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/idHomeFab"
+                app:maxImageSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dashboard_frag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/idMenuFab"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:tint="@color/white"
+                app:shapeAppearanceOverlay="@style/FabCustomShape"
+                android:visibility="invisible"/>
+
+
+
+            <TextView
+                android:id="@+id/idHomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:elevation="8dp"
+                android:background="@drawable/textview_bg"
+                app:layout_constraintTop_toTopOf="@id/idHomeFab"
+                app:layout_constraintBottom_toBottomOf="@id/idHomeFab"
+                app:layout_constraintEnd_toStartOf="@id/idHomeFab"
+                android:visibility="invisible"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/idReportFab"
+                app:maxImageSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/reports_frag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/idHomeFab"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:tint="@color/white"
+                app:shapeAppearanceOverlay="@style/FabCustomShape"
+                android:visibility="invisible"/>
+
+
+            <TextView
+                android:id="@+id/idReportText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Report"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:elevation="8dp"
+                android:background="@drawable/textview_bg"
+                app:layout_constraintTop_toTopOf="@id/idReportFab"
+                app:layout_constraintBottom_toBottomOf="@id/idReportFab"
+                app:layout_constraintEnd_toStartOf="@id/idReportFab"
+                android:visibility="invisible"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/idAddFab"
+                app:maxImageSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/idReportFab"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:tint="@color/white"
+                app:shapeAppearanceOverlay="@style/FabCustomShape"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/idAddText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:elevation="8dp"
+                android:background="@drawable/textview_bg"
+                app:layout_constraintTop_toTopOf="@id/idAddText"
+                app:layout_constraintBottom_toBottomOf="@id/idAddText"
+                app:layout_constraintEnd_toStartOf="@id/idAddText"
+                android:visibility="invisible"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/idSettingsFab"
+                app:maxImageSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/settings_frag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/idAddFab"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:tint="@color/white"
+                app:shapeAppearanceOverlay="@style/FabCustomShape"
+                android:visibility="invisible"/>
+
+
+            <TextView
+                android:id="@+id/idSettingsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:elevation="8dp"
+                android:background="@drawable/textview_bg"
+                app:layout_constraintTop_toTopOf="@id/idSettingsFab"
+                app:layout_constraintBottom_toBottomOf="@id/idSettingsFab"
+                app:layout_constraintEnd_toStartOf="@id/idSettingsFab"
+                android:visibility="invisible"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/idProfileFab"
+                app:maxImageSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/idSettingsFab"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="?attr/colorPrimary"
+                app:tint="@color/white"
+                app:shapeAppearanceOverlay="@style/FabCustomShape"
+                android:visibility="invisible"/>
+
+
+            <TextView
+                android:id="@+id/idProfileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:elevation="8dp"
+                android:background="@drawable/textview_bg"
+                app:layout_constraintTop_toTopOf="@id/idProfileFab"
+                app:layout_constraintBottom_toBottomOf="@id/idProfileFab"
+                app:layout_constraintEnd_toStartOf="@id/idProfileFab"
+                android:visibility="invisible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
 
