@@ -14,17 +14,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/idAppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/idToolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:title="Expense Tracker"
+                app:titleTextColor="@color/white"
+                app:titleTextAppearance="@style/ToolBarTittle"
+                android:elevation="5dp"
+                >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/logout"
+                    android:layout_gravity="end"/>
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/idContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:navGraph="@navigation/main_nav"
             app:defaultNavHost="true"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_marginTop="65dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="parent"
+            app:navGraph="@navigation/main_nav" />
 
         <View
             android:id="@+id/idTransparentBg"
@@ -53,10 +80,10 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/idMenuFab"
-                app:maxImageSize="40dp"
+                app:maxImageSize="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/menu1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="12dp"
@@ -69,7 +96,7 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/idHomeFab"
+                android:id="@+id/idDashboardFab"
                 app:maxImageSize="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,16 +116,16 @@
                 android:id="@+id/idHomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="@string/dashboard_frag"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="8dp"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:elevation="8dp"
                 android:background="@drawable/textview_bg"
-                app:layout_constraintTop_toTopOf="@id/idHomeFab"
-                app:layout_constraintBottom_toBottomOf="@id/idHomeFab"
-                app:layout_constraintEnd_toStartOf="@id/idHomeFab"
+                app:layout_constraintTop_toTopOf="@id/idDashboardFab"
+                app:layout_constraintBottom_toBottomOf="@id/idDashboardFab"
+                app:layout_constraintEnd_toStartOf="@id/idDashboardFab"
                 android:visibility="invisible"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -108,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/reports_frag"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/idHomeFab"
+                app:layout_constraintBottom_toTopOf="@id/idDashboardFab"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
                 android:backgroundTint="?attr/colorPrimary"
@@ -121,7 +148,7 @@
                 android:id="@+id/idReportText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Report"
+                android:text="@string/reports_frag"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="8dp"
                 android:textStyle="bold"
@@ -133,7 +160,7 @@
                 app:layout_constraintEnd_toStartOf="@id/idReportFab"
                 android:visibility="invisible"/>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/idAddFab"
+                android:id="@+id/idAddExpenseFab"
                 app:maxImageSize="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,16 +178,16 @@
                 android:id="@+id/idAddText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="@string/add_expense_frag"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="8dp"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:elevation="8dp"
                 android:background="@drawable/textview_bg"
-                app:layout_constraintTop_toTopOf="@id/idAddText"
-                app:layout_constraintBottom_toBottomOf="@id/idAddText"
-                app:layout_constraintEnd_toStartOf="@id/idAddText"
+                app:layout_constraintTop_toTopOf="@id/idAddExpenseFab"
+                app:layout_constraintBottom_toBottomOf="@id/idAddExpenseFab"
+                app:layout_constraintEnd_toStartOf="@id/idAddExpenseFab"
                 android:visibility="invisible"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -170,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/settings_frag"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/idAddFab"
+                app:layout_constraintBottom_toTopOf="@id/idAddExpenseFab"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
                 android:backgroundTint="?attr/colorPrimary"
@@ -183,7 +210,7 @@
                 android:id="@+id/idSettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="@string/setting_frag"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="8dp"
                 android:textStyle="bold"
@@ -215,7 +242,7 @@
                 android:id="@+id/idProfileText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Profile"
+                android:text="@string/profile_frag"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="8dp"
                 android:textStyle="bold"

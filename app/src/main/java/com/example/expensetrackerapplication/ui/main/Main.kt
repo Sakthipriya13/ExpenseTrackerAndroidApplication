@@ -53,11 +53,14 @@ class Main : AppCompatActivity() {
         mainDataBinding.lifecycleOwner=this
         setContentView(mainDataBinding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
+
+        setSupportActionBar(mainDataBinding.idToolBar)
+
 
         fnShrinkFab()
 
@@ -70,23 +73,28 @@ class Main : AppCompatActivity() {
             }
         }
         mainDataBinding.idReportFab.setOnClickListener {
+            fnShrinkFab()
             findNavController(R.id.idContainer).navigate(R.id.reports
             )
         }
 
-        mainDataBinding.idHomeFab.setOnClickListener {
+        mainDataBinding.idDashboardFab.setOnClickListener {
+            fnShrinkFab()
             findNavController(R.id.idContainer).navigate(R.id.dashBoard)
         }
 
-        mainDataBinding.idAddFab.setOnClickListener {
+        mainDataBinding.idAddExpenseFab.setOnClickListener {
+            fnShrinkFab()
             findNavController(R.id.idContainer).navigate(R.id.newExpense)
         }
 
         mainDataBinding.idSettingsFab.setOnClickListener {
+            fnShrinkFab()
             findNavController(R.id.idContainer).navigate(R.id.settings)
         }
 
         mainDataBinding.idProfileFab.setOnClickListener {
+            fnShrinkFab()
             findNavController(R.id.idContainer).navigate(R.id.profile)
         }
     }
@@ -96,9 +104,12 @@ class Main : AppCompatActivity() {
 
         mainDataBinding.idMenuFab.startAnimation(rotateClockWiseFabAnim)
 
-        mainDataBinding.idHomeFab.startAnimation(fromBottomFabAnim)
+        mainDataBinding.idMenuFab.setImageResource(R.drawable.add)
+
+
+        mainDataBinding.idDashboardFab.startAnimation(fromBottomFabAnim)
         mainDataBinding.idReportFab.startAnimation(fromBottomFabAnim)
-        mainDataBinding.idAddFab.startAnimation(fromBottomFabAnim)
+        mainDataBinding.idAddExpenseFab.startAnimation(fromBottomFabAnim)
         mainDataBinding.idSettingsFab.startAnimation(fromBottomFabAnim)
         mainDataBinding.idProfileFab.startAnimation(fromBottomFabAnim)
 
@@ -117,8 +128,10 @@ class Main : AppCompatActivity() {
         mainDataBinding.idTransparentBg.startAnimation(toBottomAnim)
         mainDataBinding.idMenuFab.startAnimation(rotateAntiClockWiseFabAnim)
 
-        mainDataBinding.idHomeFab.startAnimation(toBottomFabAnim)
-        mainDataBinding.idAddFab.startAnimation(toBottomFabAnim)
+        mainDataBinding.idMenuFab.setImageResource(R.drawable.menu1)
+
+        mainDataBinding.idDashboardFab.startAnimation(toBottomFabAnim)
+        mainDataBinding.idAddExpenseFab.startAnimation(toBottomFabAnim)
         mainDataBinding.idReportFab.startAnimation(toBottomFabAnim)
         mainDataBinding.idSettingsFab.startAnimation(toBottomFabAnim)
         mainDataBinding.idProfileFab.startAnimation(toBottomFabAnim)
