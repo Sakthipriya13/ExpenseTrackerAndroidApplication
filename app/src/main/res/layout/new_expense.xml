@@ -28,8 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/idFlow1"
             />
-
-        <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/idLSelectDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,7 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLines="1"
-                android:hint="@string/select_date"
+                android:text="28-11-2025"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:inputType="none"
+
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
