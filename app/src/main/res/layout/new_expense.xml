@@ -1,13 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.fragments.NewExpense">
+    >
 
-    <TextView
+    <data>
+        <variable
+            name="newExpenseViewModel"
+            type="com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Expense"
-/>
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        tools:context=".ui.main.fragments.NewExpense">
+
+        <TextView
+            android:id="@+id/idDateLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/idFlow1"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLSelectDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintEnd_toStartOf="@+id/idCalendarButton"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idESelectDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:hint="@string/select_date"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/idCalendarButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar_date"
+            app:layout_constraintStart_toEndOf="@+id/idLSelectDate"
+            app:layout_constraintWidth_percent="0.13"/>
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/idFlow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flow_horizontalStyle="spread_inside"
+            app:flow_horizontalGap="5dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idDateLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idExpenseLabel"
+            app:constraint_referenced_ids="idLSelectDate,idCalendarButton"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/idExpenseLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/expense"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/idLNewExpense"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idLSelectDate" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLNewExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idExpenseLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idCategoryLabel"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idENewExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:hint="@string/enter_expense"
+                android:drawableEnd="@drawable/currency_rupee" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/idCategoryLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/idLCategoryDropDown"
+            app:layout_constraintTop_toBottomOf="@+id/idLNewExpense" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLCategoryDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idCategoryLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idPaymentTypeLabel"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/idDCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:hint="@string/select_expense_category" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/idPaymentTypeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_type"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idLCategoryDropDown"
+            app:layout_constraintBottom_toTopOf="@+id/idLPaymentTypeDropDown"/>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLPaymentTypeDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idPaymentTypeLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idRemarksLabel"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/idDPaymentTypes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:hint="@string/select_expense_category" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/idRemarksLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/remarks"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idLPaymentTypeDropDown"
+            app:layout_constraintBottom_toTopOf="@+id/idLRemarks"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLRemarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idRemarksLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idLayout"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idERemarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/pencil"
+                android:hint="@string/add_remarks"
+                android:maxLines="3"
+                android:inputType="textMultiLine"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:id="@+id/idLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idLRemarks">
+
+            <TextView
+                android:id="@+id/idCancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/clear"
+                android:textColor="@color/colorPrimary"
+                android:textColorLink="@color/colorPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/idLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_background"
+                android:text="@string/add"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+<!--        <Button-->
+<!--            android:id="@+id/idAddExpenseButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="20sp"-->
+<!--            android:layout_margin="3dp"-->
+<!--            android:text="@string/add_expense_frag"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/idLRemarks"-->
+<!--            />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

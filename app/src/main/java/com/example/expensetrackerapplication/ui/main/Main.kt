@@ -13,6 +13,8 @@ import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.MainBinding
 import com.example.expensetrackerapplication.viewmodel.MainViewModel
 
+import android.view.View
+
 class Main : AppCompatActivity() {
     lateinit var mainDataBinding: MainBinding
     val mainViewModel : MainViewModel by viewModels()
@@ -100,6 +102,19 @@ class Main : AppCompatActivity() {
     }
 
     fun fnExpandFab() {
+
+        mainDataBinding.idDashboardFab.visibility=View.INVISIBLE
+        mainDataBinding.idReportFab.visibility=View.INVISIBLE
+        mainDataBinding.idAddExpenseFab.visibility=View.INVISIBLE
+        mainDataBinding.idSettingsFab.visibility=View.INVISIBLE
+        mainDataBinding.idProfileFab.visibility=View.INVISIBLE
+
+        mainDataBinding.idHomeText.visibility=View.INVISIBLE
+        mainDataBinding.idReportText.visibility=View.INVISIBLE
+        mainDataBinding.idAddText.visibility=View.INVISIBLE
+        mainDataBinding.idSettingsText.visibility=View.INVISIBLE
+        mainDataBinding.idProfileText.visibility=View.INVISIBLE
+
         mainDataBinding.idTransparentBg.startAnimation(fromBottomAnim)
 
         mainDataBinding.idMenuFab.startAnimation(rotateClockWiseFabAnim)
@@ -143,5 +158,20 @@ class Main : AppCompatActivity() {
         mainDataBinding.idProfileText.startAnimation(toBottomFabAnim)
 
         isExpanded = !isExpanded
+
+
+        mainDataBinding.idDashboardFab.visibility=View.GONE
+        mainDataBinding.idReportFab.visibility=View.GONE
+        mainDataBinding.idAddExpenseFab.visibility=View.GONE
+        mainDataBinding.idSettingsFab.visibility=View.GONE
+        mainDataBinding.idProfileFab.visibility=View.GONE
+
+        mainDataBinding.idHomeText.visibility=View.GONE
+        mainDataBinding.idReportText.visibility=View.GONE
+        mainDataBinding.idAddText.visibility=View.GONE
+        mainDataBinding.idSettingsText.visibility=View.GONE
+        mainDataBinding.idProfileText.visibility=View.GONE
+
+
     }
 }
