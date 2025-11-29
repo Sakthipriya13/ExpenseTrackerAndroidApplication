@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.SettingsBinding
+import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +26,10 @@ class Settings : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var settingsBinding: SettingsBinding
+
+    val settingsViewModel : SettingsViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +42,11 @@ class Settings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.settings, container, false)
+        settingsBinding= DataBindingUtil.inflate(inflater,R.layout.settings, container, false)
+        settingsBinding.settingsViewModel=settingsViewModel
+        settingsBinding.lifecycleOwner=viewLifecycleOwner
+
+        return settingsBinding.root
     }
 
     companion object {

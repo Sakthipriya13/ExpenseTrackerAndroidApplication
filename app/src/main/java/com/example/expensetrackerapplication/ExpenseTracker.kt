@@ -6,5 +6,7 @@ class ExpenseTracker : Application()
 {
     override fun onCreate() {
         super.onCreate()
+
+        
     }
 }

@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLines="1"
-                android:text="28-11-2025"
+                android:textSize="15sp"
+                android:text="@={newExpenseViewModel._selectedDate}"
                 android:focusable="false"
                 android:cursorVisible="false"
                 android:inputType="none"
@@ -99,6 +100,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
+                android:text="@={newExpenseViewModel._expenseAmt}"
+                android:textSize="15sp"
                 android:hint="@string/enter_expense"
                 android:drawableEnd="@drawable/currency_rupee" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -111,11 +114,11 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/idLCategoryDropDown"
+            app:layout_constraintBottom_toTopOf="@id/idLCategories"
             app:layout_constraintTop_toBottomOf="@+id/idLNewExpense" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/idLCategoryDropDown"
+            android:id="@+id/idLCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,11 +131,18 @@
                 android:id="@+id/idDCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Select a country"
+                android:completionThreshold="1"
                 android:padding="10dp"
-                android:maxLines="1"
-                android:hint="@string/select_expense_category" />
+                app:layout_constraintBottom_toTopOf="@+id/idPaymentTypeLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/idCategoryLabel" />
+
 
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/idPaymentTypeLabel"
@@ -142,30 +152,65 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idLCategoryDropDown"
-            app:layout_constraintBottom_toTopOf="@+id/idLPaymentTypeDropDown"/>
+            app:layout_constraintTop_toBottomOf="@+id/idLCategories"
+            app:layout_constraintBottom_toTopOf="@+id/idLPaymentType"/>
 
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/idLPaymentTypeDropDown"
+        <RadioGroup
+            android:id="@+id/idLPaymentType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idPaymentTypeLabel"
-            app:layout_constraintBottom_toTopOf="@+id/idRemarksLabel"
-            >
+            app:layout_constraintBottom_toTopOf="@+id/idRemarksLabel">
 
-            <AutoCompleteTextView
-                android:id="@+id/idDPaymentTypes"
-                android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:maxLines="1"
-                android:hint="@string/select_expense_category" />
+                android:layout_margin="10dp"
+                android:text="cash" />
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="card" />
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="upi" />
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="spilt" />
+        </RadioGroup>
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/idLPaymentTypeDropDown"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/idPaymentTypeLabel"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/idRemarksLabel"-->
+<!--            >-->
+
+<!--            <AutoCompleteTextView-->
+<!--                android:id="@+id/idDPaymentTypes"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="10dp"-->
+<!--                android:maxLines="1"-->
+<!--                android:hint="@string/select_expense_category" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <TextView
             android:id="@+id/idRemarksLabel"
@@ -175,7 +220,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idLPaymentTypeDropDown"
+            app:layout_constraintTop_toBottomOf="@+id/idLPaymentType"
             app:layout_constraintBottom_toTopOf="@+id/idLRemarks"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -194,6 +239,7 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/pencil"
                 android:hint="@string/add_remarks"
+                android:textSize="15sp"
                 android:maxLines="3"
                 android:inputType="textMultiLine"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -210,7 +256,7 @@
             app:layout_constraintTop_toBottomOf="@+id/idLRemarks">
 
             <TextView
-                android:id="@+id/idCancel"
+                android:id="@+id/idClear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
@@ -224,7 +270,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/idLogin"
+                android:id="@+id/idAdd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

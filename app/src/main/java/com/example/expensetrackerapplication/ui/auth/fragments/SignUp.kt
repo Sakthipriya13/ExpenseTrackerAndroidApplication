@@ -48,7 +48,7 @@ class SignUp : Fragment() {
     {
 
         signUpDataBinding= DataBindingUtil.inflate(inflater,R.layout.sign_up, container, false)
-        signUpDataBinding.lifecycleOwner=this
+        signUpDataBinding.lifecycleOwner=viewLifecycleOwner
         signUpDataBinding.signUpViewModel=signUpViewModel
 
         signUpViewModel.insertStatus.observe(viewLifecycleOwner){ ob ->

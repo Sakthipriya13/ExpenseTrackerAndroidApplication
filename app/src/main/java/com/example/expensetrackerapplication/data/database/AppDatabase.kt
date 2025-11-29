@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.expensetrackerapplication.data.dao.CategoryDao
 import com.example.expensetrackerapplication.data.dao.UserDao
+import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.entity.UserEntity
 
-@Database(entities = [UserEntity::class], version = 1, exportSchema = true)
+@Database(entities = [UserEntity::class, CategoryEntitty :: class], version = 2, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun CategoryDao() : CategoryDao
     companion object{
         @Volatile
         private var INSTANCE: AppDatabase? = null

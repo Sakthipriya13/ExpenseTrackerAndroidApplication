@@ -14,6 +14,12 @@ import com.example.expensetrackerapplication.databinding.MainBinding
 import com.example.expensetrackerapplication.viewmodel.MainViewModel
 
 import android.view.View
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.time.delay
+import kotlinx.coroutines.withContext
 
 class Main : AppCompatActivity() {
     lateinit var mainDataBinding: MainBinding
@@ -86,8 +92,13 @@ class Main : AppCompatActivity() {
         }
 
         mainDataBinding.idAddExpenseFab.setOnClickListener {
-            fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.newExpense)
+            lifecycleScope.launch {
+                fnShrinkFab()
+                delay(200)
+                findNavController(R.id.idContainer).navigate(R.id.newExpense)
+
+            }
+
         }
 
         mainDataBinding.idSettingsFab.setOnClickListener {
@@ -114,6 +125,8 @@ class Main : AppCompatActivity() {
         mainDataBinding.idAddText.visibility=View.INVISIBLE
         mainDataBinding.idSettingsText.visibility=View.INVISIBLE
         mainDataBinding.idProfileText.visibility=View.INVISIBLE
+
+        mainDataBinding.idTransparentBg.visibility=View.INVISIBLE
 
         mainDataBinding.idTransparentBg.startAnimation(fromBottomAnim)
 
@@ -171,6 +184,8 @@ class Main : AppCompatActivity() {
         mainDataBinding.idAddText.visibility=View.GONE
         mainDataBinding.idSettingsText.visibility=View.GONE
         mainDataBinding.idProfileText.visibility=View.GONE
+
+        mainDataBinding.idTransparentBg.visibility=View.GONE
 
 
     }

@@ -4,8 +4,12 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name ="colorPrimary">#6C67E6</color>
-    <color name="colorSecondary">#8F8CE7</color>
-    <color name="colorAccent">#9F9CDC</color>
+<!--    <color name="colorSecondary">#8F8CE7</color>-->
+<!--    <color name="colorAccent">#9F9CDC</color>-->
+    <color name="colorAccent">#9490f5</color>
+    <color name="colorSecondary">#9490f5</color>
+
+    <color name="textview_bg_for_list">#c9c7f0</color>
 
     <color name="success">#008000</color>
     <color name="error">#CD1C18</color>

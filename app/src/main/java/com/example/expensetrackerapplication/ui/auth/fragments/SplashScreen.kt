@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.SplashScreenBinding
+import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 import com.example.expensetrackerapplication.viewmodel.SplashViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,6 +39,8 @@ class SplashScreen : Fragment() {
     private lateinit var topAnimation : Animation
     private lateinit var bottomAnimation : Animation
 
+    val settingsViewModel : SettingsViewModel  by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +60,7 @@ class SplashScreen : Fragment() {
 //        viewModel= SplashViewModel(requireContext())
 
         splashDataBinding.splashViewModel=viewModel
-        splashDataBinding.lifecycleOwner=this
+        splashDataBinding.lifecycleOwner=viewLifecycleOwner
 
 
         topAnimation= AnimationUtils.loadAnimation(requireContext(), R.anim.top_animation)
@@ -66,6 +70,11 @@ class SplashScreen : Fragment() {
 //        splashDataBinding.idAppName.animation=topAnimation
 
         lifecycleScope.launchWhenStarted {
+//            settingsViewModel.fnInsertCategories()
+            settingsViewModel.fnGetAllCategories()
+        }
+
+        lifecycleScope.launchWhenStarted {
             viewModel.navigateToLogin.collect { shouldNavigate ->
                 if(shouldNavigate)
                 {
@@ -73,6 +82,7 @@ class SplashScreen : Fragment() {
                 }
             }
         }
+
 
         // Inflate the layout for this fragment
         return splashDataBinding.root

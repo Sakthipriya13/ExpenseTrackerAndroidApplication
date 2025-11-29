@@ -47,7 +47,7 @@ class Login : Fragment() {
 
         loginDataBinding= DataBindingUtil.inflate(inflater,R.layout.login,container,false)
         loginDataBinding.loginViewModel=loginViewModel
-        loginDataBinding.lifecycleOwner=this
+        loginDataBinding.lifecycleOwner=viewLifecycleOwner
 
 
         loginViewModel.loginStatus.observe(viewLifecycleOwner){ ob ->

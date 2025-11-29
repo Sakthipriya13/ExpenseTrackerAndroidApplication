@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel(application: Application) : AndroidViewModel(application)
+class LoginViewModel( application: Application) : AndroidViewModel(application)
 {
     var userRepository : UserRepository
     init {
