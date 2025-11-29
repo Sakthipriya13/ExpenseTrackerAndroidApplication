@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:text="@string/date"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,6 +78,7 @@
             android:layout_height="wrap_content"
             android:text="@string/expense"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/idLNewExpense"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -111,6 +113,7 @@
             android:layout_height="wrap_content"
             android:text="@string/category"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/idLCategories"
@@ -149,6 +152,7 @@
             android:layout_height="wrap_content"
             android:text="@string/payment_type"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idLCategories"
@@ -163,7 +167,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idPaymentTypeLabel"
-            app:layout_constraintBottom_toTopOf="@+id/idRemarksLabel">
+            app:layout_constraintBottom_toTopOf="@+id/idLPaymentType2">
 
             <RadioButton
                 android:id="@+id/idCashPayment"
@@ -173,7 +177,7 @@
                 android:drawableStart="@drawable/cash"
                 android:drawablePadding="5dp"
                 android:textSize="20sp"
-                android:text="cash" />
+                android:text="@string/cash" />
             <RadioButton
                 android:id="@+id/idCardPayment"
                 android:layout_width="wrap_content"
@@ -181,7 +185,7 @@
                 android:drawableStart="@drawable/card"
                 android:drawablePadding="5dp"
                 android:textSize="20sp"
-                android:text="card" />
+                android:text="@string/card" />
 
         </RadioGroup>
 
@@ -205,7 +209,7 @@
                 android:drawableStart="@drawable/upi"
                 android:drawablePadding="5dp"
                 android:textSize="20sp"
-                android:text="upi  " />
+                android:text="@string/upi" />
             <RadioButton
                 android:id="@+id/idSplitPayment"
                 android:layout_width="wrap_content"
@@ -213,7 +217,7 @@
                 android:drawableStart="@drawable/split"
                 android:drawablePadding="5dp"
                 android:textSize="20sp"
-                android:text="spilt" />
+                android:text="@string/split" />
         </RadioGroup>
 
 <!--        <com.google.android.material.textfield.TextInputLayout-->
@@ -242,6 +246,7 @@
             android:layout_height="wrap_content"
             android:text="@string/remarks"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idLPaymentType2"
