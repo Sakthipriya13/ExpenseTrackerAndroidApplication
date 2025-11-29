@@ -64,7 +64,6 @@
             android:layout_height="wrap_content"
             app:flow_horizontalStyle="spread_inside"
             app:flow_horizontalGap="5dp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idDateLabel"
@@ -161,14 +160,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idPaymentTypeLabel"
-            app:layout_constraintBottom_toTopOf="@+id/idLPaymentType2">
+            app:layout_constraintBottom_toTopOf="@+id/idRemarksLabel">
 
             <RadioButton
-                android:id="@+id/idCashpayment"
+                android:id="@+id/idCashPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
@@ -177,10 +175,9 @@
                 android:textSize="20sp"
                 android:text="cash" />
             <RadioButton
-                android:id="@+id/idCardpayment"
+                android:id="@+id/idCardPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:drawableStart="@drawable/card"
                 android:drawablePadding="5dp"
                 android:textSize="20sp"
@@ -194,7 +191,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idLPaymentType1"
@@ -202,7 +198,7 @@
 
 
             <RadioButton
-                android:id="@+id/idUpipayment"
+                android:id="@+id/idUpiPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
@@ -211,7 +207,7 @@
                 android:textSize="20sp"
                 android:text="upi  " />
             <RadioButton
-                android:id="@+id/idSplitpayment"
+                android:id="@+id/idSplitPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/split"
@@ -278,6 +274,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
