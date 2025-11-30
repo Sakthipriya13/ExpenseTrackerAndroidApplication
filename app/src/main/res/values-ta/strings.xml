@@ -72,4 +72,9 @@
 
     <string name="add">சேர்க்க‌</string>
 
+    <string name="cash">பணம்</string>
+    <string name="upi">யுபிஐ</string>
+    <string name="card">அட்டை</string>
+    <string name="split">பகிர்</string>
+
 </resources>

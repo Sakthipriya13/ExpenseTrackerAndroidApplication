@@ -69,4 +69,9 @@
     </string-array>
     <string name="add">ADD</string>
 
+    <string name="cash">Cash</string>
+    <string name="upi">Upi</string>
+    <string name="card">Card</string>
+    <string name="split">Split</string>
+
 </resources>
