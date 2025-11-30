@@ -62,7 +62,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textColorLink="#039BE5"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -86,9 +86,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:cursorColor="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:cursorColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary"
                 app:startIconDrawable="@drawable/user">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -114,10 +114,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:cursorColor="@color/colorPrimary"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:cursorColor="?attr/colorPrimary"
                 app:endIconMode="password_toggle"
-                app:hintTextColor="@color/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary"
                 app:startIconDrawable="@drawable/lock">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -150,8 +150,8 @@
                     android:gravity="center"
                     android:onClick="@{() -> loginViewModel.fnClearValues()}"
                     android:text="@string/clear"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorLink="@color/colorPrimary"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorLink="?attr/colorPrimary"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -202,10 +202,10 @@
             <!--                    android:gravity="center"-->
             <!--                    android:layout_gravity="center"-->
             <!--                    android:text="@string/login"-->
-            <!--                    android:textColor="@color/colorPrimary"-->
+            <!--                    android:textColor="?attr/colorPrimary"-->
             <!--                    android:textStyle="normal"-->
             <!--                    android:textSize="20sp"-->
-            <!--                    android:textColorLink="@color/colorPrimary" />-->
+            <!--                    android:textColorLink="?attr/colorPrimary" />-->
 
 
             <View

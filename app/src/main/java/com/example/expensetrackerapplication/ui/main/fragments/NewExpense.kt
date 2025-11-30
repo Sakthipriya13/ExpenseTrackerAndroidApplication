@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.databinding.NewExpenseBinding
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
@@ -41,7 +42,7 @@ class NewExpense : Fragment() {
     val newExpenseViewModel : NewExpenseViewModel by viewModels()
 
     val settingsViewModel : SettingsViewModel by activityViewModels()
-
+    var categoryList =emptyList<CategoryEntitty>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,11 +91,12 @@ class NewExpense : Fragment() {
         }
 
         settingsViewModel.categoryList.observe(viewLifecycleOwner){ list ->
-            val categoryNameList = list.map {it.categoryName}
+            categoryList = list
+            val categoryNameList= list.map {it.categoryName}
 //            val categoryNameList = mutableListOf<String?>("Food","Vegtables","Transportation","Education")
             val autoCompleteAdapter= ArrayAdapter(
                 requireContext(),
-                R.layout.text_view_for_list,
+                android.R.layout.simple_dropdown_item_1line,
                 categoryNameList)
 
             newExpenseBinding.idDCategories.setAdapter(autoCompleteAdapter)
@@ -106,11 +108,12 @@ class NewExpense : Fragment() {
             newExpenseBinding.idDCategories.showDropDown()
         }
 
-
-
-
-
-
+        newExpenseBinding.idDCategories.setOnItemClickListener { parent,_,position,_ ->
+            val selected = parent.getItemAtPosition(position).toString()
+            val selectedCategory=categoryList.get(position)
+            newExpenseViewModel._selectedCategory.value=selectedCategory.categoryId
+            Log.v("SELECTED CATEGORY POSITION","Selected category Position & Name: $selectedCategory.categoryId & $selectedCategory.categoryName")
+        }
 
         return newExpenseBinding.root
     }

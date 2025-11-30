@@ -73,5 +73,6 @@
     <string name="upi">Upi</string>
     <string name="card">Card</string>
     <string name="split">Split</string>
+    <string name="other">Other</string>
 
 </resources>

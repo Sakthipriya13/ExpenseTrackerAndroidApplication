@@ -64,10 +64,10 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="30sp"
-                android:textColorLink="@color/colorPrimary" />
+                android:textColorLink="?attr/colorPrimary" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"/>
@@ -82,9 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@drawable/user"
-                app:cursorColor="@color/colorPrimary"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary">
+                app:cursorColor="?attr/colorPrimary"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/idUserName"
@@ -110,9 +110,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@drawable/call"
-                app:cursorColor="@color/colorPrimary"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary">
+                app:cursorColor="?attr/colorPrimary"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/idMobileNo"
@@ -133,9 +133,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@drawable/email"
-                app:cursorColor="@color/colorPrimary"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary">
+                app:cursorColor="?attr/colorPrimary"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/idEmail"
                     android:layout_width="match_parent"
@@ -155,9 +155,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@drawable/lock"
-                app:cursorColor="@color/colorPrimary"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary">
+                app:cursorColor="?attr/colorPrimary"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/idPassword"
@@ -187,8 +187,8 @@
                     android:gravity="center"
                     android:text="@string/clear"
                     android:onClick="@{() -> signUpViewModel.fnClearInputs()}"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorLink="@color/colorPrimary"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorLink="?attr/colorPrimary"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -220,8 +220,8 @@
 <!--                android:layout_gravity="center"-->
 <!--                android:gravity="center"-->
 <!--                android:text="@string/signup"-->
-<!--                android:textColor="@color/colorPrimary"-->
-<!--                android:textColorLink="@color/colorPrimary"-->
+<!--                android:textColor="?attr/colorPrimary"-->
+<!--                android:textColorLink="?attr/colorPrimary"-->
 <!--                android:textSize="20sp"-->
 <!--                android:textStyle="normal" />-->
             <View
