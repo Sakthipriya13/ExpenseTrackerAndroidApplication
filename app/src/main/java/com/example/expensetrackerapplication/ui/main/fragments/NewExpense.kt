@@ -1,6 +1,9 @@
 package com.example.expensetrackerapplication.ui.main.fragments
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -9,16 +12,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.databinding.NewExpenseBinding
+import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
+import com.google.android.material.textfield.TextInputEditText
 import com.google.type.Date
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -63,9 +73,12 @@ class NewExpense : Fragment() {
         newExpenseBinding.lifecycleOwner=viewLifecycleOwner
 
         newExpenseViewModel._selectedDate.value=fnGetCurrentDate()
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                settingsViewModel.fnGetAllCategories()
+            }
 //            settingsViewModel.fnInsertCategories()
-            settingsViewModel.fnGetAllCategories()
+
         }
 
 
@@ -103,16 +116,58 @@ class NewExpense : Fragment() {
 
         }
 
-        newExpenseBinding.idDCategories.setOnClickListener {
-            Log.v("CATEGORY LIST","Category List: "+settingsViewModel.categoryList.value)
-            newExpenseBinding.idDCategories.showDropDown()
-        }
-
         newExpenseBinding.idDCategories.setOnItemClickListener { parent,_,position,_ ->
             val selected = parent.getItemAtPosition(position).toString()
             val selectedCategory=categoryList.get(position)
+
+            val selectedCategoryName=selectedCategory.categoryName
+            val selectedCategoryId=selectedCategory.categoryId
+
             newExpenseViewModel._selectedCategory.value=selectedCategory.categoryId
-            Log.v("SELECTED CATEGORY POSITION","Selected category Position & Name: $selectedCategory.categoryId & $selectedCategory.categoryName")
+            Log.v("SELECTED CATEGORY POSITION","Selected category Position & Name: $selectedCategoryName & $selectedCategoryId")
+        }
+
+
+
+        newExpenseBinding.idSplitPayment.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked)
+            {
+                newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_SPLIT
+
+                val view = layoutInflater.inflate(R.layout.split_dialogue,null)
+                var amtInCash = view.findViewById<TextInputEditText>(R.id.idEAmtInCash)
+                var amtInCard = view.findViewById<TextInputEditText>(R.id.idEAmtInCard)
+                var amtInUpi = view.findViewById<TextInputEditText>(R.id.idEAmtInUpi)
+
+                var btnOk=view.findViewById<Button>(R.id.idBtnOk)
+                var btnCancel=view.findViewById<TextView>(R.id.idBtnCancel)
+
+                var dialog = AlertDialog.Builder(requireContext())
+                    .setView(view)
+                    .setCancelable(false)
+                    .create()
+
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.show()
+
+                btnOk.setOnClickListener {
+                    newExpenseViewModel._amtInCash.value=amtInCash.text.toString().toFloatOrNull() ?:0.0f
+                    newExpenseViewModel._amtInCard.value=amtInCard.text.toString().toFloatOrNull() ?:0.0f
+                    newExpenseViewModel._amtInUpi.value=amtInUpi.text.toString().toFloatOrNull() ?:0.0f
+                    Log.v("AMT IN CASH","Amt In Cash: ${newExpenseViewModel.amtInCash.value}")
+                    Log.v("AMT IN CARD","Amt In Card: ${newExpenseViewModel.amtInCard.value}")
+                    Log.v("AMT IN UPI","Amt In Upi: ${newExpenseViewModel.amtInUpi.value}")
+
+                    dialog.dismiss()
+                }
+
+                btnCancel.setOnClickListener {
+                    newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_CASH
+                    dialog.dismiss()
+                }
+
+            }
+
         }
 
         return newExpenseBinding.root

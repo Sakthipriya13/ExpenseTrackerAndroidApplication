@@ -133,7 +133,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
-
             <LinearLayout
                 android:id="@+id/idLayout"
                 android:layout_width="match_parent"
@@ -148,8 +147,8 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
-                    android:onClick="@{() -> loginViewModel.fnClearValues()}"
                     android:text="@string/clear"
+                    android:onClick="@{() -> loginViewModel.fnClearValues()}"
                     android:textColor="?attr/colorPrimary"
                     android:textColorLink="?attr/colorPrimary"
                     android:textSize="25sp"
@@ -160,9 +159,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_background"
-                    android:text="@string/login"
                     android:onClick="@{() -> loginViewModel.fnCheckUser()}"
+                    android:background="@drawable/btn_background"
+                    android:text= "@string/login"
                     android:textSize="25sp" />
                 <!--                <ImageView-->
                 <!--                    android:id="@+id/nextButton"-->
@@ -176,6 +175,48 @@
                 <!--                    app:tint="@color/white" />-->
 
             </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/idLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/idCancel"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="start"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="?attr/selectableItemBackground"-->
+<!--                    android:gravity="center"-->
+<!--                    android:onClick="@{() -> loginViewModel.fnClearValues()}"-->
+<!--                    android:text="@string/clear"-->
+<!--                    android:textColor="?attr/colorPrimary"-->
+<!--                    android:textColorLink="?attr/colorPrimary"-->
+<!--                    android:textSize="25sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/idLogin"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/btn_background"-->
+<!--                    android:text="@string/login"-->
+<!--                    android:onClick="@{() -> loginViewModel.fnCheckUser()}"-->
+<!--                    android:textSize="25sp" />-->
+<!--                &lt;!&ndash;                <ImageView&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:id="@+id/nextButton"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_width="100dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_height="100dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_gravity="end"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:background="@drawable/btn_background"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:padding="12dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:src="@drawable/arrow_forward"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:contentDescription="@string/next"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    app:tint="@color/white" />&ndash;&gt;-->
+
+<!--            </LinearLayout>-->
 
 
             <!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->

@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.expensetrackerapplication.data.dao.CategoryDao
+import com.example.expensetrackerapplication.data.dao.ExpenseDao
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.entity.UserEntity
@@ -13,6 +14,9 @@ import com.example.expensetrackerapplication.data.entity.UserEntity
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun CategoryDao() : CategoryDao
+
+    abstract fun ExpenseDao() : ExpenseDao
+
     companion object{
         @Volatile
         private var INSTANCE: AppDatabase? = null

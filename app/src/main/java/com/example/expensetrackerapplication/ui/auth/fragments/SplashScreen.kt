@@ -69,10 +69,10 @@ class SplashScreen : Fragment() {
         splashDataBinding.idAppLogo.animation=topAnimation
 //        splashDataBinding.idAppName.animation=topAnimation
 
-        lifecycleScope.launchWhenStarted {
+//        lifecycleScope.b launchWhenStarted {
 //            settingsViewModel.fnInsertCategories()
-            settingsViewModel.fnGetAllCategories()
-        }
+//            settingsViewModel.fnGetAllCategories()
+//        }
 
         lifecycleScope.launchWhenStarted {
             viewModel.navigateToLogin.collect { shouldNavigate ->
