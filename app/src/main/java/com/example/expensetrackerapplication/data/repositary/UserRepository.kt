@@ -25,7 +25,7 @@ class UserRepository(var userDao: UserDao)
 
     }
 
-    suspend fun fnGetUserDetailsBasedOnUserName(name: String?, password : String?): MutableList<UserEntity>
+    suspend fun fnGetUserDetailsBasedOnUserName(name: String?, password : String?): List<UserEntity>
     {
         return try {
             userDao.fnGetUserBasedOnUserName(name,password)

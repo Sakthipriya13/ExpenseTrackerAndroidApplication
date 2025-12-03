@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -20,17 +22,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.databinding.NewExpenseBinding
 import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.ui.main.adapter.CategoryAdapter
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 import com.google.android.material.textfield.TextInputEditText
-import com.google.type.Date
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +74,7 @@ class NewExpense : Fragment() {
         newExpenseBinding.newExpenseViewModel=newExpenseViewModel
         newExpenseBinding.lifecycleOwner=viewLifecycleOwner
 
-        newExpenseViewModel._selectedDate.value=fnGetCurrentDate()
+//        newExpenseViewModel._selectedDate.value=fnGetCurrentDate()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 settingsViewModel.fnGetAllCategories()
@@ -106,33 +108,62 @@ class NewExpense : Fragment() {
         settingsViewModel.categoryList.observe(viewLifecycleOwner){ list ->
             categoryList = list
             val categoryNameList= list.map {it.categoryName}
-//            val categoryNameList = mutableListOf<String?>("Food","Vegtables","Transportation","Education")
             val autoCompleteAdapter= ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_dropdown_item_1line,
                 categoryNameList)
 
-            newExpenseBinding.idDCategories.setAdapter(autoCompleteAdapter)
+//            newExpenseBinding.idDCategories.setAdapter(autoCompleteAdapter)
 
         }
 
-        newExpenseBinding.idDCategories.setOnItemClickListener { parent,_,position,_ ->
-            val selected = parent.getItemAtPosition(position).toString()
-            val selectedCategory=categoryList.get(position)
+//        newExpenseBinding.idDCategories.setOnItemClickListener { parent,_,position,_ ->
+//            val selected = parent.getItemAtPosition(position).toString()
+//            var selectedCategory=categoryList.get(position)
+//            Log.v("SELECTED CATE ITEM","Selected Cate Item: $selectedCategory")
+//            Log.v("SELECTED CATE POS","Selected Cate Pos: $position")
+//            val selectedCategoryName=selectedCategory.categoryName
+//            val selectedCategoryId=selectedCategory.categoryId
+//
+//            newExpenseViewModel._selectedCategoryId.value=selectedCategory.categoryId
+//            newExpenseViewModel._selectedCategoryName.value=selectedCategory.categoryName
+//            newExpenseBinding.idDCategories.setText(selected)
+//            Log.v("SELECTED CATEGORY POSITION","Selected category Position & Name: $selectedCategoryName & $selectedCategoryId")
+//        }
 
-            val selectedCategoryName=selectedCategory.categoryName
-            val selectedCategoryId=selectedCategory.categoryId
 
-            newExpenseViewModel._selectedCategory.value=selectedCategory.categoryId
-            Log.v("SELECTED CATEGORY POSITION","Selected category Position & Name: $selectedCategoryName & $selectedCategoryId")
+        newExpenseBinding.idCategoryList.setOnClickListener {
+
+
+                val listItems = listOf("Apple", "Banana", "Orange", "Mango")
+
+                val popupView = layoutInflater.inflate(R.layout.category_list, null)
+                val rv = popupView.findViewById<RecyclerView>(R.id.idCateListView)
+
+                val popupWindow = PopupWindow(
+                    popupView,
+                    newExpenseBinding.idCategoryList.width,   // same width as ImageView
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    true
+                )
+
+                rv.layoutManager = LinearLayoutManager(requireContext())
+                rv.adapter = CategoryAdapter(listItems)
+
+                popupWindow.elevation = 20f
+                popupWindow.isOutsideTouchable = true
+                popupWindow.showAsDropDown(newExpenseBinding.idCategoryList, 0, 0)
+
+
         }
-
 
 
         newExpenseBinding.idSplitPayment.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked)
             {
+                Log.v("PAYMENT TYPE","Payment Type: SPLIT")
                 newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_SPLIT
+                newExpenseViewModel._selectedpaymentType.value=R.id.idSplitPayment
 
                 val view = layoutInflater.inflate(R.layout.split_dialogue,null)
                 var amtInCash = view.findViewById<TextInputEditText>(R.id.idEAmtInCash)
@@ -173,13 +204,6 @@ class NewExpense : Fragment() {
         return newExpenseBinding.root
     }
 
-    private fun fnGetCurrentDate() : String {
-
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val currentDate = sdf.format(java.util.Date())
-
-        return currentDate
-    }
 
     companion object {
         /**
@@ -201,3 +225,22 @@ class NewExpense : Fragment() {
             }
     }
 }
+
+//private fun NewExpense.fnShowCategoryList(it: View) {
+//    val inflater = LayoutInflater.from(requireContext())
+//    val popupView = inflater.inflate(R.layout.category_list, null)
+//
+//
+//
+//    val popupWindow = PopupWindow(
+//        popupView,
+//        LinearLayout.LayoutParams.WRAP_CONTENT,
+//        LinearLayout.LayoutParams.WRAP_CONTENT,
+//        true
+//    )
+//
+//    popupWindow.elevation = 8f
+//
+//    // Show below the button
+//    popupWindow.showAsDropDown(it)
+//}

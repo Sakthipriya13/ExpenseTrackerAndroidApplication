@@ -1,4 +1,8 @@
 package com.example.expensetrackerapplication.data.repositary
 
-class ExpenseRepository {
+import com.example.expensetrackerapplication.data.dao.ExpenseDao
+
+class ExpenseRepository(val expenseDao: ExpenseDao)
+{
+
 }

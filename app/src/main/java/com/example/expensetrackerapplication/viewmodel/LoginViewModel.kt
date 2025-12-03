@@ -29,8 +29,8 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
     var _userPassword = MutableLiveData<String?>("")
     var userPassword : LiveData<String?> = _userPassword
 
-    var _userDetailList = mutableListOf<UserEntity>()
-    var userDetailList : List<UserEntity> = _userDetailList
+    var _userDetailList = MutableLiveData<List<UserEntity>>()
+    var userDetailList : LiveData<List<UserEntity>>  = _userDetailList
 
     var _loginStatus = MutableLiveData<Boolean>(false)
     var loginStatus : LiveData<Boolean> = _loginStatus
@@ -43,8 +43,8 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             if(userName.value?.isNotEmpty() == true && userPassword.value?.isNotEmpty() == true)
             {
-                _userDetailList=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
-                _loginStatus.value=_userDetailList.isNotEmpty()
+                _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
+                _loginStatus.value= _userDetailList.value?.isNotEmpty()
                 Log.v("USER DETAILS","User Details: $userDetailList")
             }
             else

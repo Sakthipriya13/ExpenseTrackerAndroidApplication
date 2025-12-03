@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ExpenseTable")
 data class ExpenseEntity(
     @PrimaryKey(autoGenerate = true)
-    var expenseId:Int,
+    var expenseId:Int =0,
 
     @ColumnInfo(name = "ExpenseDate")
     var expenseDate : String,

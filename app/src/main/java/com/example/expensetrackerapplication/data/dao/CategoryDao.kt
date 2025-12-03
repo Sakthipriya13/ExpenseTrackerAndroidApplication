@@ -13,5 +13,5 @@ interface CategoryDao {
     suspend fun fnInsertCategories(categoryEntitty: CategoryEntitty) : Long
 
     @Query("Select * from Categories")
-    suspend fun fnGetAllCategories() : MutableList<CategoryEntitty>
+    suspend fun fnGetAllCategories() : List<CategoryEntitty>
 }

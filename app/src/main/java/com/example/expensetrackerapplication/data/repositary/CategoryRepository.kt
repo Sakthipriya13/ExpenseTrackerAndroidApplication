@@ -28,7 +28,7 @@ class CategoryRepository(val categoryDao: CategoryDao)
 
     }
 
-    suspend fun fnGetAllCategoriesFromDb() : MutableList<CategoryEntitty>{
+    suspend fun fnGetAllCategoriesFromDb() : List<CategoryEntitty>{
         try {
             var categoryList = categoryDao.fnGetAllCategories()
             return categoryList
