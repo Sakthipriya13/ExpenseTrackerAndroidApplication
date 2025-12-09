@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.LoginBinding
+import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.LoginViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -49,22 +50,45 @@ class Login : Fragment() {
         loginDataBinding.loginViewModel=loginViewModel
         loginDataBinding.lifecycleOwner=viewLifecycleOwner
 
+        loginViewModel.userNameEmptyStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("User Name Are An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
+
+        loginViewModel.userPasswordEmptyStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("User Password Are An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
+
+        loginViewModel.bothNameAndPasswordEmptyStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("User Name & Password Were An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
 
         loginViewModel.loginStatus.observe(viewLifecycleOwner){ ob ->
             if(ob)
             {
+                fnShowMessage("Successfully Login",requireContext(),R.drawable.success_bg)
                 findNavController().navigate(R.id.action_login_to_main)
             }
             else
             {
                 Log.e("LOGIN STATUS", "Login Status Value Was False")
+                fnShowMessage("User Not Found,Enter Valid User ",requireContext(),R.drawable.error_bg)
+                loginViewModel._userName.value=""
+                loginViewModel._userPassword.value=""
+                loginDataBinding.idUserName.isFocusable=true
+                loginDataBinding.idUserName.requestFocus()
             }
         }
+
 
         loginViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
             if(ob)
             {
-
                 findNavController().navigate(R.id.action_login_to_signup)
             }
             else
@@ -73,7 +97,6 @@ class Login : Fragment() {
             }
         }
 
-        // Inflate the layout for this fragment
         return loginDataBinding.root
     }
 

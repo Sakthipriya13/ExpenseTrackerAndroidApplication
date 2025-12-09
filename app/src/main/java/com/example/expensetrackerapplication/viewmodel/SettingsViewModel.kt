@@ -26,8 +26,19 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     {
         viewModelScope.launch {
             try{
-                var categories = mutableListOf<String?>("Vegtables","HouseRent","Grogeries","Savings","Travel","Health","Entertainment","Education")
+                var defaultCategories = listOf<String?>("Food","Travel","Health")
+                var categories = mutableListOf<String?>("HouseRent","Grogeries","Savings","Entertainment","Education")
 
+                for(i in defaultCategories)
+                {
+                    var categoryEntitty = CategoryEntitty(0,i)
+                    var result = categoryRepository.fnInsertCategoriesToDb(
+                        categoryEntitty
+                    )
+
+                    Log.v("INSERT STAUS","Insert Status: "+result)
+
+                }
                 for(i in categories)
                 {
                     var categoryEntitty = CategoryEntitty(0,i)

@@ -38,19 +38,49 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
     var _actionGoToSignUp = MutableLiveData<Boolean>()
     var actionGoToSignUp : LiveData<Boolean> = _actionGoToSignUp
 
+    var _userNameEmptyStatus = MutableLiveData<Boolean>(false)
+    var userNameEmptyStatus : LiveData<Boolean> = _userNameEmptyStatus
+
+    var _userPasswordEmptyStatus = MutableLiveData<Boolean>(false)
+    var userPasswordEmptyStatus : LiveData<Boolean> = _userPasswordEmptyStatus
+
+    var _bothNameAndPasswordEmptyStatus = MutableLiveData<Boolean>(false)
+    var bothNameAndPasswordEmptyStatus : LiveData<Boolean> = _bothNameAndPasswordEmptyStatus
+
     fun fnCheckUser()
     {
         viewModelScope.launch {
-            if(userName.value?.isNotEmpty() == true && userPassword.value?.isNotEmpty() == true)
-            {
-                _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
-                _loginStatus.value= _userDetailList.value?.isNotEmpty()
-                Log.v("USER DETAILS","User Details: $userDetailList")
+            when{
+
+                userName.value.isNullOrBlank() &&  userPassword.value.isNullOrBlank() -> {
+                    _bothNameAndPasswordEmptyStatus.value=true
+                }
+
+                userName.value.isNullOrBlank()-> {
+                    _userNameEmptyStatus.value=true
+                }
+
+                userPassword.value.isNullOrBlank()-> {
+                    _userPasswordEmptyStatus.value=true
+                }
+
+                else -> {
+                    _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
+                    _loginStatus.value= _userDetailList.value?.isNotEmpty()
+                    Log.v("USER DETAILS","User Details: ${userDetailList.value}")
+                }
+
             }
-            else
-            {
-                _loginStatus.value=false
-            }
+//            if(userName.value?.isNotEmpty() == true && userPassword.value?.isNotEmpty() == true)
+//            {
+//                _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
+//                _loginStatus.value= _userDetailList.value?.isNotEmpty()
+//                Log.v("USER DETAILS","User Details: $userDetailList")
+//            }
+//            else
+//            {
+//                _loginStatus.value=false
+//            }
         }
     }
 

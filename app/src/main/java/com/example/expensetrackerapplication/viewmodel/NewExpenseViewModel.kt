@@ -5,13 +5,24 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.data.database.AppDatabase
+import com.example.expensetrackerapplication.data.entity.ExpenseEntity
+import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 import com.example.expensetrackerapplication.`object`.Global
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class NewExpenseViewModel(application: Application) : AndroidViewModel(application)
 {
+    var expenseRepository : ExpenseRepository
+
+    init{
+        var expenseDao = AppDatabase.getdatabase(application).ExpenseDao()
+        expenseRepository = ExpenseRepository(expenseDao)
+    }
 
     var _selectedDate = MutableLiveData<String?>(fnGetCurrentDate() )
     var selectedDate : LiveData<String?> = _selectedDate
@@ -25,11 +36,12 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     var _selectedCategoryName = MutableLiveData<String?>()
     var selectedCategoryName : LiveData<String?> = _selectedCategoryName
 
-    var _paymentType = MutableLiveData<Int>(0)
+    var _paymentType = MutableLiveData<Int>()
     var paymentType : LiveData<Int> = _paymentType
 
-    var _selectedpaymentType = MutableLiveData<Int>(R.id.idCashPayment)
-    var selectedpaymentType : LiveData<Int> = _selectedpaymentType
+    // Payment type selected in RadioGroup
+    val _selectedpaymentType = MutableLiveData<Int?>()   // IMPORTANT: initially null
+    val selectedpaymentType: LiveData<Int?> = _selectedpaymentType
 
 
     var _expenseRemarks = MutableLiveData<String?>()
@@ -48,26 +60,104 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     var amtInOthers : LiveData<Float> = _amtInOthers
 
 
+    var _valueMissingError = MutableLiveData<String?>()
+    var valueMissingError : LiveData<String?> = _valueMissingError
 
+    var _insertStatus = MutableLiveData<Boolean>()
+    var insertStatus : LiveData<Boolean> = _insertStatus
+
+    var _showSplitDialog = MutableLiveData<Boolean>()
+    var showSplitDialog : LiveData<Boolean> = _showSplitDialog
 
     fun fnClearViews(){
         _selectedDate.value=fnGetCurrentDate()
         _expenseAmt.value=""
-        _selectedCategoryId.value=0
+        _selectedCategoryId.value=-1
         _selectedCategoryName.value=""
         _paymentType.value= Global.PAYMENT_TYPE_CASH
         _selectedpaymentType.value= R.id.idCashPayment
         _expenseRemarks.value=""
     }
 
+    fun fnAddExpenseToDb()
+    {
+        if((selectedDate.value.isNullOrBlank()) && (expenseAmt.value.isNullOrBlank()) &&
+            (selectedCategoryId.value ==0 || selectedCategoryName.value.isNullOrBlank()))
+        {
+            _valueMissingError.value = "All fields are empty. Please fill all fields"
+            return
+        }
+        when{
+            selectedDate.value.isNullOrBlank() -> {
+                _valueMissingError.value = "Date Was Missing, So Select Date"
+            }
+
+            expenseAmt.value.equals("0.0f") || expenseAmt.value.isNullOrBlank() -> {
+                _valueMissingError.value = "Expense Amount Was Missing, So Enter Amount"
+            }
+
+            selectedCategoryId.value ==0 || selectedCategoryName.value.isNullOrBlank() -> {
+                 _valueMissingError.value =  "Select Category"
+            }
+
+            else -> fnInsertExpense()
+        }
+    }
+
+    private fun fnInsertExpense() {
+        viewModelScope.launch {
+
+
+            var expenseEntity = ExpenseEntity(
+                expenseId =0,
+                expenseDate = selectedDate.value ?: "",
+                expenseAmt = expenseAmt.value?.toFloatOrNull() ?:0.0f,
+                expenseCategoryId = selectedCategoryId.value ?: -1,
+                expenseCategoryName  = selectedCategoryName.value ?: "",
+                paymentType = paymentType.value ?: Global.PAYMENT_TYPE_CASH,
+                expenseAmtInCash = amtInCash.value ?:0.0f,
+                expenseAmtInCard = amtInCard.value ?:0.0f,
+                expenseAmtInUpi = amtInUpi.value ?:0.0f,
+                expenseAmtInOthers = amtInOthers.value ?:0.0f,
+                expenseRemarks = expenseRemarks.value ?: "",
+                expenseStatus = Global.EXPENSE_STATUS_ADDED
+            )
+
+            var result = expenseRepository.fnInsertExpenseDatasToDb(expenseEntity)
+            if(result)
+            {
+                _insertStatus.value = true
+                fnClearViews()
+            }
+            else{
+                _insertStatus.value = false
+            }
+        }
+    }
+
+    // Set default ONLY during the very first fragment open
+    fun applyDefaultIfFirstOpen() {
+        if (_selectedpaymentType.value == null || _selectedpaymentType.value != R.id.idCashPayment) {  // only once
+            _selectedpaymentType.value = R.id.idCashPayment
+            _paymentType.value = Global.PAYMENT_TYPE_CASH
+        }
+    }
 
     fun fnCashPayment(){
         _paymentType.value=Global.PAYMENT_TYPE_CASH
         _selectedpaymentType.value= R.id.idCashPayment
         _amtInCash.value = expenseAmt.value?.toFloatOrNull() ?:0.0f
         Log.v("PAYMENT TYPE","Payment Type: CASH")
+        Log.v("DEFAULT PAYMENT TYPE","Default Payment Type: ${amtInCash.value}")
     }
-
+    fun fnSplitPayment(){
+        _paymentType.value=Global.PAYMENT_TYPE_SPLIT
+        _selectedpaymentType.value= R.id.idSplitPayment
+        _showSplitDialog.value = true
+//        _amtInCash.value = expenseAmt.value?.toFloatOrNull() ?:0.0f
+        Log.v("PAYMENT TYPE","Payment Type: SPLIT")
+//        Log.v("DEFAULT PAYMENT TYPE","Default Payment Type: ${amtInCash.value}")
+    }
     fun fnCardPayment(){
         _paymentType.value=Global.PAYMENT_TYPE_CARD
         _selectedpaymentType.value= R.id.idCardPayment

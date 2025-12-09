@@ -18,6 +18,12 @@ data class ExpenseEntity(
     @ColumnInfo(name="ExpenseCategoryId")
     var expenseCategoryId: Int,
 
+    @ColumnInfo(name="ExpenseCategoryName")
+    var expenseCategoryName: String?,
+
+    @ColumnInfo(name="PaymentType")
+    var paymentType: Int,
+
     @ColumnInfo(name="ExpenseAmtInCash")
     var expenseAmtInCash: Float,
 

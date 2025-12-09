@@ -9,6 +9,8 @@
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorSecondary">@color/colorSecondary</item>
         <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="successBackground">@color/successBackground</item>
+        <item name="errorBackground">@color/errorBackground</item>
     </style>
 
     <style name="FabCustomShape" parent="">

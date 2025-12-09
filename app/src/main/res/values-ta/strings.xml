@@ -43,7 +43,7 @@
     <string name="expense">செலவு</string>
     <string name="category">செலவு வகை</string>
     <string name="payment_type">கட்டண வகை</string>
-    <string name="remarks">கருத்துகள்</string>
+    <string name="remarks">கருத்துகள்(OP)</string>
 
     <string name="select_expense_category">செலவுப் பிரிவை தேர்ந்தெடுக்கவும்</string>
     <string name="select_paymenttype">கட்டண வகையைத் தேர்ந்தெடுக்கவும்</string>

@@ -13,8 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -22,13 +20,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.databinding.NewExpenseBinding
 import com.example.expensetrackerapplication.`object`.Global
-import com.example.expensetrackerapplication.ui.main.adapter.CategoryAdapter
+import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -74,17 +70,19 @@ class NewExpense : Fragment() {
         newExpenseBinding.newExpenseViewModel=newExpenseViewModel
         newExpenseBinding.lifecycleOwner=viewLifecycleOwner
 
-//        newExpenseViewModel._selectedDate.value=fnGetCurrentDate()
+        // Apply default only on first load
+//        newExpenseViewModel.applyDefaultIfFirstOpen()
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 settingsViewModel.fnGetAllCategories()
             }
-//            settingsViewModel.fnInsertCategories()
-
         }
 
-
-
+//        newExpenseViewModel.expenseAmt.observe(viewLifecycleOwner){
+//
+//            Log.v("DEFAULT PAYMENT TYPE","Default Payment Type: ${newExpenseViewModel.amtInCash}")
+//        }
 
         newExpenseBinding.idCalendarButton.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -101,107 +99,105 @@ class NewExpense : Fragment() {
             datePickerDialog.show()
         }
 
-        newExpenseBinding.idAdd.setOnClickListener {
-            Log.v("Expense AMt","Expense Amt: "+newExpenseViewModel.expenseAmt.value)
-        }
-
         settingsViewModel.categoryList.observe(viewLifecycleOwner){ list ->
             categoryList = list
             val categoryNameList= list.map {it.categoryName}
             val autoCompleteAdapter= ArrayAdapter(
                 requireContext(),
-                android.R.layout.simple_dropdown_item_1line,
+                R.layout.dropdown_item,
                 categoryNameList)
 
-//            newExpenseBinding.idDCategories.setAdapter(autoCompleteAdapter)
+            newExpenseBinding.idDCategories.setAdapter(autoCompleteAdapter)
 
         }
 
-//        newExpenseBinding.idDCategories.setOnItemClickListener { parent,_,position,_ ->
-//            val selected = parent.getItemAtPosition(position).toString()
-//            var selectedCategory=categoryList.get(position)
-//            Log.v("SELECTED CATE ITEM","Selected Cate Item: $selectedCategory")
-//            Log.v("SELECTED CATE POS","Selected Cate Pos: $position")
-//            val selectedCategoryName=selectedCategory.categoryName
-//            val selectedCategoryId=selectedCategory.categoryId
-//
-//            newExpenseViewModel._selectedCategoryId.value=selectedCategory.categoryId
-//            newExpenseViewModel._selectedCategoryName.value=selectedCategory.categoryName
-//            newExpenseBinding.idDCategories.setText(selected)
-//            Log.v("SELECTED CATEGORY POSITION","Selected category Position & Name: $selectedCategoryName & $selectedCategoryId")
+        newExpenseBinding.idDCategories.setOnItemClickListener { parent,_,position,_ ->
+            var selectedCategoryName = parent.getItemAtPosition(position).toString()
+            newExpenseViewModel._selectedCategoryName.value=selectedCategoryName
+            newExpenseViewModel._selectedCategoryId.value=categoryList[position].categoryId
+            Log.v("SELECTED CATEGORY ID","Selected Category Id: ${newExpenseViewModel._selectedCategoryId.value}")
+            Log.v("SELECTED CATEGORY NAME","Selected Category Name: ${newExpenseViewModel._selectedCategoryName.value}")
+        }
+
+
+//        newExpenseBinding.idSplitPayment.setOnCheckedChangeListener { _, isChecked ->
+//            if(isChecked)
+//            {
+         newExpenseViewModel.showSplitDialog.observe(viewLifecycleOwner){ isChecked ->
+             if(isChecked){
+                 val view = layoutInflater.inflate(R.layout.split_dialogue,null)
+                 var amtInCash = view.findViewById<TextInputEditText>(R.id.idEAmtInCash)
+                 var amtInCard = view.findViewById<TextInputEditText>(R.id.idEAmtInCard)
+                 var amtInUpi = view.findViewById<TextInputEditText>(R.id.idEAmtInUpi)
+
+                 var btnOk=view.findViewById<Button>(R.id.idBtnOk)
+                 var btnCancel=view.findViewById<TextView>(R.id.idBtnCancel)
+
+                 var dialog = AlertDialog.Builder(requireContext())
+                     .setView(view)
+                     .setCancelable(false)
+                     .create()
+
+                 dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                 dialog.show()
+
+                 btnOk.setOnClickListener {
+                     newExpenseViewModel._amtInCash.value=amtInCash.text.toString().toFloatOrNull() ?:0.0f
+                     newExpenseViewModel._amtInCard.value=amtInCard.text.toString().toFloatOrNull() ?:0.0f
+                     newExpenseViewModel._amtInUpi.value=amtInUpi.text.toString().toFloatOrNull() ?:0.0f
+
+                     val totAmt = newExpenseViewModel._amtInCash.value!! +
+                             newExpenseViewModel._amtInCard.value!! +
+                             newExpenseViewModel._amtInUpi.value!!
+
+                     newExpenseViewModel._expenseAmt.value=totAmt.toString()
+
+
+
+                     Log.v("AMT IN CASH","Amt In Cash: ${newExpenseViewModel.amtInCash.value}")
+                     Log.v("AMT IN CARD","Amt In Card: ${newExpenseViewModel.amtInCard.value}")
+                     Log.v("AMT IN UPI","Amt In Upi: ${newExpenseViewModel.amtInUpi.value}")
+                     Log.v("TOTAL EXPENSE AMT","Total Expense Amt: ${newExpenseViewModel.expenseAmt.value}")
+
+
+                     dialog.dismiss()
+
+//                     Log.v("PAYMENT TYPE","Payment Type: SPLIT")
+//                     newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_SPLIT
+//                     newExpenseViewModel._selectedpaymentType.value=R.id.idSplitPayment
+
+                 }
+
+                 btnCancel.setOnClickListener {
+                     newExpenseViewModel.fnCashPayment()
+                     dialog.dismiss()
+                 }
+             }
+         }
+
+
+//            }
+
 //        }
 
-
-        newExpenseBinding.idCategoryList.setOnClickListener {
-
-
-                val listItems = listOf("Apple", "Banana", "Orange", "Mango")
-
-                val popupView = layoutInflater.inflate(R.layout.category_list, null)
-                val rv = popupView.findViewById<RecyclerView>(R.id.idCateListView)
-
-                val popupWindow = PopupWindow(
-                    popupView,
-                    newExpenseBinding.idCategoryList.width,   // same width as ImageView
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    true
-                )
-
-                rv.layoutManager = LinearLayoutManager(requireContext())
-                rv.adapter = CategoryAdapter(listItems)
-
-                popupWindow.elevation = 20f
-                popupWindow.isOutsideTouchable = true
-                popupWindow.showAsDropDown(newExpenseBinding.idCategoryList, 0, 0)
-
-
+        newExpenseViewModel.valueMissingError.observe(viewLifecycleOwner){ errMsg ->
+            if(!errMsg.isNullOrBlank())
+            {
+                fnShowMessage(errMsg,requireContext(),R.drawable.error_bg)
+            }
         }
 
-
-        newExpenseBinding.idSplitPayment.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked)
-            {
-                Log.v("PAYMENT TYPE","Payment Type: SPLIT")
-                newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_SPLIT
-                newExpenseViewModel._selectedpaymentType.value=R.id.idSplitPayment
-
-                val view = layoutInflater.inflate(R.layout.split_dialogue,null)
-                var amtInCash = view.findViewById<TextInputEditText>(R.id.idEAmtInCash)
-                var amtInCard = view.findViewById<TextInputEditText>(R.id.idEAmtInCard)
-                var amtInUpi = view.findViewById<TextInputEditText>(R.id.idEAmtInUpi)
-
-                var btnOk=view.findViewById<Button>(R.id.idBtnOk)
-                var btnCancel=view.findViewById<TextView>(R.id.idBtnCancel)
-
-                var dialog = AlertDialog.Builder(requireContext())
-                    .setView(view)
-                    .setCancelable(false)
-                    .create()
-
-                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.show()
-
-                btnOk.setOnClickListener {
-                    newExpenseViewModel._amtInCash.value=amtInCash.text.toString().toFloatOrNull() ?:0.0f
-                    newExpenseViewModel._amtInCard.value=amtInCard.text.toString().toFloatOrNull() ?:0.0f
-                    newExpenseViewModel._amtInUpi.value=amtInUpi.text.toString().toFloatOrNull() ?:0.0f
-                    Log.v("AMT IN CASH","Amt In Cash: ${newExpenseViewModel.amtInCash.value}")
-                    Log.v("AMT IN CARD","Amt In Card: ${newExpenseViewModel.amtInCard.value}")
-                    Log.v("AMT IN UPI","Amt In Upi: ${newExpenseViewModel.amtInUpi.value}")
-
-                    dialog.dismiss()
-                }
-
-                btnCancel.setOnClickListener {
-                    newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_CASH
-                    dialog.dismiss()
-                }
+        newExpenseViewModel.insertStatus.observe(viewLifecycleOwner){ status ->
+            if(status){
+                fnShowMessage("Successfully Expense Details Are Stored",requireContext(),R.drawable.success_bg)
+            }
+            else{
+                fnShowMessage("Something Wrong, Expense Details Are Not Stored",requireContext(),R.drawable.error_bg)
 
             }
-
         }
 
-        return newExpenseBinding.root
+        return newExpenseBinding.root 
     }
 
 

@@ -41,7 +41,7 @@
     <string name="expense">EXPENSE</string>
     <string name="category">CATEGORY</string>
     <string name="payment_type">PAYMENT TYPE</string>
-    <string name="remarks">REMARKS</string>
+    <string name="remarks">REMARKS(OP)</string>
 
     <string name="select_expense_category">Select Expense Category</string>
     <string name="select_paymenttype">Select Payment Type</string>
