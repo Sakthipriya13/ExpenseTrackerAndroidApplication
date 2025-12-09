@@ -12,7 +12,7 @@ import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.data.entity.UserEntity
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 
-@Database(entities = [UserEntity::class, CategoryEntitty :: class, ExpenseEntity :: class], version = 3, exportSchema = true)
+@Database(entities = [UserEntity::class, CategoryEntitty :: class, ExpenseEntity :: class], version = 6, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun CategoryDao() : CategoryDao

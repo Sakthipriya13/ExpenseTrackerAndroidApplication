@@ -11,6 +11,6 @@
 
     <color name="textview_bg_for_list">#c9c7f0</color>
 
-    <color name="success">#008000</color>
-    <color name="error">#CD1C18</color>
+    <color name="successBackground">#52c752</color>
+    <color name="errorBackground">#f05551</color>
 </resources>
