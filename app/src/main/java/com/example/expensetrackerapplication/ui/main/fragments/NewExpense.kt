@@ -193,7 +193,6 @@ class NewExpense : Fragment() {
             }
             else{
                 fnShowMessage("Something Wrong, Expense Details Are Not Stored",requireContext(),R.drawable.error_bg)
-
             }
         }
 

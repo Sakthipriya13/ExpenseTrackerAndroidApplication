@@ -32,8 +32,11 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
     var _userDetailList = MutableLiveData<List<UserEntity>>()
     var userDetailList : LiveData<List<UserEntity>>  = _userDetailList
 
-    var _loginStatus = MutableLiveData<Boolean>(false)
-    var loginStatus : LiveData<Boolean> = _loginStatus
+    var _loginStatus_success = MutableLiveData<Boolean>(false)
+    var loginStatus_success : LiveData<Boolean> = _loginStatus_success
+
+    var _loginStatus_fail = MutableLiveData<Boolean>(false)
+    var loginStatus_fail : LiveData<Boolean> = _loginStatus_fail
 
     var _actionGoToSignUp = MutableLiveData<Boolean>()
     var actionGoToSignUp : LiveData<Boolean> = _actionGoToSignUp
@@ -66,8 +69,14 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
 
                 else -> {
                     _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
-                    _loginStatus.value= _userDetailList.value?.isNotEmpty()
+                    var insertStatus= _userDetailList.value?.isNotEmpty()
                     Log.v("USER DETAILS","User Details: ${userDetailList.value}")
+                    if(insertStatus==false){
+                        _loginStatus_fail.value=true
+                    }
+                    else{
+                        _loginStatus_success.value=true
+                    }
                 }
 
             }

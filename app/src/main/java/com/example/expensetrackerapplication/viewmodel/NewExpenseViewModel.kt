@@ -43,7 +43,6 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     val _selectedpaymentType = MutableLiveData<Int?>()   // IMPORTANT: initially null
     val selectedpaymentType: LiveData<Int?> = _selectedpaymentType
 
-
     var _expenseRemarks = MutableLiveData<String?>()
     var expenseRemarks : LiveData<String?> = _expenseRemarks
 
@@ -55,17 +54,12 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
 
     var _amtInUpi = MutableLiveData<Float>(0.0f)
     var amtInUpi : LiveData<Float> = _amtInUpi
-
     var _amtInOthers = MutableLiveData<Float>(0.0f)
     var amtInOthers : LiveData<Float> = _amtInOthers
-
-
     var _valueMissingError = MutableLiveData<String?>()
     var valueMissingError : LiveData<String?> = _valueMissingError
-
     var _insertStatus = MutableLiveData<Boolean>()
     var insertStatus : LiveData<Boolean> = _insertStatus
-
     var _showSplitDialog = MutableLiveData<Boolean>()
     var showSplitDialog : LiveData<Boolean> = _showSplitDialog
 
@@ -74,9 +68,14 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
         _expenseAmt.value=""
         _selectedCategoryId.value=-1
         _selectedCategoryName.value=""
-        _paymentType.value= Global.PAYMENT_TYPE_CASH
-        _selectedpaymentType.value= R.id.idCashPayment
+        _paymentType.value= 0
+        _selectedpaymentType.value= null
         _expenseRemarks.value=""
+
+        _amtInCash.value=0.0f
+        _amtInUpi.value=0.0f
+        _amtInCard.value=0.0f
+        _amtInOthers.value=0.0f
     }
 
     fun fnAddExpenseToDb()
@@ -106,8 +105,6 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun fnInsertExpense() {
         viewModelScope.launch {
-
-
             var expenseEntity = ExpenseEntity(
                 expenseId =0,
                 expenseDate = selectedDate.value ?: "",
@@ -131,6 +128,7 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
             }
             else{
                 _insertStatus.value = false
+                fnClearViews()
             }
         }
     }

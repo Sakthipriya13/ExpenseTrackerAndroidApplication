@@ -68,13 +68,8 @@ class Login : Fragment() {
             }
         }
 
-        loginViewModel.loginStatus.observe(viewLifecycleOwner){ ob ->
+        loginViewModel.loginStatus_fail.observe(viewLifecycleOwner){ ob ->
             if(ob)
-            {
-                fnShowMessage("Successfully Login",requireContext(),R.drawable.success_bg)
-                findNavController().navigate(R.id.action_login_to_main)
-            }
-            else
             {
                 Log.e("LOGIN STATUS", "Login Status Value Was False")
                 fnShowMessage("User Not Found,Enter Valid User ",requireContext(),R.drawable.error_bg)
@@ -84,7 +79,13 @@ class Login : Fragment() {
                 loginDataBinding.idUserName.requestFocus()
             }
         }
-
+        loginViewModel.loginStatus_success.observe(viewLifecycleOwner){ ob ->
+            if(ob)
+            {
+                fnShowMessage("Successfully Login",requireContext(),R.drawable.success_bg)
+                findNavController().navigate(R.id.action_login_to_main)
+            }
+        }
 
         loginViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
             if(ob)

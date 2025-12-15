@@ -111,6 +111,7 @@
                     android:maxLines="1"
                     android:text="@={newExpenseViewModel._expenseAmt}"
                     android:textSize="15sp" />
+                <requestFocus />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
