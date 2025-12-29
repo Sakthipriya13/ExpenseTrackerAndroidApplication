@@ -83,7 +83,7 @@ class Main : AppCompatActivity() {
                 Global.lUserPassword=""
                 Global.lUserMobileNo=""
                 Global.lUssrEmail=""
-                val intent = Intent(application, Auth::class.java)
+                val intent = Intent(this, Auth::class.java)
                 startActivity(intent)
                 finish()
             }
