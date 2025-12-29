@@ -12,4 +12,13 @@ object Global {
     const val EXPENSE_STATUS_DELETED=1
 
     const val EXPENSE_STATUS_EDITED=2
+
+    var lUserId =-1
+    var lUserName=""
+
+    var lUserPassword=""
+
+    var lUserMobileNo =""
+
+    var lUssrEmail = ""
 }

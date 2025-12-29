@@ -36,6 +36,7 @@
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/logout"
+                    android:onClick="@{() -> mainViewModel.fnLogOut()}"
                     android:layout_gravity="end"/>
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>

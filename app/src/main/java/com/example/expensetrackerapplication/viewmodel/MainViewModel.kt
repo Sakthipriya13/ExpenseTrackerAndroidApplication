@@ -8,9 +8,12 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    var _logoutSatus = MutableLiveData<Boolean>()
+    var logoutStatus : LiveData<Boolean> = _logoutSatus
+
     fun fnLogOut()
     {
-
+        _logoutSatus.value = true
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.LoginBinding
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
+import com.example.expensetrackerapplication.ui.auth.Auth
+import com.example.expensetrackerapplication.ui.main.Main
 import com.example.expensetrackerapplication.viewmodel.LoginViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -109,8 +112,12 @@ class Login : Fragment() {
             if(ob)
             {
                 fnShowMessage("Successfully Login",requireContext(),R.drawable.success_bg)
-                findNavController().navigate(R.id.action_login_to_main)
+//                findNavController().navigate(R.id.action_login_to_main)
+                var intent = Intent(requireContext(), Main::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             }
+
         }
 
         loginViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->

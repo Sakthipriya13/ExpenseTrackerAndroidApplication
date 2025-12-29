@@ -11,18 +11,14 @@
         <action
             android:id="@+id/action_splash_to_login"
             app:destination="@id/loginScreen"/>
-        <action
-            android:id="@+id/action_splash_to_main"
-            app:destination="@id/mainScreen"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/loginScreen"
         android:label="LoginScreen"
         android:name="com.example.expensetrackerapplication.ui.auth.fragments.Login">
-        <action
-            android:id="@+id/action_login_to_main"
-            app:destination="@id/mainScreen"/>
+
         <action
             android:id="@+id/action_login_to_signup"
             app:destination="@id/signUpScreen"/>
@@ -37,8 +33,4 @@
             app:destination="@id/loginScreen"/>
     </fragment>
 
-    <activity
-        android:id="@+id/mainScreen"
-        android:label="MainScreen"
-        android:name="com.example.expensetrackerapplication.ui.main.Main"/>
-</navigation>
+ </navigation>

@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -14,7 +15,10 @@ import com.example.expensetrackerapplication.databinding.MainBinding
 import com.example.expensetrackerapplication.viewmodel.MainViewModel
 
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
+import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.ui.auth.Auth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -72,6 +76,19 @@ class Main : AppCompatActivity() {
 
         fnShrinkFab()
 
+        mainViewModel.logoutStatus.observe(this) { isLoggedOut ->
+            if(isLoggedOut){
+                Global.lUserId =-1
+                Global.lUserName=""
+                Global.lUserPassword=""
+                Global.lUserMobileNo=""
+                Global.lUssrEmail=""
+                val intent = Intent(application, Auth::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
         mainDataBinding.idMenuFab.setOnClickListener {
             if(isExpanded){
                 fnExpandFab()
@@ -82,8 +99,7 @@ class Main : AppCompatActivity() {
         }
         mainDataBinding.idReportFab.setOnClickListener {
             fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.reports
-            )
+            findNavController(R.id.idContainer).navigate(R.id.reports)
         }
 
         mainDataBinding.idDashboardFab.setOnClickListener {
@@ -190,3 +206,5 @@ class Main : AppCompatActivity() {
 
     }
 }
+
+

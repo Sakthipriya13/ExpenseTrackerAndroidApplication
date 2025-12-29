@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.UserEntity
 import com.example.expensetrackerapplication.data.repositary.UserRepository
+import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -73,12 +74,22 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
 
                 else -> {
                     _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
-                    var Status= _userDetailList.value?.isNotEmpty()
+                    var result= _userDetailList.value?.isNotEmpty()
                     Log.v("USER DETAILS","User Details: ${userDetailList.value}")
-                    if(Status==false){
+                    if(result==false){
+                        Global.lUserId =-1
+                        Global.lUserName=""
+                        Global.lUserPassword=""
+                        Global.lUserMobileNo=""
+                        Global.lUssrEmail=""
                         _loginStatus_fail.value=true
                     }
                     else{
+                        Global.lUserId = userDetailList.value?.firstOrNull()?.userId ?: -1
+                        Global.lUserName=userDetailList.value?.firstOrNull()?.userName ?: ""
+                        Global.lUserPassword=userDetailList.value?.firstOrNull()?.userPassword ?: ""
+                        Global.lUserMobileNo=userDetailList.value?.firstOrNull()?.userMobileNo ?: ""
+                        Global.lUssrEmail=userDetailList.value?.firstOrNull()?.userEmail ?: ""
                         _loginStatus_success.value=true
                     }
                 }
