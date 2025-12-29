@@ -42,6 +42,8 @@ class Login : Fragment() {
     }
 
     override fun onCreateView(
+
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -49,6 +51,30 @@ class Login : Fragment() {
         loginDataBinding= DataBindingUtil.inflate(inflater,R.layout.login,container,false)
         loginDataBinding.loginViewModel=loginViewModel
         loginDataBinding.lifecycleOwner=viewLifecycleOwner
+
+//        loginDataBinding.idUserName.isFocusable=true
+//        loginDataBinding.idUserName.requestFocus()
+
+        loginViewModel.clearAllFields.observe(viewLifecycleOwner){ob ->
+            if(ob){
+                loginDataBinding.idUserName.isFocusable=true
+                loginDataBinding.idUserName.requestFocus()
+            }
+        }
+
+        loginDataBinding.idPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                loginDataBinding.idLogin.isFocusable = true
+                loginDataBinding.idLogin.requestFocus()
+            }
+        }
+
+//        loginDataBinding.idUserName.setOnFocusChangeListener { _, hasFocus ->
+//            if (!hasFocus) {
+//                loginDataBinding.idPassword.isFocusable = true
+//                loginDataBinding.idPassword.requestFocus()
+//            }
+//        }
 
         loginViewModel.userNameEmptyStatus.observe(viewLifecycleOwner){ ob ->
             if(ob){

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.SignUpBinding
 import com.example.expensetrackerapplication.databinding.SignUpBindingImpl
+import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.SignUpViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,16 +52,49 @@ class SignUp : Fragment() {
         signUpDataBinding.lifecycleOwner=viewLifecycleOwner
         signUpDataBinding.signUpViewModel=signUpViewModel
 
+        signUpViewModel.clearAllFields.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                signUpDataBinding.idUserName.isFocusable=true
+                signUpDataBinding.idUserName.requestFocus()
+            }
+        }
+
+        signUpViewModel.nameErrorStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("Name Field Was An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
+        signUpViewModel.mobileNoErrorStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("Moboile No Field Was An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
+        signUpViewModel.emailErrorStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("Email Field Was An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
+        signUpViewModel.passwordErrorStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("Password Field Was An Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
+        signUpViewModel.bothFieldsErrorStatus.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                fnShowMessage("All Fields Were Empty",requireContext(),R.drawable.error_bg)
+            }
+        }
         signUpViewModel.insertStatus.observe(viewLifecycleOwner){ ob ->
-            if(ob)
+            if(ob==true)
             {
                 Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
                 findNavController().navigate(R.id.action_signup_to_login)
+                fnShowMessage("Successfully SignUp",requireContext(),R.drawable.success_bg)
             }
             else
             {
                 Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
-
+                fnShowMessage("SignUp Failed",requireContext(),R.drawable.error_bg)
             }
         }
 

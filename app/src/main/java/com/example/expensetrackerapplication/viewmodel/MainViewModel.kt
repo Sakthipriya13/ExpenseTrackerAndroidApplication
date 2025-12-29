@@ -8,4 +8,9 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    fun fnLogOut()
+    {
+
+    }
+
 }

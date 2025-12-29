@@ -53,6 +53,7 @@
                 android:drawableStart="@drawable/cash"
                 android:drawablePadding="10dp"
                 android:hint="Enter Cash Amount"/>
+                <requestFocus/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

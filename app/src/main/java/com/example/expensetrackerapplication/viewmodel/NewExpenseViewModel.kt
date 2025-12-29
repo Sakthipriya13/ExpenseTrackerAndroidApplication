@@ -27,23 +27,23 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     var _selectedDate = MutableLiveData<String?>(fnGetCurrentDate() )
     var selectedDate : LiveData<String?> = _selectedDate
 
-    var _expenseAmt = MutableLiveData<String?>()
+    var _expenseAmt = MutableLiveData<String?>("")
     var expenseAmt : LiveData<String?> = _expenseAmt
 
-    var _selectedCategoryId = MutableLiveData<Int>()
+    var _selectedCategoryId = MutableLiveData<Int>(-1)
     var selectedCategoryId : LiveData<Int> = _selectedCategoryId
 
-    var _selectedCategoryName = MutableLiveData<String?>()
+    var _selectedCategoryName = MutableLiveData<String?>("")
     var selectedCategoryName : LiveData<String?> = _selectedCategoryName
 
-    var _paymentType = MutableLiveData<Int>()
+    var _paymentType = MutableLiveData<Int>(-1)
     var paymentType : LiveData<Int> = _paymentType
 
     // Payment type selected in RadioGroup
-    val _selectedpaymentType = MutableLiveData<Int?>()   // IMPORTANT: initially null
+    val _selectedpaymentType = MutableLiveData<Int?>(-1)   // IMPORTANT: initially null
     val selectedpaymentType: LiveData<Int?> = _selectedpaymentType
 
-    var _expenseRemarks = MutableLiveData<String?>()
+    var _expenseRemarks = MutableLiveData<String?>("")
     var expenseRemarks : LiveData<String?> = _expenseRemarks
 
     var _amtInCash = MutableLiveData<Float>(0.0f)
@@ -63,47 +63,79 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     var _showSplitDialog = MutableLiveData<Boolean>()
     var showSplitDialog : LiveData<Boolean> = _showSplitDialog
 
+    var _insertFlag = MutableLiveData<Int>(0)
+    var insertFlag : LiveData<Int> = _insertFlag
+
+    var _clearAllFields = MutableLiveData<Boolean>()
+    var clearAllFields : LiveData<Boolean> = _clearAllFields
+
+    var _bothFieldsEmptyError = MutableLiveData<String?>()
+    var bothFieldsEmptyError : LiveData<String?> = _bothFieldsEmptyError
+
+    var _amtFieldsEmptyError = MutableLiveData<String?>()
+    var amtFieldsEmptyError : LiveData<String?> = _amtFieldsEmptyError
+
+    var _paymentFieldsEmptyError = MutableLiveData<String?>()
+    var paymentFieldsEmptyError : LiveData<String?> = _paymentFieldsEmptyError
+
+    var _cateFieldsEmptyError = MutableLiveData<String?>()
+    var cateFieldsEmptyError : LiveData<String?> = _cateFieldsEmptyError
+
     fun fnClearViews(){
+
+        _clearAllFields.value=true
+
         _selectedDate.value=fnGetCurrentDate()
         _expenseAmt.value=""
         _selectedCategoryId.value=-1
         _selectedCategoryName.value=""
-        _paymentType.value= 0
+        _paymentType.value= -1
         _selectedpaymentType.value= null
         _expenseRemarks.value=""
 
-        _amtInCash.value=0.0f
         _amtInUpi.value=0.0f
         _amtInCard.value=0.0f
+        _amtInCash.value=0.0f
         _amtInOthers.value=0.0f
     }
 
     fun fnAddExpenseToDb()
     {
-        if((selectedDate.value.isNullOrBlank()) && (expenseAmt.value.isNullOrBlank()) &&
-            (selectedCategoryId.value ==0 || selectedCategoryName.value.isNullOrBlank()))
-        {
-            _valueMissingError.value = "All fields are empty. Please fill all fields"
-            return
-        }
-        when{
+         when{
+            expenseAmt.value.isNullOrBlank() &&
+            selectedCategoryId.value ==-1 &&
+            selectedCategoryName.value.isNullOrBlank() &&
+            paymentType.value== -1 &&
+            selectedpaymentType.value==-1 -> {
+                _valueMissingError.value = "All fields are empty."
+            }
+
             selectedDate.value.isNullOrBlank() -> {
                 _valueMissingError.value = "Date Was Missing, So Select Date"
             }
 
-            expenseAmt.value.equals("0.0f") || expenseAmt.value.isNullOrBlank() -> {
+            expenseAmt.value.isNullOrBlank() -> {
                 _valueMissingError.value = "Expense Amount Was Missing, So Enter Amount"
             }
 
-            selectedCategoryId.value ==0 || selectedCategoryName.value.isNullOrBlank() -> {
+            selectedCategoryId.value ==-1 && selectedCategoryName.value.isNullOrBlank() -> {
                  _valueMissingError.value =  "Select Category"
             }
+            _paymentType.value== -1 && _selectedpaymentType.value== -1 -> {
+                _valueMissingError.value =  "Select Payment Type"
+            }
 
-            else -> fnInsertExpense()
+            else -> {
+                if(insertFlag.value==0)
+                {
+                    fnInsertExpense()
+                }
+            }
         }
     }
 
     private fun fnInsertExpense() {
+        _insertFlag.value=1
         viewModelScope.launch {
             var expenseEntity = ExpenseEntity(
                 expenseId =0,
@@ -123,11 +155,14 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
             var result = expenseRepository.fnInsertExpenseDatasToDb(expenseEntity)
             if(result)
             {
-                _insertStatus.value = true
+                _insertFlag.value = 0
+                _insertStatus.value =true
                 fnClearViews()
             }
-            else{
-                _insertStatus.value = false
+            else
+            {
+                _insertFlag.value = 0
+                _insertStatus.value =false
                 fnClearViews()
             }
         }

@@ -119,6 +119,7 @@
                     android:layout_width="match_parent"
                     android:singleLine="true"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:text="@={signUpViewModel._mobileNo}"
                     android:nextFocusDown="@id/idEmail"
                     android:layout_height="match_parent"

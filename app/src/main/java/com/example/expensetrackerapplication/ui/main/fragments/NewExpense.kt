@@ -73,6 +73,13 @@ class NewExpense : Fragment() {
         // Apply default only on first load
 //        newExpenseViewModel.applyDefaultIfFirstOpen()
 
+        newExpenseViewModel.clearAllFields.observe(viewLifecycleOwner){ ob ->
+            if(ob){
+                newExpenseBinding.idENewExpense.isFocusable=true
+                newExpenseBinding.idENewExpense.requestFocus()
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 settingsViewModel.fnGetAllCategories()
@@ -169,7 +176,9 @@ class NewExpense : Fragment() {
                  }
 
                  btnCancel.setOnClickListener {
-                     newExpenseViewModel.fnCashPayment()
+//                     newExpenseViewModel.fnCashPayment()
+                     newExpenseViewModel._paymentType.value=-1
+                     newExpenseViewModel._selectedpaymentType.value=-1
                      dialog.dismiss()
                  }
              }

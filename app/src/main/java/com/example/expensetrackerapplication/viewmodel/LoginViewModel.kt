@@ -50,6 +50,10 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
     var _bothNameAndPasswordEmptyStatus = MutableLiveData<Boolean>(false)
     var bothNameAndPasswordEmptyStatus : LiveData<Boolean> = _bothNameAndPasswordEmptyStatus
 
+
+    var _clearAllFields = MutableLiveData<Boolean>()
+    var clearAllFields : LiveData<Boolean> = _clearAllFields
+
     fun fnCheckUser()
     {
         viewModelScope.launch {
@@ -69,9 +73,9 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
 
                 else -> {
                     _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
-                    var insertStatus= _userDetailList.value?.isNotEmpty()
+                    var Status= _userDetailList.value?.isNotEmpty()
                     Log.v("USER DETAILS","User Details: ${userDetailList.value}")
-                    if(insertStatus==false){
+                    if(Status==false){
                         _loginStatus_fail.value=true
                     }
                     else{
@@ -95,6 +99,7 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
 
     fun fnClearValues()
     {
+        _clearAllFields.value=true
         _userName.value=""
         _userPassword.value=""
     }

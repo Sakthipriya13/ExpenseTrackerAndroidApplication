@@ -124,6 +124,7 @@
                     android:id="@+id/idPassword"
                     android:layout_width="match_parent"
                     android:layout_height="61dp"
+                    android:inputType="textPassword"
                     android:hint="@string/password"
                     android:text="@={loginViewModel._userPassword}"
                     android:nextFocusDown="@id/idLayout"

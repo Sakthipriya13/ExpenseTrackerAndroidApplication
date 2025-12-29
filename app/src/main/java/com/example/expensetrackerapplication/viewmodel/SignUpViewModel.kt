@@ -45,9 +45,27 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
     var _insertStatus = MutableLiveData<Boolean>()
     var insertStatus : LiveData<Boolean> = _insertStatus
 
+    var _nameErrorStatus = MutableLiveData<Boolean>()
+    var nameErrorStatus : LiveData<Boolean> = _nameErrorStatus
 
+    var _mobileNoErrorStatus = MutableLiveData<Boolean>()
+    var mobileNoErrorStatus : LiveData<Boolean> = _mobileNoErrorStatus
+
+    var _emailErrorStatus = MutableLiveData<Boolean>()
+    var emailErrorStatus : LiveData<Boolean> = _emailErrorStatus
+
+    var _passwordErrorStatus = MutableLiveData<Boolean>()
+    var passwordErrorStatus : LiveData<Boolean> = _passwordErrorStatus
+
+
+    var _bothFieldsErrorStatus = MutableLiveData<Boolean>()
+    var bothFieldsErrorStatus : LiveData<Boolean> = _bothFieldsErrorStatus
+
+    var _clearAllFields = MutableLiveData<Boolean>()
+    var clearAllFields : LiveData<Boolean> = _clearAllFields
     fun fnClearInputs()
     {
+        _clearAllFields.value=true
         _name.value="";
         _mobileNo.value="";
         _password.value="";
@@ -61,13 +79,59 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
 
     fun fnStoreUserDetails()
     {
+        when {
+            name.value.isNullOrBlank() &&
+                    mobileNo.value.isNullOrBlank() &&
+                        email.value.isNullOrBlank() &&
+                    password.value.isNullOrBlank() -> {
+                    _bothFieldsErrorStatus.value=true
+            }
+
+            name.value.isNullOrBlank() -> {
+                _nameErrorStatus.value=true
+            }
+
+            mobileNo.value.isNullOrBlank() -> {
+                _mobileNoErrorStatus.value=true
+            }
+
+            email.value.isNullOrBlank() -> {
+                _emailErrorStatus.value=true
+            }
+
+            password.value.isNullOrBlank() -> {
+                _passwordErrorStatus.value=true
+            }
+
+            else -> {
+                fnInsert()
+            }
+        }
+    }
+
+    fun fnInsert()
+    {
         viewModelScope.launch {
-            val user= UserEntity(
-                userName = name.value, userMobileNo = mobileNo.value,
-                userEmail = email.value, userPassword = password.value, userId = 0
-            )
-            val status = userRepository.fnInsertUserDetails(user)
-            _insertStatus.value=status
+            if(!name.value.isNullOrBlank() &&
+                !mobileNo.value.isNullOrBlank() &&
+                !email.value.isNullOrBlank() &&
+                !password.value.isNullOrBlank())
+            {
+                val user= UserEntity(
+                    userName = name.value, userMobileNo = mobileNo.value,
+                    userEmail = email.value, userPassword = password.value, userId = 0
+                )
+
+                val status = userRepository.fnInsertUserDetails(user)
+                if(status == true)
+                {
+                    _insertStatus.value=true
+                }
+                else
+                {
+                    _insertStatus.value=false
+                }
+            }
         }
     }
 
