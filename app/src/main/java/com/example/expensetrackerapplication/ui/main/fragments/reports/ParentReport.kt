@@ -1,4 +1,4 @@
-package com.example.expensetrackerapplication.ui.main.fragments
+package com.example.expensetrackerapplication.ui.main.fragments.reports
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
-import com.example.expensetrackerapplication.databinding.SettingsBinding
-import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
+import com.example.expensetrackerapplication.databinding.ReportsBinding
+import com.example.expensetrackerapplication.viewmodel.ParentReportViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,22 +20,23 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Settings.newInstance] factory method to
+ * Use the [Reports.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Settings : Fragment() {
+class Reports : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var settingsBinding: SettingsBinding
+    private lateinit var parentReportBinding : ReportsBinding
 
-    val settingsViewModel : SettingsViewModel by viewModels()
+    val parentReportViewModel : ParentReportViewModel by viewModels()
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Settings"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Reports"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,11 +49,35 @@ class Settings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        settingsBinding= DataBindingUtil.inflate(inflater,R.layout.settings, container, false)
-        settingsBinding.settingsViewModel=settingsViewModel
-        settingsBinding.lifecycleOwner=viewLifecycleOwner
+        parentReportBinding = DataBindingUtil.inflate(inflater,R.layout.reports, container, false)
+        parentReportBinding.parentReportViewModel=parentReportViewModel
+        parentReportBinding.lifecycleOwner=viewLifecycleOwner
 
-        return settingsBinding.root
+        parentReportViewModel.showDayWiseReport.observe(viewLifecycleOwner){ isShow ->
+            if (isShow){
+                findNavController().navigate(R.id.idDayWiseReport)
+            }
+        }
+
+        parentReportViewModel.showWeeklyReport.observe(viewLifecycleOwner){ isShow ->
+            if (isShow){
+                findNavController().navigate(R.id.idWeeklyReport)
+            }
+        }
+
+        parentReportViewModel.showMonthlyReport.observe(viewLifecycleOwner){ isShow ->
+            if (isShow){
+                findNavController().navigate(R.id.idMonthlyReport)
+            }
+        }
+
+        parentReportViewModel.showCategoryReport.observe(viewLifecycleOwner){ isShow ->
+            if (isShow){
+                findNavController().navigate(R.id.idCategoryWiseReport)
+            }
+        }
+
+        return parentReportBinding.root
     }
 
     companion object {
@@ -61,12 +87,12 @@ class Settings : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Settings.
+         * @return A new instance of fragment Reports.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Settings().apply {
+            Reports().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

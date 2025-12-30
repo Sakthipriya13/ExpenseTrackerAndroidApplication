@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/reports"
         android:label="Reports"
-        android:name="com.example.expensetrackerapplication.ui.main.fragments.Reports">
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.Reports">
         <action
             android:id="@+id/action_reports_to_dashBoard"
             app:destination="@id/dashBoard"/>

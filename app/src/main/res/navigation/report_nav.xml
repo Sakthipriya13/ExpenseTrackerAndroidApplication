@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/report_nav"
+    app:startDestination="@id/idDayWiseReport"
+    >
+
+    <fragment android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.DayWiseReport"
+        android:id="@+id/idDayWiseReport"
+        android:label="DayWiseReport">
+    </fragment>
+
+    <fragment android:id="@+id/idWeeklyReport"
+        android:label="WeeklyReport"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.WeeklyReport">
+
+    </fragment>
+
+    <fragment android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.MonthlyReport"
+        android:label="MonthlyReport"
+        android:id="@+id/idMonthlyReport">
+
+    </fragment>
+
+    <fragment android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.CategoryWiseReport"
+        android:label="CategoryWiseReport"
+        android:id="@+id/idCategoryWiseReport">
+
+    </fragment>
+
+</navigation>

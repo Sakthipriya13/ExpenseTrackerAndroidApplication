@@ -2,4 +2,7 @@
 <resources>
     <attr name="successBackground" format="color"/>
     <attr name="errorBackground" format="color"/>
+    <attr name="textColorWhite" format="color"/>
+    <attr name="textColorBlack" format="color"/>
+
 </resources>
