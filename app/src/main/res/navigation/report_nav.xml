@@ -2,30 +2,48 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/report_nav"
-    app:startDestination="@id/idDayWiseReport"
+    app:startDestination="@id/idReportMenu"
     >
+    <fragment
+        android:id="@+id/idReportMenu"
+        android:label="ReportMenu"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.ReportMenu">
+        <action android:id="@+id/action_report_menu_to_day_wise_report"
+            app:destination="@id/idDayWiseReport"/>
+        <action android:id="@+id/action_report_menu_to_weekly_report"
+            app:destination="@id/idWeeklyReport"/>
+        <action android:id="@+id/action_report_menu_to_monthly_report"
+            app:destination="@id/idMonthlyReport"/>
+        <action android:id="@+id/action_report_menu_to_category_wise_report"
+            app:destination="@id/idCategoryWiseReport"/>
+    </fragment>
 
     <fragment android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.DayWiseReport"
         android:id="@+id/idDayWiseReport"
         android:label="DayWiseReport">
+        <action android:id="@+id/action_day_wise_report_to_report_menu"
+            app:destination="@id/idReportMenu"/>
     </fragment>
 
     <fragment android:id="@+id/idWeeklyReport"
         android:label="WeeklyReport"
         android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.WeeklyReport">
-
+        <action android:id="@+id/action_weekly_report_to_report_menu"
+            app:destination="@id/idReportMenu"/>
     </fragment>
 
     <fragment android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.MonthlyReport"
         android:label="MonthlyReport"
         android:id="@+id/idMonthlyReport">
-
+        <action android:id="@+id/action_monthly_report_to_report_menu"
+            app:destination="@id/idReportMenu"/>
     </fragment>
 
     <fragment android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.CategoryWiseReport"
         android:label="CategoryWiseReport"
         android:id="@+id/idCategoryWiseReport">
-
+        <action android:id="@+id/action_category_wise_report_to_report_menu"
+            app:destination="@id/idReportMenu"/>
     </fragment>
 
 </navigation>

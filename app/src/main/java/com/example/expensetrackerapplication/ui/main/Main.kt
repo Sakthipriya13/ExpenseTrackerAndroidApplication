@@ -99,19 +99,19 @@ class Main : AppCompatActivity() {
         }
         mainDataBinding.idReportFab.setOnClickListener {
             fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.reports)
+            findNavController(R.id.idContainer).navigate(R.id.idParentReport)
         }
 
         mainDataBinding.idDashboardFab.setOnClickListener {
             fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.dashBoard)
+            findNavController(R.id.idContainer).navigate(R.id.idDashBoard)
         }
 
         mainDataBinding.idAddExpenseFab.setOnClickListener {
             lifecycleScope.launch {
                 fnShrinkFab()
                 delay(200)
-                findNavController(R.id.idContainer).navigate(R.id.newExpense)
+                findNavController(R.id.idContainer).navigate(R.id.idNewExpense)
 
             }
 
@@ -119,12 +119,12 @@ class Main : AppCompatActivity() {
 
         mainDataBinding.idSettingsFab.setOnClickListener {
             fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.settings)
+            findNavController(R.id.idContainer).navigate(R.id.idSettings)
         }
 
         mainDataBinding.idProfileFab.setOnClickListener {
             fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.profile)
+            findNavController(R.id.idContainer).navigate(R.id.idProfile)
         }
     }
 

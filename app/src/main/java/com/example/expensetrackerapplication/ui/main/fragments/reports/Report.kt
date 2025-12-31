@@ -1,18 +1,18 @@
 package com.example.expensetrackerapplication.ui.main.fragments.reports
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
-import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
-import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
+import com.example.expensetrackerapplication.databinding.ReportsBinding
 import com.example.expensetrackerapplication.viewmodel.ParentReportViewModel
-import com.example.expensetrackerapplication.viewmodel.ReportMenuViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,19 +21,22 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [DayWiseReport.newInstance] factory method to
+ * Use the [Reports.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DayWiseReport : Fragment() {
+class Reports : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var dayWiseReportBinding : DayWiseReportBinding
+    private lateinit var parentReportBinding : ReportsBinding
 
-    val dayWiseReportViewModel : DayWiseReportViewModel by viewModels()
+    val parentReportViewModel : ParentReportViewModel by viewModels()
 
-    val reportMenuViewModel : ReportMenuViewModel by activityViewModels()
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Reports"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,17 +50,13 @@ class DayWiseReport : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dayWiseReportBinding = DataBindingUtil.inflate(inflater,R.layout.day_wise_report, container, false)
-        dayWiseReportBinding.dayWiseReportViewModel=dayWiseReportViewModel
-        dayWiseReportBinding.lifecycleOwner = viewLifecycleOwner
+        parentReportBinding = DataBindingUtil.inflate(inflater,R.layout.reports, container, false)
+        parentReportBinding.parentReportViewModel=parentReportViewModel
+        parentReportBinding.lifecycleOwner=viewLifecycleOwner
 
-        dayWiseReportViewModel.closeDayWiseReport.observe(viewLifecycleOwner){ isClose ->
-            if(isClose==true){
-                reportMenuViewModel._showDayWiseReport.value=false
-            }
-        }
 
-        return dayWiseReportBinding.root
+
+        return parentReportBinding.root
     }
 
     companion object {
@@ -67,12 +66,12 @@ class DayWiseReport : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment DayWiseReport.
+         * @return A new instance of fragment Reports.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            DayWiseReport().apply {
+            Reports().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

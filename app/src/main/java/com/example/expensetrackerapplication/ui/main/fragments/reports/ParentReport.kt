@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
-import com.example.expensetrackerapplication.databinding.ReportsBinding
+import com.example.expensetrackerapplication.databinding.ParentReportBinding
 import com.example.expensetrackerapplication.viewmodel.ParentReportViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,22 +18,17 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Reports.newInstance] factory method to
+ * Use the [ParentReport.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Reports : Fragment() {
+class ParentReport : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var parentReportBinding : ReportsBinding
+    private lateinit var parentReportBinding: ParentReportBinding
 
     val parentReportViewModel : ParentReportViewModel by viewModels()
-
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Reports"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,33 +42,9 @@ class Reports : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        parentReportBinding = DataBindingUtil.inflate(inflater,R.layout.reports, container, false)
+        parentReportBinding = DataBindingUtil.inflate(inflater,R.layout.parent_report, container, false)
         parentReportBinding.parentReportViewModel=parentReportViewModel
-        parentReportBinding.lifecycleOwner=viewLifecycleOwner
-
-        parentReportViewModel.showDayWiseReport.observe(viewLifecycleOwner){ isShow ->
-            if (isShow){
-                findNavController().navigate(R.id.idDayWiseReport)
-            }
-        }
-
-        parentReportViewModel.showWeeklyReport.observe(viewLifecycleOwner){ isShow ->
-            if (isShow){
-                findNavController().navigate(R.id.idWeeklyReport)
-            }
-        }
-
-        parentReportViewModel.showMonthlyReport.observe(viewLifecycleOwner){ isShow ->
-            if (isShow){
-                findNavController().navigate(R.id.idMonthlyReport)
-            }
-        }
-
-        parentReportViewModel.showCategoryReport.observe(viewLifecycleOwner){ isShow ->
-            if (isShow){
-                findNavController().navigate(R.id.idCategoryWiseReport)
-            }
-        }
+        parentReportBinding.lifecycleOwner = viewLifecycleOwner
 
         return parentReportBinding.root
     }
@@ -87,12 +56,12 @@ class Reports : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Reports.
+         * @return A new instance of fragment ParentReport.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Reports().apply {
+            ParentReport().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

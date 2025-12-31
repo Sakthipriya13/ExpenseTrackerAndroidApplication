@@ -3,71 +3,71 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/dashBoard">
+    app:startDestination="@id/idDashBoard">
 
     <fragment
-        android:id="@+id/dashBoard"
+        android:id="@+id/idDashBoard"
         android:name="com.example.expensetrackerapplication.ui.main.fragments.Dashboard"
         android:label="DashBoard">
-        <action android:id="@+id/action_dashBoard_to_reports"
-            app:destination="@id/reports"/>
+        <action android:id="@+id/action_dashBoard_to_ParentReport"
+            app:destination="@id/idParentReport"/>
         <action android:id="@+id/action_dashBoard_to_newExpense"
-                app:destination="@id/newExpense"/>
+                app:destination="@id/idNewExpense"/>
         <action android:id="@+id/action_dashBoard_to_settings"
-            app:destination="@id/settings"/>
+            app:destination="@id/idSettings"/>
         <action android:id="@+id/action_dashBoard_to_profile"
-            app:destination="@id/profile"/>
+            app:destination="@id/idProfile"/>
     </fragment>
     <fragment
-        android:id="@+id/reports"
-        android:label="Reports"
-        android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.Reports">
+        android:id="@+id/idParentReport"
+        android:label="ParentReport"
+        android:name="com.example.expensetrackerapplication.ui.main.fragments.reports.ParentReport">
         <action
-            android:id="@+id/action_reports_to_dashBoard"
-            app:destination="@id/dashBoard"/>
-        <action android:id="@+id/action_reports_to_newExpense"
-            app:destination="@id/newExpense"/>
-        <action android:id="@+id/action_reports_to_settings"
-            app:destination="@id/settings"/>
-        <action android:id="@+id/action_reports_to_profile"
-            app:destination="@id/profile"/>
+            android:id="@+id/action_idParentReport_to_dashBoard"
+            app:destination="@id/idDashBoard"/>
+        <action android:id="@+id/action_idParentReport_to_newExpense"
+            app:destination="@id/idNewExpense"/>
+        <action android:id="@+id/action_idParentReport_to_settings"
+            app:destination="@id/idSettings"/>
+        <action android:id="@+id/action_idParentReport_to_profile"
+            app:destination="@id/idProfile"/>
     </fragment>
-    <fragment android:id="@+id/newExpense"
+    <fragment android:id="@+id/idNewExpense"
         android:name="com.example.expensetrackerapplication.ui.main.fragments.NewExpense"
         android:label="NewExpense">
         <action android:id="@+id/action_newExpense_to_dashBoard"
-            app:destination="@id/dashBoard"/>
-        <action android:id="@+id/action_newExpense_to_reports"
-            app:destination="@id/reports"/>
+            app:destination="@id/idDashBoard"/>
+        <action android:id="@+id/action_newExpense_to_idParentReport"
+            app:destination="@id/idParentReport"/>
         <action android:id="@+id/action_newExpense_to_settings"
-            app:destination="@id/settings"/>
+            app:destination="@id/idSettings"/>
         <action android:id="@+id/action_newExpense_to_profile"
-            app:destination="@id/profile"/>
+            app:destination="@id/idProfile"/>
     </fragment>
     <fragment
-        android:id="@+id/settings"
+        android:id="@+id/idSettings"
         android:name="com.example.expensetrackerapplication.ui.main.fragments.Settings"
         android:label="Settings">
         <action android:id="@+id/action_settings_to_dashBoard"
-            app:destination="@id/dashBoard"/>
-        <action android:id="@+id/action_settings_to_reports"
-            app:destination="@id/reports"/>
+            app:destination="@id/idDashBoard"/>
+        <action android:id="@+id/action_settings_to_ParentReport"
+            app:destination="@id/idParentReport"/>
         <action android:id="@+id/action_settings_to_newExpense"
-            app:destination="@id/newExpense"/>
+            app:destination="@id/idNewExpense"/>
         <action android:id="@+id/action_settings_to_profile"
-            app:destination="@id/profile"/>
+            app:destination="@id/idProfile"/>
     </fragment>
     <fragment
-        android:id="@+id/profile"
+        android:id="@+id/idProfile"
         android:label="Profile"
         android:name="com.example.expensetrackerapplication.ui.main.fragments.Profile">
         <action android:id="@+id/action_profile_to_dashBoard"
-            app:destination="@id/dashBoard"/>
-        <action android:id="@+id/action_profile_to_reports"
-            app:destination="@id/reports"/>
+            app:destination="@id/idDashBoard"/>
+        <action android:id="@+id/action_profile_to_ParentReport"
+            app:destination="@id/idParentReport"/>
         <action android:id="@+id/action_profile_to_newExpense"
-            app:destination="@id/newExpense"/>
+            app:destination="@id/idNewExpense"/>
         <action android:id="@+id/action_profile_to_settings"
-            app:destination="@id/settings"/>
+            app:destination="@id/idSettings"/>
     </fragment>
 </navigation>
