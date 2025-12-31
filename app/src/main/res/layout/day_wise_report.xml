@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
     <data>
@@ -15,21 +16,134 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_height="match_parent"
-                android:layout_width="50dp"
-                android:src ="@drawable/cancel"
-                android:onClick=""/>
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="Day Wise Report" />
+                android:text="@string/day_wise_report"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{() -> DayWiseReportViewModel.fnCloseDayWiseReport()}"
+                android:src="@drawable/cancel"/>
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/idDateLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/date"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/idFlow1"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLSelectDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.75"
+            app:layout_constraintEnd_toStartOf="@+id/idCalendarButton"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idESelectDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:inputType="none"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/idCalendarButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:src="@drawable/calendar_date"
+            app:layout_constraintStart_toEndOf="@+id/idLSelectDate"
+            app:layout_constraintWidth_percent="0.13"/>
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/idFlow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:flow_horizontalStyle="spread_inside"
+            app:flow_horizontalGap="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idDateLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idExpenseLabel"
+            app:constraint_referenced_ids="idLSelectDate,idCalendarButton"
+            tools:ignore="MissingConstraints" />
+        <view
+            android:wi/>
+        <TextView
+            android:id="@+id/idExpenseLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/expense_summary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/idLNewExpense"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idLSelectDate" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLNewExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idExpenseLabel"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idENewExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/currency_rupee"
+                android:drawablePadding="10dp"
+                android:hint="@string/expense_summary"
+                android:inputType="none"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:maxLines="1"
+                android:textSize="15sp" />
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

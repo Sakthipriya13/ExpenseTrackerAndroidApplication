@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 
 class DayWiseReportViewModel(application : Application) : AndroidViewModel(application = application)
 {
-    var _closeDayWiseReport = MutableLiveData<Boolean>(false)
+    var _closeDayWiseReport = MutableLiveData<Boolean>()
     var closeDayWiseReport : LiveData<Boolean> = _closeDayWiseReport
 
     fun fnCloseDayWiseReport()

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
@@ -53,7 +54,7 @@ class DayWiseReport : Fragment() {
 
         dayWiseReportViewModel.closeDayWiseReport.observe(viewLifecycleOwner){ isClose ->
             if(isClose==true){
-                reportMenuViewModel._showDayWiseReport.value=false
+                findNavController().navigate(R.id.action_day_wise_report_to_report_menu)
             }
         }
 

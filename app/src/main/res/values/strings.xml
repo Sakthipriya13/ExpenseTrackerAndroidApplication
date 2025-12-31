@@ -74,7 +74,8 @@
     <string name="card">Card</string>
     <string name="split">Split</string>
     <string name="other">Other</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="day_wise_report">DAY-WISE REPORT</string>
+    <string name="expense_summary">EXPENSE SUMMARY</string>
 
 </resources>

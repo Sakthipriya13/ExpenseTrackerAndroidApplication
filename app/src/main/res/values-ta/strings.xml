@@ -78,4 +78,7 @@
     <string name="split">பகிர்</string>
     <string name="other">மற்றவை</string>
 
+    <string name="day_wise_report">நாள் வாரியான அறிக்கை</string>
+    <string name="expense_summary">EXPENSE SUMMARY</string>
+
 </resources>
