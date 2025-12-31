@@ -14,6 +14,7 @@
         tools:context=".ui.main.fragments.reports.DayWiseReport">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
@@ -40,7 +41,7 @@
                 android:layout_weight="3"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{() -> DayWiseReportViewModel.fnCloseDayWiseReport()}"
-                android:src="@drawable/cancel"/>
+                android:src="@drawable/cancel" />
 
         </LinearLayout>
 
@@ -71,12 +72,11 @@
                 android:id="@+id/idESelectDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLines="1"
                 android:textSize="15sp"
                 android:focusable="false"
                 android:cursorVisible="false"
                 android:inputType="none"
-
+                android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,7 +84,7 @@
             android:id="@+id/idCalendarButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:src="@drawable/calendar_date"
+            android:src="@drawable/ic_calendar"
             app:layout_constraintStart_toEndOf="@+id/idLSelectDate"
             app:layout_constraintWidth_percent="0.13"/>
 
@@ -102,8 +102,16 @@
             app:layout_constraintBottom_toTopOf="@+id/idExpenseLabel"
             app:constraint_referenced_ids="idLSelectDate,idCalendarButton"
             tools:ignore="MissingConstraints" />
-        <view
-            android:wi/>
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="20dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/idFlow1"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/idExpenseLabel"-->
+<!--            tools:ignore="MissingConstraints" />-->
+
         <TextView
             android:id="@+id/idExpenseLabel"
             android:layout_width="match_parent"
@@ -136,7 +144,6 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/currency_rupee"
                 android:drawablePadding="10dp"
-                android:hint="@string/expense_summary"
                 android:inputType="none"
                 android:focusable="false"
                 android:cursorVisible="false"
