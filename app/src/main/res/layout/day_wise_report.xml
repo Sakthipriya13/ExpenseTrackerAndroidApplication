@@ -102,16 +102,6 @@
             app:layout_constraintBottom_toTopOf="@+id/idExpenseLabel"
             app:constraint_referenced_ids="idLSelectDate,idCalendarButton"
             tools:ignore="MissingConstraints" />
-
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="20dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/idFlow1"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/idExpenseLabel"-->
-<!--            tools:ignore="MissingConstraints" />-->
-
         <TextView
             android:id="@+id/idExpenseLabel"
             android:layout_width="match_parent"
@@ -135,6 +125,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/idDayWiseReportView"
             app:layout_constraintTop_toBottomOf="@+id/idExpenseLabel"
             >
 
@@ -151,6 +142,16 @@
                 android:textSize="15sp" />
             <requestFocus />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idDayWiseReportView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/idLNewExpense"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
