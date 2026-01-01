@@ -135,7 +135,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/idDayWiseReportScroll"
+            app:layout_constraintBottom_toTopOf="@id/idExportLayout"
             app:layout_constraintTop_toBottomOf="@+id/idExpenseLabel"
             >
 
@@ -153,6 +153,70 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/idExportLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toBottomOf="@id/idLNewExpense"
+            app:layout_constraintBottom_toTopOf="@id/idDayWiseReportScroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/idCancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="?attr/colorPrimary"
+                android:textColorLink="?attr/colorPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Export"-->
+<!--                android:textSize="25sp"-->
+<!--                android:gravity="start"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:textColor="?attr/textColorWhite"-->
+<!--                android:drawableStart="@drawable/ic_export"-->
+<!--                android:background="@drawable/export_btn_background"-->
+<!--                />-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Export"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:background="@drawable/export_btn_background"
+                app:icon="@drawable/ic_export"
+                app:iconGravity="start"
+                app:iconPadding="6dp"
+                app:iconTint="@color/white"/>
+
+        </LinearLayout>
+
+<!--        <Button-->
+<!--            android:id="@+id/idExportBtn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/btn_background"-->
+<!--            android:text="Export"-->
+<!--            android:textColor="?attr/textColorWhite"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/idLNewExpense"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:layout_margin="5dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/idDayWiseReportScroll"-->
+<!--            />    -->
 
         <HorizontalScrollView
             android:id="@+id/idDayWiseReportScroll"
@@ -162,7 +226,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idLNewExpense"
+            app:layout_constraintTop_toBottomOf="@id/idExportLayout"
             android:scrollbars="none">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -209,7 +273,7 @@
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
-                            android:text="CASH"
+                            android:text="PAYMENT TYPE"
                             android:textSize="20sp" />
 
                         <TextView
@@ -220,29 +284,7 @@
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
-                            android:text="CARD"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="5dp"
-                            android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
-                            android:textColor="?attr/textColorWhite"
-                            android:gravity="center"
-                            android:text="UPI"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="5dp"
-                            android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
-                            android:textColor="?attr/textColorWhite"
-                            android:gravity="center"
-                            android:text="OTHER"
+                            android:text="REMARKS"
                             android:textSize="20sp" />
 
                         <TextView
