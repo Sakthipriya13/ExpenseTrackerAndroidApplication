@@ -14,4 +14,6 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     {
         _closeDayWiseReport.value=true
     }
+
+
 }

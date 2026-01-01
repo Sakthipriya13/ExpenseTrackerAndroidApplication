@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.data.entity.UserEntity
+import com.example.expensetrackerapplication.model.DayWiseReportModel
 
 @Dao
 interface ExpenseDao {
@@ -18,5 +19,8 @@ interface ExpenseDao {
 
     @Query("SELECT * FROM ExpenseTable")
     suspend fun fnGetAllExpense(): List<ExpenseEntity>
+
+    @Query("SELECT ExpenseCategoryId,ExpenseCategoryName,ExpenseAmountt,paymentType,ExpenseRemarks,ExpenseStatus FROM ExpenseTable WHERE ExpenseDate= :date")
+    suspend fun fnGetExpensePerDate(date : String): List<DayWiseReportModel>
 
 }

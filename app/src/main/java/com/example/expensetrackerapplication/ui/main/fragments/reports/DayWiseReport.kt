@@ -58,6 +58,12 @@ class DayWiseReport : Fragment() {
             }
         }
 
+        dayWiseReportBinding.idCalendarButton.setOnClickListener {
+
+        }
+
+
+
         return dayWiseReportBinding.root
     }
 

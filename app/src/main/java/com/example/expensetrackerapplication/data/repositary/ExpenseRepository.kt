@@ -18,4 +18,8 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
             return false
         }
     }
+
+    suspend fun fnGetExpenseDetailsPerDate(date : String){
+
+    }
 }
