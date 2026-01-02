@@ -1,5 +1,8 @@
 package com.example.expensetrackerapplication.`object`
 
+import java.text.SimpleDateFormat
+import java.util.Locale
+
 object Global {
     const val PAYMENT_TYPE_CASH=1
     const val PAYMENT_TYPE_CARD=2
@@ -21,4 +24,12 @@ object Global {
     var lUserMobileNo =""
 
     var lUssrEmail = ""
+
+    fun fnGetCurrentDate() : String {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val currentDate = sdf.format(java.util.Date())
+
+        return currentDate
+    }
 }

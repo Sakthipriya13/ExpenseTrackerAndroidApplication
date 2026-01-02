@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
     <data>
-        <variable name="DayWiseReportViewModel"
+        <variable name="dayWiseReportViewModel"
             type="com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel"/>
     </data>
 
@@ -47,7 +47,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_weight="3"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{() -> DayWiseReportViewModel.fnCloseDayWiseReport()}"
+                android:onClick="@{() -> dayWiseReportViewModel.fnCloseDayWiseReport()}"
                 android:src="@drawable/cancel"
                 tools:layout_editor_absoluteY="2dp" />
 
@@ -87,6 +87,7 @@
                 android:cursorVisible="false"
                 android:inputType="none"
                 android:maxLines="1"
+                android:text="@={dayWiseReportViewModel._selectedDate}"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,6 +95,7 @@
             android:id="@+id/idCalendarButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_calendar"
             app:layout_constraintStart_toEndOf="@+id/idLSelectDate"
             app:layout_constraintWidth_percent="0.13"/>
@@ -149,7 +151,9 @@
                 android:focusable="false"
                 android:cursorVisible="false"
                 android:maxLines="1"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:text="@={dayWiseReportViewModel._expenseSummary}"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 

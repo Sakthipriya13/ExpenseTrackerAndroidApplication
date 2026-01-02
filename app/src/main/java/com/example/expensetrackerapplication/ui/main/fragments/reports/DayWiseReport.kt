@@ -1,5 +1,7 @@
 package com.example.expensetrackerapplication.ui.main.fragments.reports
 
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,10 +11,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
+import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
+import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
-import com.example.expensetrackerapplication.viewmodel.ParentReportViewModel
 import com.example.expensetrackerapplication.viewmodel.ReportMenuViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +41,8 @@ class DayWiseReport : Fragment() {
 
     val reportMenuViewModel : ReportMenuViewModel by activityViewModels()
 
+    lateinit var listAdapter : ListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -52,6 +59,10 @@ class DayWiseReport : Fragment() {
         dayWiseReportBinding.dayWiseReportViewModel=dayWiseReportViewModel
         dayWiseReportBinding.lifecycleOwner = viewLifecycleOwner
 
+        listAdapter = ListAdapter()
+        dayWiseReportBinding.idDayWiseReportView.adapter = listAdapter
+        dayWiseReportBinding.idDayWiseReportView.layoutManager = LinearLayoutManager(requireContext())
+
         dayWiseReportViewModel.closeDayWiseReport.observe(viewLifecycleOwner){ isClose ->
             if(isClose==true){
                 findNavController().navigate(R.id.action_day_wise_report_to_report_menu)
@@ -59,10 +70,26 @@ class DayWiseReport : Fragment() {
         }
 
         dayWiseReportBinding.idCalendarButton.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            val datePickerDialog = DatePickerDialog(requireContext(),
+                { _,y,m,d ->
+                    var date =  "$d-${m+1}-$y"
+                    dayWiseReportViewModel._selectedDate.value=date
+
+                    dayWiseReportViewModel.fnGetExpenseDetails(date)
+
+            },year,month,day)
+
+            datePickerDialog.show()
         }
 
-
+        dayWiseReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
+            listAdapter.fnSubmitList(list)
+        }
 
         return dayWiseReportBinding.root
     }
@@ -86,4 +113,44 @@ class DayWiseReport : Fragment() {
                 }
             }
     }
+}
+
+class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListViewHolder>()
+{
+    private lateinit var expenseList : List<DayWiseReportModel>
+    fun fnSubmitList(list: List<DayWiseReportModel>){
+        expenseList=list
+        notifyDataSetChanged()
+    }
+    inner class ListViewHolder (val binding: DayWiseReportListItemBinding): RecyclerView.ViewHolder(binding.root)
+    {
+        fun bind(item: DayWiseReportModel){
+            binding.dayWiseReportListItem=item
+            binding.executePendingBindings()
+        }
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ListViewHolder {
+
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = DataBindingUtil.inflate<DayWiseReportListItemBinding>(inflater,R.layout.day_wise_report_list_item,parent,false)
+//        val view = LayoutInflater.from(parent.context).inflate(R.layout.day_wise_report_list_item,parent,false)
+        return ListViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(
+        holder: ListViewHolder,
+        position: Int
+    ) {
+//        val item = list[position]
+        holder.bind(expenseList[position])
+    }
+
+    override fun getItemCount(): Int {
+       return expenseList.size
+    }
+
 }

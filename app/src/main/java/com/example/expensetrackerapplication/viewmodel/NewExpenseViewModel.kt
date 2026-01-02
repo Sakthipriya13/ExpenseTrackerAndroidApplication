@@ -24,7 +24,7 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
         expenseRepository = ExpenseRepository(expenseDao)
     }
 
-    var _selectedDate = MutableLiveData<String?>(fnGetCurrentDate() )
+    var _selectedDate = MutableLiveData<String?>(Global.fnGetCurrentDate() )
     var selectedDate : LiveData<String?> = _selectedDate
 
     var _expenseAmt = MutableLiveData<String?>("")
@@ -85,7 +85,7 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
 
         _clearAllFields.value=true
 
-        _selectedDate.value=fnGetCurrentDate()
+        _selectedDate.value=Global.fnGetCurrentDate()
         _expenseAmt.value=""
         _selectedCategoryId.value=-1
         _selectedCategoryName.value=""
@@ -211,11 +211,5 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
         _amtInOthers.value =expenseAmt.value?.toFloatOrNull() ?:0.0f
         Log.v("PAYMENT TYPE","Payment Type: OTHER")
     }
-    fun fnGetCurrentDate() : String {
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val currentDate = sdf.format(java.util.Date())
-
-        return currentDate
-    }
 }
