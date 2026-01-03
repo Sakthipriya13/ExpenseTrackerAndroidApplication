@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
+import com.example.expensetrackerapplication.listener.DayWiseReportClickListener
 import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
 import com.example.expensetrackerapplication.viewmodel.ReportMenuViewModel
@@ -94,6 +95,8 @@ class DayWiseReport : Fragment() {
         return dayWiseReportBinding.root
     }
 
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -117,7 +120,8 @@ class DayWiseReport : Fragment() {
 
 class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListViewHolder>()
 {
-    private lateinit var expenseList : List<DayWiseReportModel>
+    private  var expenseList : List<DayWiseReportModel> = emptyList()
+
     fun fnSubmitList(list: List<DayWiseReportModel>){
         expenseList=list
         notifyDataSetChanged()
@@ -128,6 +132,7 @@ class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListViewHolder>()
             binding.dayWiseReportListItem=item
             binding.executePendingBindings()
         }
+
     }
 
     override fun onCreateViewHolder(
@@ -137,7 +142,6 @@ class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListViewHolder>()
 
         val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<DayWiseReportListItemBinding>(inflater,R.layout.day_wise_report_list_item,parent,false)
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.day_wise_report_list_item,parent,false)
         return ListViewHolder(binding)
     }
 
@@ -145,7 +149,6 @@ class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListViewHolder>()
         holder: ListViewHolder,
         position: Int
     ) {
-//        val item = list[position]
         holder.bind(expenseList[position])
     }
 

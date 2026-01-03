@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.`object`
 
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -31,5 +32,17 @@ object Global {
         val currentDate = sdf.format(java.util.Date())
 
         return currentDate
+    }
+
+    fun fnRoundTheFloatingValues(amt : Float) : Float
+    {
+        return amt.toBigDecimal()
+            .setScale(2, RoundingMode.HALF_UP)
+            .toFloat()
+    }
+
+    fun fnFormatFloatTwoDigits(amt : Float): Float
+    {
+        return String.format("%.2f",amt).toFloat()
     }
 }

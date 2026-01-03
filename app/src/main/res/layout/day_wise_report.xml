@@ -250,7 +250,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
@@ -261,7 +262,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
@@ -272,18 +274,20 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
-                            android:text="PAYMENT TYPE"
+                            android:text="PAYMENT"
                             android:textSize="20sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
@@ -294,12 +298,25 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
                             android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
-                            android:text="DELETE"
+                            android:text="STATUS"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:layout_weight="1"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="DEL"
                             android:textSize="20sp" />
 
                     </LinearLayout>
