@@ -30,6 +30,8 @@ import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -104,7 +106,10 @@ class NewExpense : Fragment() {
 
             val datePickerDialog = DatePickerDialog(requireContext(),
                 { _,y,m,d ->
-                    var date="$d-${m+1}-$y"
+
+                    calendar.set(y,m,d)
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                    val date = sdf.format(calendar.time)
                     newExpenseViewModel._selectedDate.value=date
 
                 } , year,month,day)

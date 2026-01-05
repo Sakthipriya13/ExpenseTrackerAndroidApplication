@@ -84,8 +84,9 @@ dependencies {
     // Optional: Paging support with Room
     implementation (libs.androidx.room.paging)
 
-    implementation("androidx.sqlite:sqlite-bundled:2.5.0")
+    implementation(libs.androidx.sqlite.bundled)
 
-
+    implementation(libs.poi)
+    implementation(libs.poi.ooxml)
 
 }

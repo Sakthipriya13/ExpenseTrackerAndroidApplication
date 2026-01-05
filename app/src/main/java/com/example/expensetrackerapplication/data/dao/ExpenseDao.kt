@@ -20,7 +20,7 @@ interface ExpenseDao {
     suspend fun fnGetAllExpense(): List<ExpenseEntity>
 
     @Query("SELECT * FROM ExpenseTable WHERE ExpenseDate= :date")
-    suspend fun fnGetExpensePerDate(date: String?, deletedExpense: Int): List<ExpenseEntity>
+    suspend fun fnGetExpensePerDate(date: String?): List<ExpenseEntity>
 
     @Query("UPDATE ExpenseTable SET ExpenseStatus = :delExpense WHERE expenseId= :id")
     suspend fun fnDeleteExpensePerId(id: Int?, delExpense: Int) : Int

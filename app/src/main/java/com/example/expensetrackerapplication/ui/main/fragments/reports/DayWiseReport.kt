@@ -3,6 +3,7 @@ package com.example.expensetrackerapplication.ui.main.fragments.reports
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +19,11 @@ import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
 import com.example.expensetrackerapplication.listener.DayWiseReportClickListener
 import com.example.expensetrackerapplication.model.DayWiseReportModel
+import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
 import com.example.expensetrackerapplication.viewmodel.ReportMenuViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,7 +73,6 @@ class DayWiseReport : Fragment() {
                 findNavController().navigate(R.id.action_day_wise_report_to_report_menu)
             }
         }
-
         dayWiseReportBinding.idCalendarButton.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
@@ -78,14 +81,21 @@ class DayWiseReport : Fragment() {
 
             val datePickerDialog = DatePickerDialog(requireContext(),
                 { _,y,m,d ->
-                    var date =  "$d-${m+1}-$y"
-                    dayWiseReportViewModel._selectedDate.value=date
 
-                    dayWiseReportViewModel.fnGetExpenseDetails(date)
+                    calendar.set(y,m,d)
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                    val date = sdf.format(calendar.time)
+//                    var date =  "$d-${m+1}-$y"
+                    dayWiseReportViewModel._selectedDate.value=date
 
             },year,month,day)
 
             datePickerDialog.show()
+        }
+
+        dayWiseReportViewModel.selectedDate.observe(viewLifecycleOwner){ date ->
+            Log.i("SELECTED DATE","Selected Date1: $date")
+            dayWiseReportViewModel.fnGetExpenseDetails(date)
         }
 
         dayWiseReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
