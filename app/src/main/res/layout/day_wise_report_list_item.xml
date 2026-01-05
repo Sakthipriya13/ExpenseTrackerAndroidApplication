@@ -7,11 +7,11 @@
         <variable
             name="dayWiseReportListItem"
             type="com.example.expensetrackerapplication.model.DayWiseReportModel" />
-      </data>
+    </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,8 +20,8 @@
             <TextView
                 android:id="@+id/idCategoryName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="start|center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -32,8 +32,8 @@
             <TextView
                 android:id="@+id/idExpenseAmt"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.87"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="start|center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -44,8 +44,8 @@
             <TextView
                 android:id="@+id/idExpensePaymentType"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.75"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="start|center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -56,8 +56,8 @@
             <TextView
                 android:id="@+id/idExpenseRemarks"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="start|center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -67,8 +67,8 @@
             <TextView
                 android:id="@+id/idExpenseStatus"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.85"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="start|center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -79,8 +79,8 @@
             <ImageView
                 android:id="@+id/idDeleteExpense"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.9"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
                 android:src="@drawable/ic_delete"

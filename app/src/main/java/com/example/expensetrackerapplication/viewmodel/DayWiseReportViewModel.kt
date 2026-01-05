@@ -117,42 +117,61 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     }
 
     fun fnExportReport(){
-        var workBook = XSSFWorkbook()
-        var sheet = workBook.createSheet("DAY WISE REPORT")
+        viewModelScope.launch {
+            try
+            {
+                var workBook = XSSFWorkbook()
+                var sheet = workBook.createSheet("DAY WISE REPORT")
 
-        //Header Row
-        var headerRow = sheet.createRow(0)
-        headerRow.createCell(0).setCellValue("CATEGORY")
-        headerRow.createCell(1).setCellValue("EXPENSE AMOUNT")
-        headerRow.createCell(2).setCellValue("PAYMENT TYPE")
-        headerRow.createCell(3).setCellValue("REMARKS")
-        headerRow.createCell(4).setCellValue("STATUS")
+                //Header Row
+                var headerRow = sheet.createRow(0)
+                headerRow.createCell(0).setCellValue("CATEGORY")
+                headerRow.createCell(1).setCellValue("EXPENSE AMOUNT")
+                headerRow.createCell(2).setCellValue("PAYMENT TYPE")
+                headerRow.createCell(3).setCellValue("REMARKS")
+                headerRow.createCell(4).setCellValue("STATUS")
 
-        //Data Row
-        expenseList.value?.forEachIndexed { index, expense ->
-            var dataRow = sheet.createRow(index+1)
+                //Data Row
+                expenseList.value?.forEachIndexed { index, expense ->
+                    var dataRow = sheet.createRow(index+1)
 
-            dataRow.createCell(0).setCellValue(expense.catgeoryName)
-            dataRow.createCell(1).setCellValue(expense.expenseAmt)
-            dataRow.createCell(2).setCellValue(expense.paymentType)
-            dataRow.createCell(3).setCellValue(expense.expenseRemarks)
-            dataRow.createCell(4).setCellValue(expense.isDelete)
+                    dataRow.createCell(0).setCellValue(expense.catgeoryName)
+                    dataRow.createCell(1).setCellValue(expense.expenseAmt)
+                    dataRow.createCell(2).setCellValue(expense.paymentType)
+                    dataRow.createCell(3).setCellValue(expense.expenseRemarks)
+                    dataRow.createCell(4).setCellValue(expense.isDelete)
 
+                }
+
+//                for (i in 0..4){
+//                    sheet.autoSizeColumn(i)
+//                }
+
+                var file = File(
+                    application.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "DayWiseReport.xlsx"
+                )
+
+                var fos = FileOutputStream(file)
+
+                workBook.write(fos)
+                fos.close()
+                workBook.close()
+
+                if(file.exists() && file.length()>0)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            catch (e : Exception)
+            {
+                Log.e("EXPORT REPORT AS EXCEL","Export Report As Excel: ${e.message}")
+            }
         }
 
-        for (i in 0..4){
-            sheet.autoSizeColumn(i)
-        }
-
-        var file = File(
-            application.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "DayWiseReport.xlsx"
-        )
-
-        var fos = FileOutputStream(file)
-
-        workBook.write(fos)
-        fos.close()
-        workBook.close()
     }
 
 
