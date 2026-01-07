@@ -19,7 +19,7 @@ import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
 import com.example.expensetrackerapplication.listener.DayWiseReportClickListener
 import com.example.expensetrackerapplication.model.DayWiseReportModel
-import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
 import com.example.expensetrackerapplication.viewmodel.ReportMenuViewModel
 import java.text.SimpleDateFormat
@@ -68,6 +68,8 @@ class DayWiseReport : Fragment() {
         dayWiseReportBinding.idDayWiseReportView.adapter = listAdapter
         dayWiseReportBinding.idDayWiseReportView.layoutManager = LinearLayoutManager(requireContext())
 
+        dayWiseReportViewModel.fnPreWarmExcelEngine()
+
         dayWiseReportViewModel.closeDayWiseReport.observe(viewLifecycleOwner){ isClose ->
             if(isClose==true){
                 findNavController().navigate(R.id.action_day_wise_report_to_report_menu)
@@ -95,11 +97,34 @@ class DayWiseReport : Fragment() {
 
         dayWiseReportViewModel.selectedDate.observe(viewLifecycleOwner){ date ->
             Log.i("SELECTED DATE","Selected Date1: $date")
+            dayWiseReportViewModel.fnClearFields()
             dayWiseReportViewModel.fnGetExpenseDetails(date)
         }
 
         dayWiseReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
-            listAdapter.fnSubmitList(list)
+            listAdapter.fnSubmitList(list, object : DayWiseReportClickListener{
+                override fun onDeleteClick(expense: DayWiseReportModel) {
+                    dayWiseReportViewModel.fnDeleteExpense(expense.expenseId)
+                }
+            })
+        }
+
+        dayWiseReportViewModel.exportStatus.observe(viewLifecycleOwner){ status ->
+            if(status){
+                fnShowMessage("Report Successfully Exported",requireContext(),R.drawable.success_bg)
+            }
+            else{
+                fnShowMessage("Report Export Failed",requireContext(),R.drawable.error_bg)
+            }
+        }
+
+        dayWiseReportViewModel.expenseDeleteStatus.observe(viewLifecycleOwner){ status ->
+            if(status){
+                fnShowMessage("Successfully Expense Details Was Deleted",requireContext(),R.drawable.success_bg)
+            }
+            else{
+                fnShowMessage("Delete Expense Details Was Failed",requireContext(),R.drawable.error_bg)
+            }
         }
 
         return dayWiseReportBinding.root
@@ -131,15 +156,20 @@ class DayWiseReport : Fragment() {
 class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListViewHolder>()
 {
     private  var expenseList : List<DayWiseReportModel> = emptyList()
-
-    fun fnSubmitList(list: List<DayWiseReportModel>){
+    lateinit var deleteClickListener : DayWiseReportClickListener
+    fun fnSubmitList(
+        list: List<DayWiseReportModel>,
+        listener: DayWiseReportClickListener
+    ){
         expenseList=list
+        deleteClickListener = listener
         notifyDataSetChanged()
     }
     inner class ListViewHolder (val binding: DayWiseReportListItemBinding): RecyclerView.ViewHolder(binding.root)
     {
         fun bind(item: DayWiseReportModel){
             binding.dayWiseReportListItem=item
+            binding.deleteClickListener=deleteClickListener
             binding.executePendingBindings()
         }
 

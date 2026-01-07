@@ -1,7 +1,11 @@
 package com.example.expensetrackerapplication.viewmodel
 
 import android.app.Application
+import android.content.ContentResolver
+import android.content.ContentValues
+import android.net.Uri
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -12,6 +16,7 @@ import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.`object`.Global
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
@@ -36,10 +41,20 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     var _expenseList = MutableLiveData<List<DayWiseReportModel>>()
     var expenseList : LiveData<List<DayWiseReportModel>> = _expenseList
 
+    var _exportStatus = MutableLiveData<Boolean>()
+    var exportStatus : LiveData<Boolean> = _exportStatus
+
+    var _expenseDeleteStatus = MutableLiveData<Boolean>()
+    var expenseDeleteStatus : LiveData<Boolean> = _expenseDeleteStatus
 
     fun fnCloseDayWiseReport()
     {
         _closeDayWiseReport.value=true
+    }
+
+    fun fnClearFields(){
+        _expenseSummary.value=""
+        _expenseList.value = emptyList<DayWiseReportModel>()
     }
 
     fun fnGetExpenseDetails(date: String?){
@@ -106,8 +121,9 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
             {
                 var delStatus = expenseRepository.fnDeleteExpense(expenseId)
 
-                if(delStatus)
+                if(delStatus){
                     fnGetExpenseDetails(selectedDate.value)
+                }
             }
             catch(e : Exception)
             {
@@ -118,8 +134,12 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
     fun fnExportReport(){
         viewModelScope.launch {
+
             try
             {
+                var start = System.currentTimeMillis()
+
+
                 var workBook = XSSFWorkbook()
                 var sheet = workBook.createSheet("DAY WISE REPORT")
 
@@ -147,24 +167,27 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 //                    sheet.autoSizeColumn(i)
 //                }
 
-                var file = File(
-                    application.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "DayWiseReport.xlsx"
-                )
+                 _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${System.currentTimeMillis()}.xlsx")
 
-                var fos = FileOutputStream(file)
-
-                workBook.write(fos)
-                fos.close()
-                workBook.close()
-
-                if(file.exists() && file.length()>0)
-                {
-
-                }
-                else
-                {
-
-                }
+//                var file = File(
+//                    application.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "DayWiseReport.xlsx"
+//                )
+//
+//                var fos = FileOutputStream(file)
+//
+//                workBook.write(fos)
+//                fos.close()
+//                workBook.close()
+//
+//                if(file.exists() && file.length()>0)
+//                {
+//                    _exportStatus.value = true
+//                }
+//                else
+//                {
+//                    _exportStatus.value = false
+//                }
+                Log.i("TIME DIFF","Time Diff: ${System.currentTimeMillis()-start} ms")
             }
             catch (e : Exception)
             {
@@ -174,6 +197,47 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
     }
 
+    fun fnExportReportToDownloads(workBook : XSSFWorkbook, fileName : String): Boolean
+    {
+        return try {
+            var values = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                put(MediaStore.MediaColumns.MIME_TYPE,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                put(
+                    MediaStore.MediaColumns.RELATIVE_PATH,
+                    Environment.DIRECTORY_DOCUMENTS+"/ExpenseTracker"
+                )
+            }
 
+            val uri: Uri =application.contentResolver.insert(
+                MediaStore.Files.getContentUri("external"),
+                values
+            ) ?: return false
+
+            application.contentResolver.openOutputStream(uri)?.use { os ->
+                workBook.write(os)
+            }
+
+            workBook.close()
+
+            true
+        }
+        catch (e : Exception){
+            Log.e("FN_EXPORT_REPORT_TO_DOWNLOADS","Fn Export Report To Downloads: ${e.message}")
+            false
+        }
+
+    }
+
+    fun fnPreWarmExcelEngine() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val wb = XSSFWorkbook()
+                wb.createSheet("warmup")
+                wb.close()
+            } catch (_: Exception) {}
+        }
+    }
 
 }

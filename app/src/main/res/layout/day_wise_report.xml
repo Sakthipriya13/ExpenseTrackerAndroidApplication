@@ -197,7 +197,7 @@
                 android:id="@+id/btnExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/export_btn_background"
+                android:background="@drawable/btn_background"
                 android:text="Export"
                 android:textColor="@color/white"
                 android:textSize="25sp"
@@ -227,7 +227,6 @@
             android:id="@+id/idDayWiseReportScroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -235,13 +234,13 @@
             android:scrollbars="none">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent">
-                    <LinearLayout
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/idListHeader"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -249,83 +248,102 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.004">
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/idCategoryName"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:paddingStart="5dp"
                             android:paddingEnd="5dp"
+                            android:paddingStart="5dp"
                             android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
                             android:text="CATEGORY"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/idExpenseAmt"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
                             android:text="EXPENSE"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idCategoryName"
+                            />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/idPaymentType"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
                             android:text="PAYMENT"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idExpenseAmt"/>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/idExpenseRemarks"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
                             android:text="REMARKS"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idPaymentType"/>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/idExpenseStatus"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
                             android:text="STATUS"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idExpenseRemarks"/>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/idDel"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
                             android:background="?attr/colorPrimary"
-                            android:layout_weight="1"
                             android:textColor="?attr/textColorWhite"
                             android:gravity="center"
                             android:text="DEL"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.10"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idExpenseStatus"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/idDayWiseReportView"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="40dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
