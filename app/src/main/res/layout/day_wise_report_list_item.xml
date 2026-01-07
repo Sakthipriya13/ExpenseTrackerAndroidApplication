@@ -8,7 +8,7 @@
             type="com.example.expensetrackerapplication.model.DayWiseReportModel" />
         <variable
             name="deleteClickListener"
-            type="com.example.expensetrackerapplication.listener.DayWiseReportClickListener" />
+            type="com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener" />
 
     </data>
 
@@ -16,16 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="35dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/idCategoryName"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:gravity="start|center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
@@ -35,11 +33,8 @@
 
                 <TextView
                     android:id="@+id/idExpenseAmt"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idCategoryName"
                     android:gravity="start|center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
@@ -49,11 +44,8 @@
 
                 <TextView
                     android:id="@+id/idExpensePaymentType"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idExpenseAmt"
                     android:gravity="start|center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
@@ -63,11 +55,8 @@
 
                 <TextView
                     android:id="@+id/idExpenseRemarks"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idExpensePaymentType"
                     android:gravity="start|center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
@@ -76,12 +65,9 @@
                     android:textSize="20sp" />
                 <TextView
                     android:id="@+id/idExpenseStatus"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.10"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idExpenseRemarks"
-                    android:gravity="start|center"
+                    android:gravity="center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:textColor="?attr/textColorBlack"
@@ -90,17 +76,14 @@
 
                 <ImageView
                     android:id="@+id/idDeleteExpense"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:onClick="@{() -> deleteClickListener.onDeleteClick(dayWiseReportListItem)}"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:src="@drawable/ic_delete"
-                    app:layout_constraintStart_toEndOf="@id/idExpenseStatus"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.10" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:src="@drawable/ic_delete" />
+            </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

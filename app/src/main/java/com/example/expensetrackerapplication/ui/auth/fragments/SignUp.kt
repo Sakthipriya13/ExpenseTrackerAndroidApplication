@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.SignUpBinding
-import com.example.expensetrackerapplication.databinding.SignUpBindingImpl
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.SignUpViewModel
 
@@ -89,7 +88,7 @@ class SignUp : Fragment() {
             {
                 Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
                 findNavController().navigate(R.id.action_signup_to_login)
-                fnShowMessage("Successfully SignUp",requireContext(),R.drawable.success_bg)
+                fnShowMessage("Successfully SignUp",requireContext(),R.drawable.bg_success)
             }
             else
             {

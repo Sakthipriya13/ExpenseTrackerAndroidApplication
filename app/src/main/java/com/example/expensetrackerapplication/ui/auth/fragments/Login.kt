@@ -7,14 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.LoginBinding
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
-import com.example.expensetrackerapplication.ui.auth.Auth
 import com.example.expensetrackerapplication.ui.main.Main
 import com.example.expensetrackerapplication.viewmodel.LoginViewModel
 
@@ -111,7 +109,7 @@ class Login : Fragment() {
         loginViewModel.loginStatus_success.observe(viewLifecycleOwner){ ob ->
             if(ob)
             {
-                fnShowMessage("Successfully Login",requireContext(),R.drawable.success_bg)
+                fnShowMessage("Successfully Login",requireContext(),R.drawable.bg_success)
 //                findNavController().navigate(R.id.action_login_to_main)
                 var intent = Intent(requireContext(), Main::class.java)
                 startActivity(intent)

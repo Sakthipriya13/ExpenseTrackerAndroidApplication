@@ -24,7 +24,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.databinding.NewExpenseBinding
-import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
@@ -208,7 +207,7 @@ class NewExpense : Fragment() {
 
         newExpenseViewModel.insertStatus.observe(viewLifecycleOwner){ status ->
             if(status){
-                fnShowMessage("Successfully Expense Details Are Stored",requireContext(),R.drawable.success_bg)
+                fnShowMessage("Successfully Expense Details Are Stored",requireContext(),R.drawable.bg_success)
             }
             else{
                 fnShowMessage("Something Wrong, Expense Details Are Not Stored",requireContext(),R.drawable.error_bg)

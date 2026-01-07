@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="day_wise_report">DAY-WISE REPORT</string>
+
+    <string name="warning">Warning!</string>
+
+    <string name="do_you_want_to_delete_the_expense">Do You Want To Delete The Expense?</string>
+
 </resources>
