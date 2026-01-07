@@ -81,4 +81,9 @@
     <string name="day_wise_report">நாள் வாரியான அறிக்கை</string>
     <string name="expense_summary">EXPENSE SUMMARY</string>
 
+    <string name="warning">முன் எச்சரிக்கை!</string>
+
+    <string name="do_you_want_to_delete_the_expense">இந்த செலவை நீக்க விரும்புகிறீர்களா?</string>
+
+
 </resources>
