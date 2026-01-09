@@ -11,6 +11,8 @@
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="successBackground">@color/successBackground</item>
         <item name="errorBackground">@color/errorBackground</item>
+        <item name="infoBackground">@color/infoBackground</item>
+        <item name="warningBackground">@color/warningBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
     </style>
