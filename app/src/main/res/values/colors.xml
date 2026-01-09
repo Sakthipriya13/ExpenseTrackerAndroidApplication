@@ -14,7 +14,7 @@
     <color name="successBackground">#52c752</color>
     <color name="errorBackground">#f05551</color>
 
-    <color name="infoBackground">#52c752</color>
+    <color name="infoBackground">#F5B027</color>
     <color name="warningBackground">#f05551</color>
 
     <color name="text_color_black">#FF000000</color>

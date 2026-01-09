@@ -2,6 +2,8 @@ package com.example.expensetrackerapplication.ui.main.fragments.reports
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -132,6 +134,13 @@ class DayWiseReport : Fragment() {
             }
         }
 
+        dayWiseReportViewModel.isExportLoading.observe(viewLifecycleOwner){ isLoading ->
+            if(isLoading)
+                dayWiseReportBinding.isExportLoading.visibility=View.VISIBLE
+            else
+                dayWiseReportBinding.isExportLoading.visibility=View.GONE
+        }
+
         return dayWiseReportBinding.root
     }
 
@@ -143,6 +152,7 @@ class DayWiseReport : Fragment() {
             .setView(promptBinding.root)
             .setCancelable(false)
             .create()
+        deletePrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         promptBinding.idBtnOk.setOnClickListener {
             dayWiseReportViewModel.fnDeleteExpense(expense.expenseId)
             deletePrompt.dismiss()
