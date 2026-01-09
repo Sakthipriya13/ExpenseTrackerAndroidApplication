@@ -1,9 +1,6 @@
 package com.example.expensetrackerapplication.ui.main.fragments.reports
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -18,10 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetrackerapplication.R
-import com.example.expensetrackerapplication.databinding.ConfirmationPromptBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
-import com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener
+import com.example.expensetrackerapplication.listener.DayWiseReportClickListener
 import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
@@ -108,17 +104,14 @@ class DayWiseReport : Fragment() {
         dayWiseReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
             listAdapter.fnSubmitList(list, object : DayWiseReportClickListener{
                 override fun onDeleteClick(expense: DayWiseReportModel) {
-                    if(!expense.isDelete.equals("DELETED"))
-                        fnShowDeletePrompt(expense)
-                    else
-                        fnShowMessage("Expense Was Already Deleted",requireContext(),R.drawable.bg_info)
+                    dayWiseReportViewModel.fnDeleteExpense(expense.expenseId)
                 }
             })
         }
 
         dayWiseReportViewModel.exportStatus.observe(viewLifecycleOwner){ status ->
             if(status){
-                fnShowMessage("Report Successfully Exported",requireContext(),R.drawable.bg_success)
+                fnShowMessage("Report Successfully Exported",requireContext(),R.drawable.success_bg)
             }
             else{
                 fnShowMessage("Report Export Failed",requireContext(),R.drawable.error_bg)
@@ -127,40 +120,14 @@ class DayWiseReport : Fragment() {
 
         dayWiseReportViewModel.expenseDeleteStatus.observe(viewLifecycleOwner){ status ->
             if(status){
-                fnShowMessage("Successfully Expense Details Was Deleted",requireContext(),R.drawable.bg_success)
+                fnShowMessage("Successfully Expense Details Was Deleted",requireContext(),R.drawable.success_bg)
             }
             else{
                 fnShowMessage("Delete Expense Details Was Failed",requireContext(),R.drawable.error_bg)
             }
         }
 
-        dayWiseReportViewModel.isExportLoading.observe(viewLifecycleOwner){ isLoading ->
-            if(isLoading)
-                dayWiseReportBinding.isExportLoading.visibility=View.VISIBLE
-            else
-                dayWiseReportBinding.isExportLoading.visibility=View.GONE
-        }
-
         return dayWiseReportBinding.root
-    }
-
-    fun fnShowDeletePrompt(expense : DayWiseReportModel){
-        var promptBinding = ConfirmationPromptBinding.inflate(layoutInflater)
-        promptBinding.tittle = getString(R.string.warning)
-        promptBinding.message = getString(R.string.do_you_want_to_delete_the_expense)
-        val deletePrompt = AlertDialog.Builder(requireContext())
-            .setView(promptBinding.root)
-            .setCancelable(false)
-            .create()
-        deletePrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        promptBinding.idBtnOk.setOnClickListener {
-            dayWiseReportViewModel.fnDeleteExpense(expense.expenseId)
-            deletePrompt.dismiss()
-        }
-        promptBinding.idBtnCancel.setOnClickListener {
-            deletePrompt.dismiss()
-        }
-        deletePrompt.show()
     }
 
 

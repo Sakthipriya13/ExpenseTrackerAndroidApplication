@@ -13,24 +13,11 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.fragments.reports.DayWiseReport">
 
-
-        <ProgressBar
-            android:id="@+id/isExportLoading"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/idHeaderContainer"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:layout_constraintBottom_toTopOf="@id/idDateLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,181 +123,39 @@
             android:text="@string/expense_summary"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/idLSummaryLabel"
+            app:layout_constraintBottom_toTopOf="@+id/idLNewExpense"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idLSelectDate" />
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/idLNewExpense"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="20dp"-->
-<!--            android:layout_marginEnd="20dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/idExportLayout"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/idExpenseLabel"-->
-<!--            >-->
-
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:id="@+id/idENewExpense"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:drawableStart="@drawable/currency_rupee"-->
-<!--                android:drawablePadding="10dp"-->
-<!--                android:inputType="none"-->
-<!--                android:focusable="false"-->
-<!--                android:cursorVisible="false"-->
-<!--                android:maxLines="1"-->
-<!--                android:textSize="15sp"-->
-<!--                android:text="@={dayWiseReportViewModel._expenseSummary}"-->
-<!--                />-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
-
-        <LinearLayout
-            android:id="@+id/idLSummaryLabel"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idLNewExpense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/idExpenseLabel"
-            app:layout_constraintBottom_toTopOf="@id/idLExpenseSummary"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/idTotalExpenseLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:textSize="20sp"
-                android:text="TOTAL"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="?attr/colorPrimary"
-                />
-            <TextView
-                android:id="@+id/idAddedExpenseLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:textSize="20sp"
-                android:text="ADDED"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="?attr/colorPrimary"
-                />
-            <TextView
-                android:id="@+id/idDeletedExpenseLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="DELETED"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="?attr/colorPrimary"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/idLExpenseSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
-            app:layout_constraintTop_toBottomOf="@id/idLSummaryLabel"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/idExportLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/idExpenseLabel"
+            >
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idLTotalExpense"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idENewExpense"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/currency_rupee"
+                android:drawablePadding="10dp"
+                android:inputType="none"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:text="@={dayWiseReportViewModel._expenseSummary}"
+                />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idETotalExpense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="false"
-                    android:drawableStart="@drawable/currency_rupee"
-                    android:drawablePadding="1dp"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:inputType="none"
-                    android:maxLines="1"
-                    android:text="@={dayWiseReportViewModel._totalExpenseSummary}"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idLAddedExpense"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="3dp"
-                android:layout_marginEnd="3dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEAddedExpense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/currency_rupee"
-                    android:drawablePadding="1dp"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:maxLines="1"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@={dayWiseReportViewModel._addedExpenseSummary}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idLDeletedExpense"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEDeletedExpense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/currency_rupee"
-                    android:drawablePadding="1dp"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:maxLines="1"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="@={dayWiseReportViewModel._deltedExpenseSummary}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/idExportLayout"
@@ -318,8 +163,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="10dp"
-            app:layout_constraintTop_toBottomOf="@id/idLExpenseSummary"
-            app:layout_constraintBottom_toTopOf="@id/idReportHorizontalScroll"
+            app:layout_constraintTop_toBottomOf="@id/idLNewExpense"
+            app:layout_constraintBottom_toTopOf="@id/idDayWiseReportScroll"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -336,6 +181,18 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Export"-->
+<!--                android:textSize="25sp"-->
+<!--                android:gravity="start"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:textColor="?attr/textColorWhite"-->
+<!--                android:drawableStart="@drawable/ic_export"-->
+<!--                android:background="@drawable/export_btn_background"-->
+<!--                />-->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnExport"
                 android:layout_width="wrap_content"
@@ -352,109 +209,149 @@
 
         </LinearLayout>
 
-        <!-- Horizontal Scroll Container -->
+<!--        <Button-->
+<!--            android:id="@+id/idExportBtn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/btn_background"-->
+<!--            android:text="Export"-->
+<!--            android:textColor="?attr/textColorWhite"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/idLNewExpense"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:layout_margin="5dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/idDayWiseReportScroll"-->
+<!--            />    -->
+
         <HorizontalScrollView
-            android:id="@+id/idReportHorizontalScroll"
+            android:id="@+id/idDayWiseReportScroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:fillViewport="true"
-            android:scrollbars="none"
-            app:layout_constraintTop_toBottomOf="@id/idExportLayout"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/idExportLayout"
+            android:scrollbars="none">
 
-            <!-- Vertical container for Header + RecyclerView -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
 
-                <!-- Header Row -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:background="?attr/colorPrimary">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/idListHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.004">
+                        <TextView
+                            android:id="@+id/idCategoryName"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingEnd="5dp"
+                            android:paddingStart="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="CATEGORY"
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
 
-                    <TextView
-                        android:layout_width="200dp"
+                        <TextView
+                            android:id="@+id/idExpenseAmt"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="EXPENSE"
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idCategoryName"
+                            />
+
+                        <TextView
+                            android:id="@+id/idPaymentType"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="PAYMENT"
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idExpenseAmt"/>
+
+                        <TextView
+                            android:id="@+id/idExpenseRemarks"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="REMARKS"
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.20"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idPaymentType"/>
+
+                        <TextView
+                            android:id="@+id/idExpenseStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="STATUS"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idExpenseRemarks"/>
+
+                        <TextView
+                            android:id="@+id/idDel"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="?attr/textColorWhite"
+                            android:gravity="center"
+                            android:text="DEL"
+                            android:textSize="20sp"
+                            app:layout_constraintWidth_percent="0.10"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/idExpenseStatus"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/idDayWiseReportView"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="start|center"
-                        android:textColor="?attr/textColorWhite"
-                        android:textSize="20sp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="CATEGORY"
-                        android:textStyle="bold"/>
+                        android:layout_marginTop="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idListHeader"/>
 
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:gravity="start|center"
-                        android:textColor="?attr/textColorWhite"
-                        android:textSize="20sp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="EXPENSE"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:gravity="start|center"
-                        android:textColor="?attr/textColorWhite"
-                        android:textSize="20sp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="PAYMENT TYPE"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:gravity="start|center"
-                        android:textColor="?attr/textColorWhite"
-                        android:textSize="20sp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="NOTES"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="?attr/textColorWhite"
-                        android:textSize="20sp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="STATUS"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="?attr/textColorWhite"
-                        android:textSize="20sp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="DEL"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <!-- RecyclerView -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/idDayWiseReportView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:overScrollMode="never"/>
-            </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
         </HorizontalScrollView>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
