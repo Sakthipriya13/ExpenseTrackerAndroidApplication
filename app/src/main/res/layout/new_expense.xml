@@ -60,6 +60,7 @@
                 android:id="@+id/idCalendarButton"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/calendar_date"
                 app:layout_constraintStart_toEndOf="@+id/idLSelectDate"
                 app:layout_constraintWidth_percent="0.13"/>

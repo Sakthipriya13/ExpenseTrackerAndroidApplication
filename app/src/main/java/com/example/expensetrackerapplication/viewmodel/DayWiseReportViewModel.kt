@@ -44,8 +44,8 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     var _addedExpenseSummary = MutableLiveData<String>()
     var addedExpenseSummary : LiveData<String> = _addedExpenseSummary
 
-    var _deltedExpenseSummary = MutableLiveData<String>()
-    var deltedExpenseSummary : LiveData<String> = _deltedExpenseSummary
+    var _deletedExpenseSummary = MutableLiveData<String>()
+    var deletedExpenseSummary : LiveData<String> = _deletedExpenseSummary
 
     var _expenseList = MutableLiveData<List<DayWiseReportModel>>()
     var expenseList : LiveData<List<DayWiseReportModel>> = _expenseList
@@ -66,6 +66,8 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
     fun fnClearFields(){
         _totalExpenseSummary.value=""
+        _addedExpenseSummary.value=""
+        _deletedExpenseSummary.value=""
         _expenseList.value = emptyList<DayWiseReportModel>()
     }
 
@@ -117,7 +119,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
                     _expenseList.value = list
                     _totalExpenseSummary.value= Global.fnFormatFloatTwoDigits(totalExpenseAmtSum) .toString()
                     _addedExpenseSummary.value =Global.fnFormatFloatTwoDigits(addedExpenseAmtSum) .toString()
-                    _deltedExpenseSummary.value = Global. fnFormatFloatTwoDigits(deletedExpenseAmtSum) .toString()
+                    _deletedExpenseSummary.value = Global. fnFormatFloatTwoDigits(deletedExpenseAmtSum) .toString()
 
                     Log.i("EXPENSE DETAILS PER DATE","Expense Details Per Date1: $list")
                 }
@@ -158,174 +160,134 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
             {
                 _isExportLoading.value=true
 
-                var start = System.currentTimeMillis()
-
-                var workBook = XSSFWorkbook()
-                var sheet = workBook.createSheet("DAY WISE REPORT")
-
-                sheet.setColumnWidth(0,20*256)
-                sheet.setColumnWidth(1,20*256)
-                sheet.setColumnWidth(2,20*256)
-                sheet.setColumnWidth(3,20*256)
-                sheet.setColumnWidth(4,20*256)
-
-
-                val headerFont = Global.fnHeaderFont(workBook)
-                val summaryFont =  Global.fnSummaryFont(workBook)
-                //Header Style
-                val headerStyle = Global.fnHeaderStyle(workBook,headerFont)
-                //Summary Style
-                val summaryStyle = Global.fnSummaryStyle(workBook,summaryFont)
-                //Create Table Header Style
-                val tableHeaderStyle = Global.fnTableHeaderStyle(workBook)
-                //Create Table Date Style
-                val dataStyle = Global.fnTableDateStyle(workBook)
-
-                //Header Row
-                var headerRow = sheet.createRow(0)
-                var headerCell = headerRow.createCell(0)
-                headerCell.setCellValue("DAY WISE REPORT")
-                headerCell.cellStyle = headerStyle
-
-                sheet.addMergedRegion(
-                    CellRangeAddress(
-                        0,  // first row (0th row)
-                        0,  // last row
-                        0,  // first column
-                        4   // last column
-                    )
-                )
-
-                var dateRow = sheet.createRow(1)
-                var dateCell0 = dateRow.createCell(0)
-                dateCell0.setCellValue("DATE: ${selectedDate.value}")
-                dateCell0.cellStyle=summaryStyle
-
-//                var dateCell1 = dateRow.createCell(1)
-//                dateCell1.setCellValue("${selectedDate.value}")
-//                dateCell1.cellStyle=summaryStyle
-
-                sheet.addMergedRegion(
-                    CellRangeAddress(1,1,0,4)
-                )
-                var timeRow = sheet.createRow(2)
-                var timeCell0 = timeRow.createCell(0)
-                timeCell0.setCellValue("TIME: ${System.currentTimeMillis()}")
-                timeCell0.cellStyle=summaryStyle
-
-//                var timeCell1 = timeRow.createCell(1)
-//                timeCell1.setCellValue("${System.currentTimeMillis()}")
-//                timeCell1.cellStyle=summaryStyle
-
-                sheet.addMergedRegion(
-                    CellRangeAddress(2,2,0,4)
-                )
-
-                var totalExpenseRow = sheet.createRow(3)
-                var totalExpenseCell0 = totalExpenseRow.createCell(0)
-                totalExpenseCell0.setCellValue("TOTAL EXPENSE: ${totalExpenseSummary.value}")
-                totalExpenseCell0.cellStyle=summaryStyle
-
-//                var totalExpenseCell1 = totalExpenseRow.createCell(0)
-//                totalExpenseCell1.setCellValue("${totalExpenseSummary.value}")
-//                totalExpenseCell1.cellStyle=summaryStyle
-
-                sheet.addMergedRegion(
-                    CellRangeAddress(3,3,0,4)
-                )
-
-                var addedExpenseRow = sheet.createRow(4)
-                var addedExpenseCell0 = addedExpenseRow.createCell(0)
-                addedExpenseCell0.setCellValue("ADDED EXPENSE: ${addedExpenseSummary.value}")
-                addedExpenseCell0.cellStyle=summaryStyle
-
-//                var addedExpenseCell1 = addedExpenseRow.createCell(1)
-//                addedExpenseCell1.setCellValue("${addedExpenseSummary.value}")
-//                addedExpenseCell1.cellStyle=summaryStyle
-
-                sheet.addMergedRegion(
-                    CellRangeAddress(4,4,0,4)
-                )
-
-                var deletedExpenseRow = sheet.createRow(5)
-                var deletedExpenseCell0 = deletedExpenseRow.createCell(0)
-                deletedExpenseCell0.setCellValue("DELETED EXPENSE: ${deltedExpenseSummary.value}")
-                deletedExpenseCell0.cellStyle=summaryStyle
-
-//                var deletedExpenseCell1 = deletedExpenseRow.createCell(1)
-//                deletedExpenseCell1.setCellValue("${deltedExpenseSummary.value}")
-//                deletedExpenseCell1.cellStyle=summaryStyle
-
-                sheet.addMergedRegion(
-                    CellRangeAddress(5,5,0,4)
-                )
-
-                //Table Header Row
-                var tableHeaderRow = sheet.createRow(6)
-                var cell0 = tableHeaderRow.createCell(0)
-                cell0.setCellValue("CATEGORY")
-                cell0.cellStyle=tableHeaderStyle
-                var cell1 =tableHeaderRow.createCell(1)
-                cell1.setCellValue("EXPENSE AMOUNT")
-                cell1.cellStyle=tableHeaderStyle
-                var cell2=tableHeaderRow.createCell(2)
-                cell2.setCellValue("PAYMENT TYPE")
-                cell2.cellStyle = tableHeaderStyle
-                var cell3=tableHeaderRow.createCell(3)
-                cell3.setCellValue("REMARKS")
-                cell3.cellStyle=tableHeaderStyle
-                var cell4=tableHeaderRow.createCell(4)
-                cell4.setCellValue("STATUS")
-                cell4.cellStyle=tableHeaderStyle
-
-                //Table Data Row
-                expenseList.value?.forEachIndexed { index, expense ->
-                    var dataRow = sheet.createRow(index+8)
-
-                    var dataCell0=dataRow.createCell(0)
-                    dataCell0.setCellValue(expense.catgeoryName)
-                    dataCell0.cellStyle=dataStyle
-                    var dataCell1=dataRow.createCell(1)
-                    dataCell1.setCellValue(expense.expenseAmt)
-                    dataCell1.cellStyle=dataStyle
-                    var dataCell2=dataRow.createCell(2)
-                    dataCell2.setCellValue(expense.paymentType)
-                    dataCell2.cellStyle=dataStyle
-                    var dataCell3=dataRow.createCell(3)
-                    dataCell3.setCellValue(expense.expenseRemarks)
-                    dataCell3.cellStyle=dataStyle
-                    var dataCell4=dataRow.createCell(4)
-                    dataCell4.setCellValue(expense.isDelete)
-                    dataCell4.cellStyle=dataStyle
-
-                }
-
-//                for (i in 0..4){
-//                    sheet.autoSizeColumn(i)
-//                }
-
-
-                 _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${System.currentTimeMillis()}.xlsx")
-
-//                var file = File(
-//                    application.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "DayWiseReport.xlsx"
+//                var start = System.currentTimeMillis()
+//
+//                var workBook = XSSFWorkbook()
+//                var sheet = workBook.createSheet("DAY WISE REPORT")
+//
+//                sheet.setColumnWidth(0,30*256)
+//                sheet.setColumnWidth(1,20*256)
+//                sheet.setColumnWidth(2,20*256)
+//                sheet.setColumnWidth(3,50*256)
+//                sheet.setColumnWidth(4,20*256)
+//
+//
+//                val headerFont = Global.fnHeaderFont(workBook)
+//                val summaryFont =  Global.fnSummaryFont(workBook)
+//                //Header Style
+//                val headerStyle = Global.fnHeaderStyle(workBook,headerFont)
+//                //Summary Style
+//                val summaryStyle = Global.fnSummaryStyle(workBook,summaryFont)
+//                //Create Table Header Style
+//                val tableHeaderStyle = Global.fnTableHeaderStyle(workBook)
+//                //Create Table Date Style
+//                val dataStyle = Global.fnTableDateStyle(workBook)
+//
+//                //Header Row
+//                var headerRow = sheet.createRow(0)
+//                var headerCell = headerRow.createCell(0)
+//                headerCell.setCellValue("DAY WISE REPORT")
+//                headerCell.cellStyle = headerStyle
+//
+//                sheet.addMergedRegion(
+//                    CellRangeAddress(
+//                        0,  // first row (0th row)
+//                        0,  // last row
+//                        0,  // first column
+//                        4   // last column
+//                    )
 //                )
 //
-//                var fos = FileOutputStream(file)
+//                var dateRow = sheet.createRow(1)
+//                var dateCell0 = dateRow.createCell(0)
+//                dateCell0.setCellValue("DATE: ${selectedDate.value}")
+//                dateCell0.cellStyle=summaryStyle
 //
-//                workBook.write(fos)
-//                fos.close()
-//                workBook.close()
+//                sheet.addMergedRegion(
+//                    CellRangeAddress(1,1,0,4)
+//                )
+//                var timeRow = sheet.createRow(2)
+//                var timeCell0 = timeRow.createCell(0)
+//                timeCell0.setCellValue("TIME: ${System.currentTimeMillis()}")
+//                timeCell0.cellStyle=summaryStyle
 //
-//                if(file.exists() && file.length()>0)
-//                {
-//                    _exportStatus.value = true
+//
+//                sheet.addMergedRegion(
+//                    CellRangeAddress(2,2,0,4)
+//                )
+//
+//                var totalExpenseRow = sheet.createRow(3)
+//                var totalExpenseCell0 = totalExpenseRow.createCell(0)
+//                totalExpenseCell0.setCellValue("TOTAL EXPENSE: ${totalExpenseSummary.value}")
+//                totalExpenseCell0.cellStyle=summaryStyle
+//
+//
+//                sheet.addMergedRegion(
+//                    CellRangeAddress(3,3,0,4)
+//                )
+//
+//                var addedExpenseRow = sheet.createRow(4)
+//                var addedExpenseCell0 = addedExpenseRow.createCell(0)
+//                addedExpenseCell0.setCellValue("ADDED EXPENSE: ${addedExpenseSummary.value}")
+//                addedExpenseCell0.cellStyle=summaryStyle
+//
+//
+//                sheet.addMergedRegion(
+//                    CellRangeAddress(4,4,0,4)
+//                )
+//
+//                var deletedExpenseRow = sheet.createRow(5)
+//                var deletedExpenseCell0 = deletedExpenseRow.createCell(0)
+//                deletedExpenseCell0.setCellValue("DELETED EXPENSE: ${deletedExpenseSummary.value}")
+//                deletedExpenseCell0.cellStyle=summaryStyle
+//
+//                sheet.addMergedRegion(
+//                    CellRangeAddress(5,5,0,4)
+//                )
+//
+//                //Table Header Row
+//                var tableHeaderRow = sheet.createRow(6)
+//                var cell0 = tableHeaderRow.createCell(0)
+//                cell0.setCellValue("CATEGORY")
+//                cell0.cellStyle=tableHeaderStyle
+//                var cell1 =tableHeaderRow.createCell(1)
+//                cell1.setCellValue("EXPENSE AMOUNT")
+//                cell1.cellStyle=tableHeaderStyle
+//                var cell2=tableHeaderRow.createCell(2)
+//                cell2.setCellValue("PAYMENT TYPE")
+//                cell2.cellStyle = tableHeaderStyle
+//                var cell3=tableHeaderRow.createCell(3)
+//                cell3.setCellValue("REMARKS")
+//                cell3.cellStyle=tableHeaderStyle
+//                var cell4=tableHeaderRow.createCell(4)
+//                cell4.setCellValue("STATUS")
+//                cell4.cellStyle=tableHeaderStyle
+//
+//                //Table Data Row
+//                expenseList.value?.forEachIndexed { index, expense ->
+//                    var dataRow = sheet.createRow(index+8)
+//
+//                    var dataCell0=dataRow.createCell(0)
+//                    dataCell0.setCellValue(expense.catgeoryName)
+//                    dataCell0.cellStyle=dataStyle
+//                    var dataCell1=dataRow.createCell(1)
+//                    dataCell1.setCellValue(expense.expenseAmt)
+//                    dataCell1.cellStyle=dataStyle
+//                    var dataCell2=dataRow.createCell(2)
+//                    dataCell2.setCellValue(expense.paymentType)
+//                    dataCell2.cellStyle=dataStyle
+//                    var dataCell3=dataRow.createCell(3)
+//                    dataCell3.setCellValue(expense.expenseRemarks)
+//                    dataCell3.cellStyle=dataStyle
+//                    var dataCell4=dataRow.createCell(4)
+//                    dataCell4.setCellValue(expense.isDelete)
+//                    dataCell4.cellStyle=dataStyle
+//
 //                }
-//                else
-//                {
-//                    _exportStatus.value = false
-//                }
-                Log.i("TIME DIFF","Time Diff: ${System.currentTimeMillis()-start} ms")
+//
+//                 _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${System.currentTimeMillis()}.xlsx")
+
+//                Log.i("TIME DIFF","Time Diff: ${System.currentTimeMillis()-start} ms")
             }
             catch (e : Exception)
             {

@@ -126,6 +126,13 @@ class Main : AppCompatActivity() {
             fnShrinkFab()
             findNavController(R.id.idContainer).navigate(R.id.idProfile)
         }
+
+        mainViewModel.displayTransparentBg.observe(this){ isDisplay ->
+            if(isDisplay)
+                mainDataBinding.idTransparentBg.visibility=View.VISIBLE
+            else
+                mainDataBinding.idTransparentBg.visibility=View.GONE
+        }
     }
 
     fun fnExpandFab() {

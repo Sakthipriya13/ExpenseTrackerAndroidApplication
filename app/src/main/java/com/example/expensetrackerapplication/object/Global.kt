@@ -34,6 +34,8 @@ object Global {
 
     var lUssrEmail = ""
 
+    var isCalendarSelected : Boolean = false
+
     fun fnGetCurrentDate() : String {
 
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())

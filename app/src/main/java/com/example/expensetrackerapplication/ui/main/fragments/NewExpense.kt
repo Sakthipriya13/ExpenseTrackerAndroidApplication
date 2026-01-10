@@ -24,6 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.databinding.NewExpenseBinding
+import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
@@ -98,21 +99,30 @@ class NewExpense : Fragment() {
 //        }
 
         newExpenseBinding.idCalendarButton.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            if(Global.isCalendarSelected==false){
+                Global.isCalendarSelected=true
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerDialog = DatePickerDialog(requireContext(),
-                { _,y,m,d ->
+                val datePickerDialog = DatePickerDialog(requireContext(),
+                    { _,y,m,d ->
 
-                    calendar.set(y,m,d)
-                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
-                    val date = sdf.format(calendar.time)
-                    newExpenseViewModel._selectedDate.value=date
+                        calendar.set(y,m,d)
+                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val date = sdf.format(calendar.time)
+                        newExpenseViewModel._selectedDate.value=date
+                        Global.isCalendarSelected=false
+                    } , year,month,day)
+                datePickerDialog.setCancelable(false)
+                datePickerDialog.setCanceledOnTouchOutside(false)
 
-                } , year,month,day)
-            datePickerDialog.show()
+                datePickerDialog.setOnCancelListener {
+                    Global.isCalendarSelected=false
+                }
+                datePickerDialog.show()
+            }
         }
 
         settingsViewModel.categoryList.observe(viewLifecycleOwner){ list ->
@@ -168,6 +178,8 @@ class NewExpense : Fragment() {
 
                      newExpenseViewModel._expenseAmt.value=totAmt.toString()
 
+                     newExpenseBinding.idERemarks.requestFocus()
+                     newExpenseBinding.idERemarks.isFocusable=true
 
 
                      Log.v("AMT IN CASH","Amt In Cash: ${newExpenseViewModel.amtInCash.value}")
