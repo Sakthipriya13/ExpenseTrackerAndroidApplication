@@ -1,106 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <data>
         <variable
             name="dayWiseReportListItem"
             type="com.example.expensetrackerapplication.model.DayWiseReportModel" />
         <variable
             name="deleteClickListener"
-            type="com.example.expensetrackerapplication.listener.DayWiseReportClickListener" />
-
+            type="com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:padding="5dp"
+        android:layout_height="60dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/idCategoryName"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:gravity="start|center"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@{dayWiseReportListItem.catgeoryName}"
-                    android:textColor="?attr/textColorBlack"
-                    android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/idCategoryName"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
+                android:maxLines="2"
+                android:paddingEnd="5dp"
+                android:text="@{dayWiseReportListItem.catgeoryName}"
+                android:textColor="?attr/textColorBlack"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/idExpenseAmt"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idCategoryName"
-                    android:gravity="start|center"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@{dayWiseReportListItem.expenseAmt}"
-                    android:textColor="?attr/textColorBlack"
-                    android:textSize="20sp" />
+            <TextView
+                android:id="@+id/idExpenseAmt"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@{dayWiseReportListItem.expenseAmt}"
+                android:textColor="?attr/textColorBlack"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/idExpensePaymentType"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idExpenseAmt"
-                    android:gravity="start|center"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@{dayWiseReportListItem.paymentType}"
-                    android:textColor="?attr/textColorBlack"
-                    android:textSize="20sp" />
+            <TextView
+                android:id="@+id/idExpensePaymentType"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:maxLines="2"
+                android:text="@{dayWiseReportListItem.paymentType}"
+                android:textColor="?attr/textColorBlack"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/idExpenseRemarks"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idExpensePaymentType"
-                    android:gravity="start|center"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@{dayWiseReportListItem.expenseRemarks}"
-                    android:textColor="?attr/textColorBlack"
-                    android:textSize="20sp" />
-                <TextView
-                    android:id="@+id/idExpenseStatus"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintWidth_percent="0.10"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idExpenseRemarks"
-                    android:gravity="start|center"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:textColor="?attr/textColorBlack"
-                    android:text="@{dayWiseReportListItem.isDelete}"
-                    android:textSize="20sp" />
+            <TextView
+                android:id="@+id/idExpenseRemarks"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:maxLines="2"
+                android:text="@{dayWiseReportListItem.expenseRemarks}"
+                android:textColor="?attr/textColorBlack"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/idExpenseStatus"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="?attr/textColorBlack"
+                android:text="@{dayWiseReportListItem.isDelete}"
+                android:textSize="20sp" />
 
-                <ImageView
-                    android:id="@+id/idDeleteExpense"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:onClick="@{() -> deleteClickListener.onDeleteClick(dayWiseReportListItem)}"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:src="@drawable/ic_delete"
-                    app:layout_constraintStart_toEndOf="@id/idExpenseStatus"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.10" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/idDeleteExpense"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{() -> deleteClickListener.onDeleteClick(dayWiseReportListItem)}"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:src="@drawable/ic_delete" />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
