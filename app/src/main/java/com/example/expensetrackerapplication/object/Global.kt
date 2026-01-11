@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.math.RoundingMode
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 object Global {
@@ -44,6 +45,12 @@ object Global {
         return currentDate
     }
 
+    fun fnGetCurrentTime() : String {
+        val sdf = SimpleDateFormat("HH:mm:ss",Locale.getDefault())
+        val currentTime = sdf.format(Date())
+        return currentTime
+    }
+
     fun fnRoundTheFloatingValues(amt : Float) : Float
     {
         return amt.toBigDecimal()
@@ -51,9 +58,9 @@ object Global {
             .toFloat()
     }
 
-    fun fnFormatFloatTwoDigits(amt : Float): Float
+    fun fnFormatFloatTwoDigits(amt : Float): String
     {
-        return String.format("%.2f",amt).toFloat()
+        return String.format("%.2f",amt)
     }
 
     fun fnHeaderFont(workBook: XSSFWorkbook) : Font {

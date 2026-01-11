@@ -158,11 +158,9 @@ class DayWiseReport : Fragment() {
         dayWiseReportViewModel.isExportLoading.observe(viewLifecycleOwner){ isLoading ->
             if(isLoading){
                 dayWiseReportBinding.isExportLoading.visibility=View.VISIBLE
-                mainViewModel._displayTransparentBg.value = true
             }
             else{
                 dayWiseReportBinding.isExportLoading.visibility=View.GONE
-                mainViewModel._displayTransparentBg.value = false
             }
         }
 

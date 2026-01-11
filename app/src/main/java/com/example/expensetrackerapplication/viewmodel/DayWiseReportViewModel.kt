@@ -16,6 +16,7 @@ import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.FillPatternType
@@ -53,7 +54,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     var _exportStatus = MutableLiveData<Boolean>()
     var exportStatus : LiveData<Boolean> = _exportStatus
 
-    var _isExportLoading = MutableLiveData<Boolean>()
+    var _isExportLoading = MutableLiveData<Boolean>(false)
     var isExportLoading : LiveData<Boolean> = _isExportLoading
 
     var _expenseDeleteStatus = MutableLiveData<Boolean>()
@@ -90,7 +91,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
                             expenseId = ex.expenseId,
                             categoryId= ex.expenseCategoryId,
                             catgeoryName= ex.expenseCategoryName,
-                            expenseAmt = Global.fnFormatFloatTwoDigits(ex.expenseAmt.toFloat() ?:0.00f).toString(),
+                            expenseAmt = Global.fnFormatFloatTwoDigits(ex.expenseAmt.toFloat() ?:0.00f),
                             expenseRemarks = ex.expenseRemarks,
                             isDelete = if (ex.expenseStatus == Global.EXPENSE_STATUS_DELETED) "DELETED" else "NOT DELETED",
                             paymentType = when{
@@ -155,139 +156,149 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
     fun fnExportReport(){
         viewModelScope.launch {
-
             try
             {
-                _isExportLoading.value=true
+                Log.i("EXPORT LOADING VALUE","Export Loading Value1: ${isExportLoading.value}")
+                if(isExportLoading.value==false)
+                {
+                    _isExportLoading.value=true
 
-//                var start = System.currentTimeMillis()
-//
-//                var workBook = XSSFWorkbook()
-//                var sheet = workBook.createSheet("DAY WISE REPORT")
-//
-//                sheet.setColumnWidth(0,30*256)
-//                sheet.setColumnWidth(1,20*256)
-//                sheet.setColumnWidth(2,20*256)
-//                sheet.setColumnWidth(3,50*256)
-//                sheet.setColumnWidth(4,20*256)
-//
-//
-//                val headerFont = Global.fnHeaderFont(workBook)
-//                val summaryFont =  Global.fnSummaryFont(workBook)
-//                //Header Style
-//                val headerStyle = Global.fnHeaderStyle(workBook,headerFont)
-//                //Summary Style
-//                val summaryStyle = Global.fnSummaryStyle(workBook,summaryFont)
-//                //Create Table Header Style
-//                val tableHeaderStyle = Global.fnTableHeaderStyle(workBook)
-//                //Create Table Date Style
-//                val dataStyle = Global.fnTableDateStyle(workBook)
-//
-//                //Header Row
-//                var headerRow = sheet.createRow(0)
-//                var headerCell = headerRow.createCell(0)
-//                headerCell.setCellValue("DAY WISE REPORT")
-//                headerCell.cellStyle = headerStyle
-//
-//                sheet.addMergedRegion(
-//                    CellRangeAddress(
-//                        0,  // first row (0th row)
-//                        0,  // last row
-//                        0,  // first column
-//                        4   // last column
-//                    )
-//                )
-//
-//                var dateRow = sheet.createRow(1)
-//                var dateCell0 = dateRow.createCell(0)
-//                dateCell0.setCellValue("DATE: ${selectedDate.value}")
-//                dateCell0.cellStyle=summaryStyle
-//
-//                sheet.addMergedRegion(
-//                    CellRangeAddress(1,1,0,4)
-//                )
-//                var timeRow = sheet.createRow(2)
-//                var timeCell0 = timeRow.createCell(0)
-//                timeCell0.setCellValue("TIME: ${System.currentTimeMillis()}")
-//                timeCell0.cellStyle=summaryStyle
-//
-//
-//                sheet.addMergedRegion(
-//                    CellRangeAddress(2,2,0,4)
-//                )
-//
-//                var totalExpenseRow = sheet.createRow(3)
-//                var totalExpenseCell0 = totalExpenseRow.createCell(0)
-//                totalExpenseCell0.setCellValue("TOTAL EXPENSE: ${totalExpenseSummary.value}")
-//                totalExpenseCell0.cellStyle=summaryStyle
-//
-//
-//                sheet.addMergedRegion(
-//                    CellRangeAddress(3,3,0,4)
-//                )
-//
-//                var addedExpenseRow = sheet.createRow(4)
-//                var addedExpenseCell0 = addedExpenseRow.createCell(0)
-//                addedExpenseCell0.setCellValue("ADDED EXPENSE: ${addedExpenseSummary.value}")
-//                addedExpenseCell0.cellStyle=summaryStyle
-//
-//
-//                sheet.addMergedRegion(
-//                    CellRangeAddress(4,4,0,4)
-//                )
-//
-//                var deletedExpenseRow = sheet.createRow(5)
-//                var deletedExpenseCell0 = deletedExpenseRow.createCell(0)
-//                deletedExpenseCell0.setCellValue("DELETED EXPENSE: ${deletedExpenseSummary.value}")
-//                deletedExpenseCell0.cellStyle=summaryStyle
-//
-//                sheet.addMergedRegion(
-//                    CellRangeAddress(5,5,0,4)
-//                )
-//
-//                //Table Header Row
-//                var tableHeaderRow = sheet.createRow(6)
-//                var cell0 = tableHeaderRow.createCell(0)
-//                cell0.setCellValue("CATEGORY")
-//                cell0.cellStyle=tableHeaderStyle
-//                var cell1 =tableHeaderRow.createCell(1)
-//                cell1.setCellValue("EXPENSE AMOUNT")
-//                cell1.cellStyle=tableHeaderStyle
-//                var cell2=tableHeaderRow.createCell(2)
-//                cell2.setCellValue("PAYMENT TYPE")
-//                cell2.cellStyle = tableHeaderStyle
-//                var cell3=tableHeaderRow.createCell(3)
-//                cell3.setCellValue("REMARKS")
-//                cell3.cellStyle=tableHeaderStyle
-//                var cell4=tableHeaderRow.createCell(4)
-//                cell4.setCellValue("STATUS")
-//                cell4.cellStyle=tableHeaderStyle
-//
-//                //Table Data Row
-//                expenseList.value?.forEachIndexed { index, expense ->
-//                    var dataRow = sheet.createRow(index+8)
-//
-//                    var dataCell0=dataRow.createCell(0)
-//                    dataCell0.setCellValue(expense.catgeoryName)
-//                    dataCell0.cellStyle=dataStyle
-//                    var dataCell1=dataRow.createCell(1)
-//                    dataCell1.setCellValue(expense.expenseAmt)
-//                    dataCell1.cellStyle=dataStyle
-//                    var dataCell2=dataRow.createCell(2)
-//                    dataCell2.setCellValue(expense.paymentType)
-//                    dataCell2.cellStyle=dataStyle
-//                    var dataCell3=dataRow.createCell(3)
-//                    dataCell3.setCellValue(expense.expenseRemarks)
-//                    dataCell3.cellStyle=dataStyle
-//                    var dataCell4=dataRow.createCell(4)
-//                    dataCell4.setCellValue(expense.isDelete)
-//                    dataCell4.cellStyle=dataStyle
-//
-//                }
-//
-//                 _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${System.currentTimeMillis()}.xlsx")
+                    delay(1000L)
 
-//                Log.i("TIME DIFF","Time Diff: ${System.currentTimeMillis()-start} ms")
+                    Log.i("EXPORT LOADING VALUE","Export Loading Value2: ${isExportLoading.value}")
+
+                    var start = Global.fnGetCurrentTime()
+
+                    var workBook = XSSFWorkbook()
+                    var sheet = workBook.createSheet("DAY WISE REPORT")
+
+                    sheet.setColumnWidth(0,30*256)
+                    sheet.setColumnWidth(1,20*256)
+                    sheet.setColumnWidth(2,20*256)
+                    sheet.setColumnWidth(3,50*256)
+                    sheet.setColumnWidth(4,20*256)
+
+
+                    val headerFont = Global.fnHeaderFont(workBook)
+                    val summaryFont =  Global.fnSummaryFont(workBook)
+                    //Header Style
+                    val headerStyle = Global.fnHeaderStyle(workBook,headerFont)
+                    //Summary Style
+                    val summaryStyle = Global.fnSummaryStyle(workBook,summaryFont)
+                    //Create Table Header Style
+                    val tableHeaderStyle = Global.fnTableHeaderStyle(workBook)
+                    //Create Table Date Style
+                    val dataStyle = Global.fnTableDateStyle(workBook)
+
+                    //Header Row
+                    var headerRow = sheet.createRow(0)
+                    var headerCell = headerRow.createCell(0)
+                    headerCell.setCellValue("DAY WISE REPORT")
+                    headerCell.cellStyle = headerStyle
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(
+                            0,  // first row (0th row)
+                            0,  // last row
+                            0,  // first column
+                            4   // last column
+                        )
+                    )
+
+                    var dateRow = sheet.createRow(1)
+                    var dateCell0 = dateRow.createCell(0)
+                    dateCell0.setCellValue("DATE: ${selectedDate.value}")
+                    dateCell0.cellStyle=summaryStyle
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(1,1,0,4)
+                    )
+                    var timeRow = sheet.createRow(2)
+                    var timeCell0 = timeRow.createCell(0)
+                    timeCell0.setCellValue("TIME: ${Global.fnGetCurrentTime()}")
+                    timeCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(2,2,0,4)
+                    )
+
+                    var totalExpenseRow = sheet.createRow(3)
+                    var totalExpenseCell0 = totalExpenseRow.createCell(0)
+                    totalExpenseCell0.setCellValue("TOTAL EXPENSE: ${totalExpenseSummary.value}")
+                    totalExpenseCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(3,3,0,4)
+                    )
+
+                    var addedExpenseRow = sheet.createRow(4)
+                    var addedExpenseCell0 = addedExpenseRow.createCell(0)
+                    addedExpenseCell0.setCellValue("ADDED EXPENSE: ${addedExpenseSummary.value}")
+                    addedExpenseCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(4,4,0,4)
+                    )
+
+                    var deletedExpenseRow = sheet.createRow(5)
+                    var deletedExpenseCell0 = deletedExpenseRow.createCell(0)
+                    deletedExpenseCell0.setCellValue("DELETED EXPENSE: ${deletedExpenseSummary.value}")
+                    deletedExpenseCell0.cellStyle=summaryStyle
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(5,5,0,4)
+                    )
+
+                    //Table Header Row
+                    var tableHeaderRow = sheet.createRow(6)
+                    var cell0 = tableHeaderRow.createCell(0)
+                    cell0.setCellValue("CATEGORY")
+                    cell0.cellStyle=tableHeaderStyle
+                    var cell1 =tableHeaderRow.createCell(1)
+                    cell1.setCellValue("EXPENSE AMOUNT")
+                    cell1.cellStyle=tableHeaderStyle
+                    var cell2=tableHeaderRow.createCell(2)
+                    cell2.setCellValue("PAYMENT TYPE")
+                    cell2.cellStyle = tableHeaderStyle
+                    var cell3=tableHeaderRow.createCell(3)
+                    cell3.setCellValue("REMARKS")
+                    cell3.cellStyle=tableHeaderStyle
+                    var cell4=tableHeaderRow.createCell(4)
+                    cell4.setCellValue("STATUS")
+                    cell4.cellStyle=tableHeaderStyle
+
+                    //Table Data Row
+                    expenseList.value?.forEachIndexed { index, expense ->
+                        var dataRow = sheet.createRow(index+8)
+
+                        var dataCell0=dataRow.createCell(0)
+                        dataCell0.setCellValue(expense.catgeoryName)
+                        dataCell0.cellStyle=dataStyle
+                        var dataCell1=dataRow.createCell(1)
+                        dataCell1.setCellValue(expense.expenseAmt)
+                        dataCell1.cellStyle=dataStyle
+                        var dataCell2=dataRow.createCell(2)
+                        dataCell2.setCellValue(expense.paymentType)
+                        dataCell2.cellStyle=dataStyle
+                        var dataCell3=dataRow.createCell(3)
+                        dataCell3.setCellValue(expense.expenseRemarks)
+                        dataCell3.cellStyle=dataStyle
+                        var dataCell4=dataRow.createCell(4)
+                        dataCell4.setCellValue(expense.isDelete)
+                        dataCell4.cellStyle=dataStyle
+
+                    }
+
+                    _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${Global.fnGetCurrentTime()}.xlsx")
+
+                    Log.i("EXPORT LOADING VALUE","Export Loading Value3: ${isExportLoading.value}")
+
+                    Log.i("TIME DIFF","Time Diff: ${Global.fnGetCurrentTime()} ms")
+
+                }
             }
             catch (e : Exception)
             {
@@ -322,6 +333,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
             }
 
             workBook.close()
+//            delay(1000L)
             _isExportLoading.value=false
             true
         }
