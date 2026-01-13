@@ -37,6 +37,8 @@ object Global {
 
     var isCalendarSelected : Boolean = false
 
+    val defaultCategories = listOf<String>("Food","Healthcare","Utilities","Groceries","Transportation")
+
     fun fnGetCurrentDate() : String {
 
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())

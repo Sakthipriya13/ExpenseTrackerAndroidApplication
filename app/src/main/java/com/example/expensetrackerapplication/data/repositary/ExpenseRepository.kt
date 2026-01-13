@@ -24,7 +24,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
 
     suspend fun fnGetExpenseDetailsPerDate(date: String?): List<ExpenseEntity>{
         try {
-            return expenseDao.fnGetExpensePerDate(date)
+            return expenseDao.fnGetExpensePerDate(date,Global.lUserId)
         }
         catch (e : Exception){
             Log.e("GET EXPENSE DETAILS PER DATE","Get Expense Details Per Date: ${e.message}")
@@ -35,7 +35,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnDeleteExpense(expenseId: Int?): Boolean {
         try
         {
-            var delStatus = expenseDao.fnDeleteExpensePerId(expenseId,Global.EXPENSE_STATUS_DELETED)
+            var delStatus = expenseDao.fnDeleteExpensePerId(expenseId,Global.EXPENSE_STATUS_DELETED,Global.lUserId)
             if(delStatus>0)
                 return true
             else
