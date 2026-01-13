@@ -28,6 +28,20 @@ class CategoryRepository(val categoryDao: CategoryDao)
 
     }
 
+    suspend fun fnInsertDefaultCategoriesToDb(categoryEntity: List<CategoryEntitty>): List<Long>
+    {
+        try{
+            return categoryDao.fnInsertDefaultCategories(categoryEntity)
+
+        }
+        catch (e: Exception)
+        {
+            Log.e("INSERT CATEGORIES","Insert Categories: "+e.message)
+            return listOf()
+        }
+
+    }
+
     suspend fun fnGetAllCategoriesFromDb() : List<CategoryEntitty>{
         try {
             var categoryList = categoryDao.fnGetAllCategories()

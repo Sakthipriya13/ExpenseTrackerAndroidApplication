@@ -10,8 +10,12 @@ import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 interface CategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun fnInsertCategories(categoryEntitty: CategoryEntitty) : Long
+    suspend fun fnInsertCategories(categoryEntity: CategoryEntitty) : Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun fnInsertDefaultCategories(categoryEntity: List<CategoryEntitty>) : List<Long>
 
     @Query("Select * from Categories")
     suspend fun fnGetAllCategories() : List<CategoryEntitty>
+
 }
