@@ -94,4 +94,12 @@
 
     <string name="confirm">உறுதி செய்</string>
 
+
+    <string name="gallery">புகைப்படங்கள்</string>
+    <string name="camera">கேமரா</string>
+
+    <string name="submit">பதிவு செய்க</string>
+
+    <string name="income">வருமானம்</string>
+
 </resources>

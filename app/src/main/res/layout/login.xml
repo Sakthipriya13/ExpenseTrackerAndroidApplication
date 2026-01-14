@@ -127,7 +127,7 @@
                     android:inputType="textPassword"
                     android:hint="@string/password"
                     android:text="@={loginViewModel._userPassword}"
-                    android:nextFocusDown="@id/idLayout"
+                    android:nextFocusDown="@id/idLogin"
                     android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 

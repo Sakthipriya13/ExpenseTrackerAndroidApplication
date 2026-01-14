@@ -1,12 +1,10 @@
 package com.example.expensetrackerapplication.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.expensetrackerapplication.data.entity.UserEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -21,5 +19,5 @@ interface UserDao {
     suspend fun fnDeleteUserAccountFromDb(id: Int) : Int
 
     @Query("UPDATE USER SET UserPassword= :newPassword WHERE UserId= :userId AND UserPassword= :currentPassword")
-    suspend fun fnUpdateUserPassword(newPassword : String, userId : Int,currentPassword : String) : Long
+    suspend fun fnUpdateUserPassword(newPassword: String?, userId: Int, currentPassword: String?) : Int
 }

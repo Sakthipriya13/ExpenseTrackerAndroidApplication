@@ -63,12 +63,12 @@ class Login : Fragment() {
             }
         }
 
-        loginDataBinding.idPassword.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                loginDataBinding.idLogin.isFocusable = true
-                loginDataBinding.idLogin.requestFocus()
-            }
-        }
+//        loginDataBinding.idPassword.setOnFocusChangeListener { _, hasFocus ->
+//            if (!hasFocus) {
+//                loginDataBinding.idLogin.isFocusable = true
+//                loginDataBinding.idLogin.requestFocus()
+//            }
+//        }
 
 //        loginDataBinding.idUserName.setOnFocusChangeListener { _, hasFocus ->
 //            if (!hasFocus) {

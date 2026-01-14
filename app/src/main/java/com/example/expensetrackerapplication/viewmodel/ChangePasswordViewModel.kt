@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.repositary.UserRepository
 import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.ui_event.ResultState
 import kotlinx.coroutines.launch
 
 class ChangePasswordViewModel(application : Application) : AndroidViewModel(application = application)
@@ -19,17 +20,20 @@ class ChangePasswordViewModel(application : Application) : AndroidViewModel(appl
         userRepository = UserRepository(userDao)
 
     }
-    var _currentPassword = MutableLiveData<String>()
+    var _currentPassword = MutableLiveData<String>(""+Global.lUserPassword)
     var currentPassword : LiveData<String> = _currentPassword
 
     var _newPassword = MutableLiveData<String>()
     var newPassword : LiveData<String> = _newPassword
 
-    var _changePasswordStatus = MutableLiveData<Boolean>()
-    var changePasswordStatus : LiveData<Boolean> = _changePasswordStatus
+    var _result = MutableLiveData<ResultState>()
+    var result : LiveData<ResultState> = _result
+
+    var _isCancel = MutableLiveData<Boolean>()
+    var isCancel : LiveData<Boolean> = _isCancel
 
     fun onClickCancel(){
-
+        _isCancel.value = true
     }
 
     fun onClickConfirm(){
@@ -37,10 +41,13 @@ class ChangePasswordViewModel(application : Application) : AndroidViewModel(appl
               try{
                     var updateStatus = userRepository.fnUpdateLoginUserPassword(newPassword =newPassword.value, userId =Global.lUserId, currentPassword = currentPassword.value)
 
-                    if (updateStatus) _changePasswordStatus.postValue(true) else _changePasswordStatus.postValue(false)
+                    if (updateStatus)
+                        _result.postValue(ResultState.success("Successfully User Password Changed"))
+                    else
+                        _result.postValue(ResultState.fail("Password Changes Failed"))
               }
               catch (e : Exception){
-                  _changePasswordStatus.postValue(false)
+                  _result.postValue(ResultState.fail("Password Changes Failed"))
               }
           }
     }

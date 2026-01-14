@@ -13,13 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.AddIncomeBinding
 import com.example.expensetrackerapplication.databinding.ChangePasswordBinding
 import com.example.expensetrackerapplication.databinding.ConfirmationPromptBinding
+import com.example.expensetrackerapplication.databinding.EditProfilePhotoBinding
 import com.example.expensetrackerapplication.databinding.ProfileBinding
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui.auth.Auth
+import com.example.expensetrackerapplication.ui_event.ResultState
+import com.example.expensetrackerapplication.viewmodel.AddInComeViewModel
 import com.example.expensetrackerapplication.viewmodel.ChangePasswordViewModel
+import com.example.expensetrackerapplication.viewmodel.EditProfilePhotoViewModel
 import com.example.expensetrackerapplication.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -107,6 +112,20 @@ class Profile : Fragment() {
             }
         }
 
+
+        profileViewModel.isEdit.observe(viewLifecycleOwner){ status ->
+            if(status){
+                AddIncome().show(parentFragmentManager,"EditProfilePhotoBottomSheet")
+            }
+        }
+
+
+        profileViewModel.isAddIncome.observe(viewLifecycleOwner){ status ->
+            if(status){
+                EditProfile().show(parentFragmentManager,"AddIncomeBottomSheet")
+            }
+        }
+
         return profileBinding.root
     }
 
@@ -137,6 +156,7 @@ class ChangePassword : BottomSheetDialogFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isCancelable = false
     }
 
     override fun onCreateView(
@@ -148,18 +168,73 @@ class ChangePassword : BottomSheetDialogFragment(){
         changePasswordBinding.changePassword=changePasswordViewModel
         changePasswordBinding.lifecycleOwner=viewLifecycleOwner
 
-        changePasswordViewModel.changePasswordStatus.observe(viewLifecycleOwner){ status ->
-            if(status == true ){
-                fnShowMessage("Successfully User Password Changed",requireContext(),R.drawable.bg_success)
+        changePasswordViewModel.isCancel.observe(viewLifecycleOwner){ isCancel ->
+            if(isCancel){
                 dismiss()
             }
-            else{
-                fnShowMessage("Password Changes Failed",requireContext(),R.drawable.error_bg)
-                dismiss()
+        }
+        changePasswordViewModel.result.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ResultState.success  -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    dismiss()
+                }
+                is ResultState.fail  -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    dismiss()
+                }
             }
         }
 //        return super.onCreateView(inflater, container, savedInstanceState)
         return changePasswordBinding.root
 
+    }
+}
+
+class AddIncome : BottomSheetDialogFragment(){
+
+    private lateinit var addIncomeBinding : AddIncomeBinding
+    val addIncomeViewModel : AddInComeViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCancelable = false
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        addIncomeBinding = DataBindingUtil.inflate(inflater,R.layout.add_income,container,false)
+        addIncomeBinding.addIncome = addIncomeViewModel
+        addIncomeBinding.lifecycleOwner=viewLifecycleOwner
+
+        return addIncomeBinding.root
+    }
+}
+
+class EditProfile : BottomSheetDialogFragment(){
+
+    private lateinit var editProfilePhotoBinding : EditProfilePhotoBinding
+
+    val editProfilePhotoViewModel : EditProfilePhotoViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCancelable = false
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        editProfilePhotoBinding = DataBindingUtil.inflate(inflater,R.layout.edit_profile_photo,container,false)
+        editProfilePhotoBinding.editProfilePhoto=editProfilePhotoViewModel
+        editProfilePhotoBinding.lifecycleOwner=viewLifecycleOwner
+
+
+        return editProfilePhotoBinding.root
     }
 }
