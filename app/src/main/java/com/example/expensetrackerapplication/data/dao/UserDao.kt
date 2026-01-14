@@ -16,4 +16,10 @@ interface UserDao {
 
     @Query("SELECT * FROM User WHERE UserName=:name AND UserPassword=:password")
     suspend fun fnGetUserBasedOnUserName(name:String?,password:String?): List<UserEntity>
+
+    @Query("DELETE FROM User WHERE UserId= :id")
+    suspend fun fnDeleteUserAccountFromDb(id: Int) : Int
+
+    @Query("UPDATE USER SET UserPassword= :newPassword WHERE UserId= :userId AND UserPassword= :currentPassword")
+    suspend fun fnUpdateUserPassword(newPassword : String, userId : Int,currentPassword : String) : Long
 }

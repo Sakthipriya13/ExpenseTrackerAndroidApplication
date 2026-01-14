@@ -8,18 +8,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.database.AppDatabase
+import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.entity.UserEntity
+import com.example.expensetrackerapplication.data.repositary.CategoryRepository
 import com.example.expensetrackerapplication.data.repositary.UserRepository
+import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(application: Application) : AndroidViewModel(application) {
 
     var userRepository: UserRepository
+    var categoryRepository : CategoryRepository
 
     init {
         val userDao= AppDatabase.getdatabase(application).userDao()
         userRepository= UserRepository(userDao)
 
+        val categoryDao = AppDatabase.getdatabase(application).CategoryDao()
+        categoryRepository= CategoryRepository(categoryDao)
     }
 
     //User Name
@@ -122,10 +128,26 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                     userEmail = email.value, userPassword = password.value, userId = 0
                 )
 
-                val status = userRepository.fnInsertUserDetails(user)
-                if(status == true)
+                val userId = userRepository.fnInsertUserDetails(user)
+                if(userId > 0)
                 {
-                    _insertStatus.value=true
+                    var categoryEntities=Global.defaultCategories.map{
+                        CategoryEntitty(
+                            categoryId = 0,
+                            categoryName = it,
+                            userId = userId.toInt()
+                        )
+                    }
+
+                    var categoryInsertStatus = categoryRepository.fnInsertDefaultCategoriesToDb(categoryEntities)
+
+                    if(categoryInsertStatus.isNotEmpty() && categoryInsertStatus.all {it > 0})
+                    {
+                        _insertStatus.postValue(true)
+                    }
+                    else{
+                        _insertStatus.value=false
+                    }
                 }
                 else
                 {

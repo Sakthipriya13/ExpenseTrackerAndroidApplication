@@ -85,5 +85,13 @@
 
     <string name="do_you_want_to_delete_the_expense">இந்த செலவை நீக்க விரும்புகிறீர்களா?</string>
 
+    <string name="edit">மாற்று</string>
+
+
+    <string name="add_income">வருமானம் சேர்த்தல்</string>
+    <string name="change_password">கடவுச்சொல் மாற்றம்</string>
+    <string name="del_account">கணக்கு நீக்கம்</string>
+
+    <string name="confirm">உறுதி செய்</string>
 
 </resources>

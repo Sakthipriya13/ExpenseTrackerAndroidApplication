@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.repositary.CategoryRepository
+import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application)
@@ -26,22 +27,22 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     {
         viewModelScope.launch {
             try{
-                var defaultCategories = listOf<String?>("Food","Travel","Health")
+//                var defaultCategories = listOf<String?>("Food","Travel","Health")
                 var categories = mutableListOf<String?>("HouseRent","Grogeries","Savings","Entertainment","Education")
 
-                for(i in defaultCategories)
-                {
-                    var categoryEntitty = CategoryEntitty(0,i)
-                    var result = categoryRepository.fnInsertCategoriesToDb(
-                        categoryEntitty
-                    )
-
-                    Log.v("INSERT STAUS","Insert Status: "+result)
-
-                }
+//                for(i in defaultCategories)
+//                {
+//                    var categoryEntitty = CategoryEntitty(0,i,Global.lUserId)
+//                    var result = categoryRepository.fnInsertCategoriesToDb(
+//                        categoryEntitty
+//                    )
+//
+//                    Log.v("INSERT STAUS","Insert Status: "+result)
+//
+//                }
                 for(i in categories)
                 {
-                    var categoryEntitty = CategoryEntitty(0,i)
+                    var categoryEntitty = CategoryEntitty(0,i,Global.lUserId)
                     var result = categoryRepository.fnInsertCategoriesToDb(
                         categoryEntitty
                     )

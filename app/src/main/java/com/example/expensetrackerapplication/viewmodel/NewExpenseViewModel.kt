@@ -139,6 +139,7 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             var expenseEntity = ExpenseEntity(
                 expenseId =0,
+                userId = Global.lUserId,
                 expenseDate = selectedDate.value ?: "",
                 expenseAmt = expenseAmt.value?.toFloatOrNull() ?:0.0f,
                 expenseCategoryId = selectedCategoryId.value ?: -1,

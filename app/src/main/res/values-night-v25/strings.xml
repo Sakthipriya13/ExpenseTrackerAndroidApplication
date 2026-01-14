@@ -6,4 +6,12 @@
 
     <string name="do_you_want_to_delete_the_expense">Do You Want To Delete The Expense?</string>
 
+    <string name="edit">Edit</string>
+
+    <string name="add_income">Add Income</string>
+    <string name="change_password">Change Password</string>
+    <string name="del_account">Delete Account</string>
+    <string name="logout">Logout</string>
+    <string name="confirm">CONFIRM</string>
+
 </resources>

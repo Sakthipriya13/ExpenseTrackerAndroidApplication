@@ -3,24 +3,22 @@ package com.example.expensetrackerapplication.data.repositary
 import android.util.Log
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.entity.UserEntity
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 class UserRepository(var userDao: UserDao)
 {
-    suspend fun fnInsertUserDetails(user: UserEntity) : Boolean
+    suspend fun fnInsertUserDetails(user: UserEntity) : Long
     {
         try {
-            val insertStatus=userDao.fnInsertUser(user)
-            if(insertStatus>0)
-                return true
-            else
-                return false
+            return userDao.fnInsertUser(user)
+//            if(insertStatus>0)
+//                return true
+//            else
+//                return false
         }
         catch (e: Exception)
         {
             Log.e("INSERT USER","Insert User In The Database: $e.message")
-            return false
+            return 0
         }
 
     }
@@ -37,6 +35,31 @@ class UserRepository(var userDao: UserDao)
                 "Error fetching user details: ${e.message}"
             )
             mutableListOf()
+        }
+    }
+
+    suspend fun fnDeleteUser(userId : Int) : Boolean{
+        return try {
+            var result = userDao.fnDeleteUserAccountFromDb(userId)
+            if(result > 0) true else false
+        }
+        catch (e: Exception)
+        {
+            Log.e(
+                "DELETE USER ACCOUNT",
+                "Delete User Account: ${e.message}"
+            )
+            false
+        }
+    }
+
+    suspend fun fnUpdateLoginUserPassword(currentPassword: String?, userId: Int, newPassword: String?):Boolean{
+        return try {
+            var result = userDao.fnUpdateUserPassword(newPassword = newPassword,userId, currentPassword = currentPassword)
+            if(result>0) true else false
+        } catch (e : Exception){
+            Log.e("UPDATE USER PASSWORD","Update User Password: ${e.message}")
+            false
         }
     }
 }

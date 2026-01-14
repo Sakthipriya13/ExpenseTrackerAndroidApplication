@@ -92,7 +92,7 @@ class SignUp : Fragment() {
             }
             else
             {
-                Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
+                Log.d("DATA_INSERT_STATUS", "Data Insterted Failed")
                 fnShowMessage("SignUp Failed",requireContext(),R.drawable.error_bg)
             }
         }

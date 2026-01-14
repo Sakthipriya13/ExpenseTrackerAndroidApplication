@@ -23,6 +23,12 @@
     </style>
 
 
+    <style name="Circular" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+
     <style name="ToolBarTittle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
