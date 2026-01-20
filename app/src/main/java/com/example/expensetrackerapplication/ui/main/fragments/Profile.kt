@@ -1,17 +1,31 @@
 package com.example.expensetrackerapplication.ui.main.fragments
 
+import android.Manifest
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.paging.LOG_TAG
+import com.bumptech.glide.Glide
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.AddIncomeBinding
 import com.example.expensetrackerapplication.databinding.ChangePasswordBinding
@@ -21,12 +35,19 @@ import com.example.expensetrackerapplication.databinding.ProfileBinding
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui.auth.Auth
+import com.example.expensetrackerapplication.ui_event.EditProfilePhoto
 import com.example.expensetrackerapplication.ui_event.ResultState
 import com.example.expensetrackerapplication.viewmodel.AddInComeViewModel
 import com.example.expensetrackerapplication.viewmodel.ChangePasswordViewModel
 import com.example.expensetrackerapplication.viewmodel.EditProfilePhotoViewModel
+import com.example.expensetrackerapplication.viewmodel.MainViewModel
 import com.example.expensetrackerapplication.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.delay
+import java.io.File
+import java.security.Permissions
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +67,45 @@ class Profile : Fragment() {
     private lateinit var profileBinding: ProfileBinding
 
     private val profileViewModel : ProfileViewModel by viewModels()
+
+    private val mainViewModel : MainViewModel by activityViewModels()
+
+    private  var profilePhotoUri : Uri? = null
+
+//    private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){ uri : Uri? ->
+//        uri.let {
+//            Log.i("IMAGE URI","Image Uri: $uri")
+////            profileViewModel._profileUri.value=uri
+//            profilePhotoUri=uri
+//
+//            profileViewModel.fnUpdateUserProfilePhoto(profilePhotoUri)
+//
+//        }
+//    }
+
+
+    private var galleryLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()){ uri : Uri ->
+        uri.let {
+            Log.i("IMAGE URI","Image Uri: $uri")
+
+            requireContext().contentResolver.takePersistableUriPermission(
+                it,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+
+            profilePhotoUri=it
+
+            profileViewModel.fnUpdateUserProfilePhoto(profilePhotoUri)
+
+        }
+    }
+
+    private var takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()){ success ->
+        if(success){
+//            profileViewModel._profileUri.value=profilePhotoUri
+            profileViewModel.fnUpdateUserProfilePhoto(profilePhotoUri)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -68,11 +128,9 @@ class Profile : Fragment() {
         profileBinding.profile=profileViewModel
         profileBinding.lifecycleOwner=viewLifecycleOwner
 
-        profileViewModel.isEdit.observe(viewLifecycleOwner) { isEdit ->
-            if (isEdit) {
 
-            }
-        }
+        profileViewModel.fnGetUserProfilePhotoUri()
+
 
         profileViewModel.isDelAccount.observe(viewLifecycleOwner){ isDelAc ->
             if(isDelAc){
@@ -112,21 +170,114 @@ class Profile : Fragment() {
             }
         }
 
-
         profileViewModel.isEdit.observe(viewLifecycleOwner){ status ->
-            if(status){
-                AddIncome().show(parentFragmentManager,"EditProfilePhotoBottomSheet")
+            if(status == true ){
+                val view = EditProfilePhotoBinding.inflate(layoutInflater)
+
+                var delAcPrompt = AlertDialog.Builder(requireContext())
+                    .setView(view.root)
+                    .setCancelable(false)
+                    .create()
+                delAcPrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+                view.idGalleryFlow.setOnClickListener {
+                    galleryLauncher.launch(arrayOf("image/*"))
+//                    profileViewModel.fnUpdateUserProfilePhoto(profilePhotoUri)
+                    delAcPrompt.dismiss()
+                }
+
+                view.idCameraFlow.setOnClickListener {
+                    checkCameraPermissions()
+                    delAcPrompt.dismiss()
+                }
+
+                view.idBtnDelProfilePhoto.setOnClickListener {
+                    profileBinding.idProfileImage.setImageResource(R.drawable.user)
+                    profileViewModel.fnUpdateUserProfilePhoto(null)
+                    delAcPrompt.dismiss()
+                }
+
+                view.idBtnCancel.setOnClickListener {
+                    delAcPrompt.dismiss()
+                }
+                delAcPrompt.show()
+
+
+//                val editOptions = arrayOf("Gallery","Camera")
+//                var editPrompt = AlertDialog.Builder(requireContext())
+//                    .setItems(editOptions){ _,which ->
+//                        when(which){
+//                            0 -> {
+//                                galleryLauncher.launch("image/*")
+//                            }
+//                            1 -> {
+//                                checkCameraPermissions()
+//                            }
+//                        }
+//                    }
+//                    .show()
             }
         }
 
 
         profileViewModel.isAddIncome.observe(viewLifecycleOwner){ status ->
             if(status){
-                EditProfile().show(parentFragmentManager,"AddIncomeBottomSheet")
+                AddIncome().show(parentFragmentManager,"AddIncomeBottomSheet")
             }
         }
 
+//        profileViewModel.isDelProfilePhoto.observe(viewLifecycleOwner){ isDelete ->
+//            if(isDelete){
+//                profileBinding.idProfileImage.setImageResource(R.drawable.user)
+//            }
+//        }
+
+        profileViewModel.profileUri.observe(viewLifecycleOwner){ uri ->
+            if(uri!=null){
+                Log.i("PROFILE URI","Profile Uri: $uri")
+                profileBinding.idProfileImage.setImageURI(uri)
+                mainViewModel.fnGetUserProfilePhotoUri()
+            }
+            else{
+                profileBinding.idProfileImage.setImageResource(R.drawable.user)
+                fnShowMessage("Something Wrong , Can't Load Profile Photo",requireContext(),R.drawable.error_bg)
+            }
+        }
+
+
+
         return profileBinding.root
+    }
+
+    fun checkCameraPermissions(){
+        if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED )
+        {
+            openCamera()
+        }
+        else{
+            requestPermissions(arrayOf(Manifest.permission.CAMERA),100)
+        }
+    }
+
+    fun openCamera(){
+        profilePhotoUri=createImageUri()
+        takePictureLauncher.launch(profilePhotoUri)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode==100 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            openCamera()
+        }
+    }
+
+    fun createImageUri(): Uri{
+        val file = File(requireContext().externalCacheDir,"camera_img_${Global.fnGetCurrentTime()}.jpg")
+        return FileProvider.getUriForFile(requireContext(),"${requireContext().packageName}.provider",file)
     }
 
     companion object {
@@ -209,32 +360,107 @@ class AddIncome : BottomSheetDialogFragment(){
         addIncomeBinding.addIncome = addIncomeViewModel
         addIncomeBinding.lifecycleOwner=viewLifecycleOwner
 
+        addIncomeBinding.idBtnCalendar.setOnClickListener {
+            if(Global.isCalendarSelected==false)
+            {
+                Global.isCalendarSelected=true
+                var calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _,y,m,d ->
+                       calendar.set(y,m,d)
+                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        var date = sdf.format(calendar.time)
+                        addIncomeViewModel._selectedDate.value=date
+                        Global.isCalendarSelected=false
+                    },year,month,day
+                )
+
+                datePickerDialog.setCancelable(false)
+                datePickerDialog.setCanceledOnTouchOutside(false)
+                datePickerDialog.setOnCancelListener {
+                    Global.isCalendarSelected=false
+                    datePickerDialog.dismiss()
+                }
+                datePickerDialog.show()
+            }
+        }
+
+        addIncomeViewModel.isLeave.observe(viewLifecycleOwner){ isLeave ->
+            if(isLeave){
+                dismiss()
+            }
+        }
+
+        addIncomeViewModel.insertStatus.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ResultState.success -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    dismiss()
+                }
+
+                is ResultState.fail -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
+                    dismiss()
+                }
+            }
+        }
+
         return addIncomeBinding.root
     }
 }
 
-class EditProfile : BottomSheetDialogFragment(){
-
-    private lateinit var editProfilePhotoBinding : EditProfilePhotoBinding
-
-    val editProfilePhotoViewModel : EditProfilePhotoViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        isCancelable = false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        editProfilePhotoBinding = DataBindingUtil.inflate(inflater,R.layout.edit_profile_photo,container,false)
-        editProfilePhotoBinding.editProfilePhoto=editProfilePhotoViewModel
-        editProfilePhotoBinding.lifecycleOwner=viewLifecycleOwner
-
-
-        return editProfilePhotoBinding.root
-    }
-}
+//class EditProfile : BottomSheetDialogFragment(){
+//
+//    private lateinit var editProfilePhotoBinding : EditProfilePhotoBinding
+//
+//    val editProfilePhotoViewModel : EditProfilePhotoViewModel by viewModels()
+//
+//    val profileViewModel : ProfileViewModel by activityViewModels()
+//
+//
+//
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        isCancelable = false
+//    }
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//
+//        editProfilePhotoBinding = DataBindingUtil.inflate(inflater,R.layout.edit_profile_photo,container,false)
+//        editProfilePhotoBinding.editProfilePhoto=editProfilePhotoViewModel
+//        editProfilePhotoBinding.lifecycleOwner=viewLifecycleOwner
+//
+//
+//        editProfilePhotoViewModel.isLeave.observe(viewLifecycleOwner){ isLeave ->
+//            if(isLeave){
+//                dismiss()
+//            }
+//        }
+//
+//        editProfilePhotoViewModel.isDelProfilePhoto.observe(viewLifecycleOwner){ isDel ->
+//            if(isDel){
+//                profileViewModel._isDelProfilePhoto.value =true
+//            }
+//        }
+//
+////        editProfilePhotoViewModel.editResult.observe(viewLifecycleOwner){ res ->
+////            when(res){
+////                is EditProfilePhoto.gallery -> galleryLauncher.launch("image/*")
+////                is EditProfilePhoto.camera -> {
+////
+////                }
+////            }
+////        }
+//
+//        return editProfilePhotoBinding.root
+//    }
+//}

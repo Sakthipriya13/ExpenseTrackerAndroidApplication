@@ -89,5 +89,5 @@ dependencies {
     implementation(libs.poi)
     implementation(libs.poi.ooxml)
 
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

@@ -26,7 +26,6 @@
     <string name="dashboard_frag">மேற்பார்வை</string>
     <string name="reports_frag">அறிக்கைகள்</string>
     <string name="add_expense_frag">புதிய செலவு</string>
-    <string name="category_management">வகை மேலாண்மை</string>
     <string name="setting_frag">அமைப்பு</string>
     <string name="profile_frag">சுயவிவரம்</string>
     <string name="logout">வெளியேறு</string>
@@ -101,5 +100,18 @@
     <string name="submit">பதிவு செய்க</string>
 
     <string name="income">வருமானம்</string>
+    <string name="english">ஆங்கிலம்</string>
+    <string name="tamil">தமிழ்</string>
+
+    <string name="theme">தீம்</string>
+    <string name="dark_theme">இருண்ட தீம்</string>
+    <string name="light_theme">ஒளி தீம்</string>
+    <string name="system_theme">சிஸ்டம் தீம்</string>
+
+    <string name="theme_color">தீம் நிறம்</string>
+    <string name="category_management">செலவு வகை மேலாண்மை</string>
+
+    <string name="default_categories">முன்னிருப்பு வகைகள்</string>
+
 
 </resources>

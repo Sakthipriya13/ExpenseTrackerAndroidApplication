@@ -20,7 +20,7 @@
             android:id="@+id/idProfileImage"
             app:shapeAppearanceOverlay="@style/Circular"
             android:scaleType="centerCrop"
-            android:src="@drawable/profile_demo_img"
+            android:src="@drawable/user"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -53,4 +53,17 @@ class CategoryRepository(val categoryDao: CategoryDao)
             return mutableListOf()
         }
     }
+
+
+    suspend fun fnGetDefaultCategoriesFromDb() : List<CategoryEntitty>{
+        try {
+            var categoryList = categoryDao.fnGetDefaultCategories()
+            return categoryList
+        }
+        catch (e: Exception)
+        {
+            Log.e("GET CATEGORIES","Get Categories: "+e.message)
+            return mutableListOf()
+        }
+    }
 }

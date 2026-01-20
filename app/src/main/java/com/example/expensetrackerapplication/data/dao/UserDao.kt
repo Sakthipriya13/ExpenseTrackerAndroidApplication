@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.data.dao
 
+import android.net.Uri
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -20,4 +21,11 @@ interface UserDao {
 
     @Query("UPDATE USER SET UserPassword= :newPassword WHERE UserId= :userId AND UserPassword= :currentPassword")
     suspend fun fnUpdateUserPassword(newPassword: String?, userId: Int, currentPassword: String?) : Int
+
+
+    @Query("UPDATE USER SET UserProfilePhotoUri= :uri WHERE UserId= :userId")
+    suspend fun fnUpdateUserProfilePhoto(uri: String?, userId: Int) : Int
+
+    @Query("SELECT UserProfilePhotoUri FROM User WHERE userId= :userId")
+    suspend fun fnGetUserProfilePhotoUri(userId : Int) : String
 }

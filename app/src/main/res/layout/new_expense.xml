@@ -15,8 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.fragments.NewExpense"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/idMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="20dp"
@@ -110,6 +112,7 @@
                     android:hint="@string/enter_expense"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
+                    android:nextFocusDown="@id/idDCategories"
                     android:text="@={newExpenseViewModel._expenseAmt}"
                     android:textSize="15sp" />
                 <requestFocus />
@@ -133,7 +136,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Select a Category"
-                app:layout_constraintEnd_toStartOf="@+id/idCategoryList"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/idCategoryLabel"
                 app:layout_constraintBottom_toTopOf="@+id/idPaymentTypeLabel"

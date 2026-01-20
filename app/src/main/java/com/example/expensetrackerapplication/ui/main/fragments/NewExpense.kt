@@ -15,6 +15,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -79,6 +81,20 @@ class NewExpense : Fragment() {
 
         // Apply default only on first load
 //        newExpenseViewModel.applyDefaultIfFirstOpen()
+
+//        val focusListener = View.OnFocusChangeListener { _, hasFocus ->
+//            if (hasFocus) {
+//                newExpenseBinding.idMain.post {
+//                    val offset = resources.displayMetrics.heightPixels / 3
+//                    newExpenseBinding.idMain.scrollTo(0, offset)
+//                }
+//            }
+//            else{
+//                newExpenseBinding.idMain.scrollTo(0, 0)
+//            }
+//        }
+
+//        newExpenseBinding.idERemarks.onFocusChangeListener = focusListener
 
         newExpenseViewModel.clearAllFields.observe(viewLifecycleOwner){ ob ->
             if(ob){
@@ -229,6 +245,23 @@ class NewExpense : Fragment() {
         return newExpenseBinding.root 
     }
 
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+//
+//            val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+//
+//            v.setPadding(
+//                v.paddingLeft,
+//                v.paddingTop,
+//                v.paddingRight,
+//                imeBottom
+//            )
+//
+//            insets
+//        }
+//    }
 
     companion object {
         /**

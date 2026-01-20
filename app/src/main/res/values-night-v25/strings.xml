@@ -20,5 +20,18 @@
     <string name="camera">Camera</string>
 
     <string name="submit">SUBMIT</string>
+    <string name="english">English</string>
+    <string name="tamil">Tamil</string>
+
+    <string name="theme">THEME</string>
+    <string name="dark_theme">Dark</string>
+    <string name="light_theme">Light</string>
+    <string name="system_theme">System</string>
+
+    <string name="theme_color">THEME COLOR</string>
+    <string name="category_management">CATEGORY MANAGEMENT</string>
+
+    <string name="default_categories">Default Categories</string>
+
 
 </resources>

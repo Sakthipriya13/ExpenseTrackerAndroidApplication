@@ -13,15 +13,16 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:fontFamily">@font/kanit_regular</item>
         <item name="fontFamily">@font/kanit_regular</item>
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorSecondary">@color/colorSecondary</item>
-        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary1</item>
+        <item name="android:colorSecondary">@color/colorSecondary1</item>
+        <item name="android:colorAccent">@color/colorAccent1</item>
         <item name="successBackground">@color/successBackground</item>
         <item name="errorBackground">@color/errorBackground</item>
         <item name="infoBackground">@color/infoBackground</item>
         <item name="warningBackground">@color/warningBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
+        <item name="greyColor">@color/color_grey</item>
     </style>
 
     <style name="FabCustomShape" parent="">
@@ -30,13 +31,26 @@
     </style>
 
 
-    <style name="Circular" >
+    <style name="Circular" parent="ShapeAppearance.Material3.SmallComponent" >
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="strokeWidth">2dp</item>
     </style>
+
+
 
     <style name="ToolBarTittle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="BottomSheetCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">40dp</item>
+        <item name="cornerSizeTopRight">40dp</item>
+    </style>
+
 </resources>

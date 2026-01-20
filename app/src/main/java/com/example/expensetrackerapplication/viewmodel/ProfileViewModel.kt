@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.viewmodel
 
 import android.app.Application
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -44,6 +45,12 @@ class ProfileViewModel(application : Application) : AndroidViewModel(application
     var _deleteUserAcStatus = MutableLiveData<Boolean>()
     var deleteUserAcStatus : LiveData<Boolean> = _deleteUserAcStatus
 
+    var _profileUri = MutableLiveData<Uri?>()
+    var profileUri : LiveData<Uri?> = _profileUri
+
+    var _isDelProfilePhoto = MutableLiveData<Boolean>()
+    var isDelProfilePhoto : LiveData<Boolean> = _isDelProfilePhoto
+
     fun onClickEditProfilePicture(){
         _isEdit.value=true
     }
@@ -58,6 +65,39 @@ class ProfileViewModel(application : Application) : AndroidViewModel(application
 
     fun onClickDeleteAccount(){
         _isDelAccount.value=true
+    }
+
+
+    fun fnUpdateUserProfilePhoto(imgUri : Uri?){
+        viewModelScope.launch {
+            try{
+                var updateStatus = userRepository.fnUpdateLoginUserProfilePhoto(imgUri.toString(),Global.lUserId)
+
+                if(updateStatus){
+                    _profileUri.value = imgUri
+                }
+                else{
+                    _profileUri.value = null
+                }
+            }
+            catch (e : Exception){
+                Log.e("UPDATE USER PROFILE PHOTO","Update Profile Photo: ${e.message}")
+                _profileUri.value = null
+            }
+        }
+    }
+
+    fun fnGetUserProfilePhotoUri(){
+        viewModelScope.launch {
+            try {
+                var imgUri = userRepository.fnGetLoginUserProfilePhotoUri(Global.lUserId)
+                _profileUri.value = Uri.parse(imgUri)
+            }
+            catch (e : Exception)
+            {
+                Log.i("GET USER PROFILE PHOTO","Get User Profile Uri: ${e.message}")
+            }
+        }
     }
 
     fun fnDeleteUserAccount()  {

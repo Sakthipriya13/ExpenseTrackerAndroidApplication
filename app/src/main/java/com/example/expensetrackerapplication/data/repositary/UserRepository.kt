@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.data.repositary
 
+import android.net.Uri
 import android.util.Log
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.entity.UserEntity
@@ -60,6 +61,27 @@ class UserRepository(var userDao: UserDao)
         } catch (e : Exception){
             Log.e("UPDATE USER PASSWORD","Update User Password: ${e.message}")
             false
+        }
+    }
+
+    suspend fun fnUpdateLoginUserProfilePhoto(userImgUri: String?, userId: Int):Boolean{
+        return try {
+            var result = userDao.fnUpdateUserProfilePhoto(userImgUri,userId)
+            if(result>0) true else false
+        } catch (e : Exception){
+            Log.e("UPDATE USER PASSWORD","Update User Password: ${e.message}")
+            false
+        }
+    }
+
+    suspend fun fnGetLoginUserProfilePhotoUri(userId: Int):String?{
+        return try {
+             userDao.fnGetUserProfilePhotoUri(userId)
+        }
+        catch (e : Exception)
+        {
+            Log.e("GET USER PROFILE PHOTO","Get User Profile Photo: ${e.message}")
+            null
         }
     }
 }

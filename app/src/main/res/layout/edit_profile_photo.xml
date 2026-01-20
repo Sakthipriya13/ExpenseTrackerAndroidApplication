@@ -3,20 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="editProfilePhoto"
-            type="com.example.expensetrackerapplication.viewmodel.EditProfilePhotoViewModel" />
-    </data>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="editProfilePhoto"-->
+<!--            type="com.example.expensetrackerapplication.viewmodel.EditProfilePhotoViewModel" />-->
+<!--    </data>-->
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="10dp">
+        android:layout_height="wrap_content"
+        android:minWidth="280dp"
+        android:maxWidth="320dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="20dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="20dp">
             <ImageView
                 android:id="@+id/idBtnCancel"
                 android:layout_width="0dp"
@@ -36,9 +40,9 @@
                 android:textColor="?attr/colorPrimary"
                 app:layout_constraintWidth_percent="0.60"
                 android:textSize="25sp"
-                app:layout_constraintEnd_toStartOf="@id/idBtnDel"/>
+                app:layout_constraintEnd_toStartOf="@id/idBtnDelProfilePhoto"/>
             <ImageView
-                android:id="@+id/idBtnDel"
+                android:id="@+id/idBtnDelProfilePhoto"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -56,7 +60,7 @@
                 app:flow_horizontalStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:constraint_referenced_ids="idBtnCancel,idHeader,idBtnDel"/>
+                app:constraint_referenced_ids="idBtnCancel,idHeader,idBtnDelProfilePhoto"/>
 
             <ImageView
                 android:id="@+id/idGalleryImg"
@@ -85,7 +89,7 @@
                 app:flow_horizontalStyle="spread_inside"
                 app:flow_horizontalGap="5dp"
                 android:layout_margin="20dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="?attr/selectableItemBackground"
                 app:layout_constraintTop_toBottomOf="@id/idHeaderFlow"
                 app:layout_constraintStart_toStartOf="parent"
                 app:constraint_referenced_ids="idGalleryImg,idGalleryName"/>
@@ -118,7 +122,7 @@
                 app:flow_horizontalStyle="spread_inside"
                 app:flow_horizontalGap="5dp"
                 android:layout_margin="20dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="?attr/selectableItemBackground"
                 app:layout_constraintTop_toBottomOf="@id/idGalleryFlow"
                 app:layout_constraintStart_toStartOf="parent"
                 app:constraint_referenced_ids="idCameraImg,idCameraName"/>

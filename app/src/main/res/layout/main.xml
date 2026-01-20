@@ -32,11 +32,26 @@
                 app:titleTextAppearance="@style/ToolBarTittle"
                 android:elevation="5dp"
                 >
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/idUserProfileImg"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/Circular"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="end"
+                    />
+
+
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/logout"
                     android:layout_marginEnd="10dp"
+                    app:tint="?attr/textColorWhite"
                     android:background="?attr/selectableItemBackground"
                     android:onClick="@{() -> mainViewModel.fnLogOut()}"
                     android:layout_gravity="end"/>

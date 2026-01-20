@@ -15,10 +15,14 @@ import com.example.expensetrackerapplication.databinding.MainBinding
 import com.example.expensetrackerapplication.viewmodel.MainViewModel
 
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.ui.auth.Auth
+import com.example.expensetrackerapplication.viewmodel.ProfileViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,6 +32,7 @@ import kotlinx.coroutines.withContext
 class Main : AppCompatActivity() {
     lateinit var mainDataBinding: MainBinding
     val mainViewModel : MainViewModel by viewModels()
+
 
     var isExpanded = false
 
@@ -65,6 +70,10 @@ class Main : AppCompatActivity() {
         mainDataBinding.lifecycleOwner=this
         setContentView(mainDataBinding.root)
 
+        mainViewModel.fnGetUserProfilePhotoUri()
+
+        hideSystemUI()
+
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -73,6 +82,9 @@ class Main : AppCompatActivity() {
 
         setSupportActionBar(mainDataBinding.idToolBar)
 
+        mainViewModel.profileUri.observe(this){ uri ->
+            mainDataBinding.idUserProfileImg.setImageURI(uri)
+        }
 
         fnShrinkFab()
 
@@ -134,7 +146,24 @@ class Main : AppCompatActivity() {
                 mainDataBinding.idTransparentBg.visibility=View.GONE
         }
     }
-
+    private fun hideSystemUI() {
+        // Android 11 and above
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.insetsController?.hide(
+                WindowInsets.Type.navigationBars() or
+                        WindowInsets.Type.statusBars()
+            )
+            window.insetsController?.systemBarsBehavior =
+                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+        // Android 10 and below
+        else {
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN
+        }
+    }
     fun fnExpandFab() {
 
         mainDataBinding.idDashboardFab.visibility=View.INVISIBLE

@@ -125,7 +125,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
             {
                 val user= UserEntity(
                     userName = name.value, userMobileNo = mobileNo.value,
-                    userEmail = email.value, userPassword = password.value, userId = 0
+                    userEmail = email.value, userPassword = password.value, userProfilePhotoUri = null,userId = 0
                 )
 
                 val userId = userRepository.fnInsertUserDetails(user)

@@ -18,4 +18,8 @@ interface CategoryDao {
     @Query("Select * from Categories")
     suspend fun fnGetAllCategories() : List<CategoryEntitty>
 
+
+    @Query("Select * from Categories LIMIT 5")
+    suspend fun fnGetDefaultCategories() : List<CategoryEntitty>
+
 }

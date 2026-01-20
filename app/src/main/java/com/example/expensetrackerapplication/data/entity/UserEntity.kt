@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.data.entity
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,6 +21,9 @@ data class UserEntity(
     var userEmail : String?,
 
     @ColumnInfo(name = "UserPassword")
-    var userPassword : String?
+    var userPassword : String?,
+
+    @ColumnInfo(name = "UserProfilePhotoUri")
+    var userProfilePhotoUri : String?
 
 )
