@@ -10,40 +10,412 @@
             name="settingsViewModel"
             type="com.example.expensetrackerapplication.viewmodel.SettingsViewModel" />
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.fragments.Settings">
-        <TextView
+        tools:context=".ui.main.fragments.Settings"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Setting is going on"/>
+            >
+            <androidx.cardview.widget.CardView
+                android:id="@+id/idCategoryManage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/idCategoryHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_management"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:textColor="?attr/colorPrimary"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <TextView
+                        android:id="@+id/idDefaultCategoryHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/default_categories"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idCategoryHeader"/>
 
-        <Button
-            android:id="@+id/idInsertCaegory"
-            android:layout_width="192dp"
-            android:layout_height="64dp"
-            android:onClick="@{() -> settingsViewModel.fnInsertCategories()}"
-            android:text="Insert Category"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/idCat1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{settingsViewModel._defCat1}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/idCat2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{settingsViewModel._defCat2}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/idCat3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{settingsViewModel._defCat3}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
 
-        <Button
-            android:id="@+id/idGetCategories"
-            android:layout_width="180dp"
-            android:layout_height="65dp"
-            android:onClick="@{() -> settingsViewModel.fnGetAllCategories()}"
-            android:text="Get Categories"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.463"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.62" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:id="@+id/idCatRow1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:flow_horizontalGap="5dp"
+                        app:flow_horizontalStyle="spread"
+                        app:layout_constraintTop_toBottomOf="@id/idDefaultCategoryHeader"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:constraint_referenced_ids="idCat1,idCat2,idCat3"
+                        />
+                    <TextView
+                        android:id="@+id/idCat4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{settingsViewModel._defCat4}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/idCat5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{settingsViewModel._defCat5}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:id="@+id/idCatRow2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:flow_horizontalGap="5dp"
+                        app:flow_horizontalStyle="spread"
+                        app:layout_constraintTop_toBottomOf="@id/idCatRow1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:constraint_referenced_ids="idCat4,idCat5"
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/idLCat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/idCatRow2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/idBtnLayout"
+                        >
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/idECat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_category"
+                            android:drawablePadding="10dp"
+                            android:hint="Enter Category"
+                            android:inputType="text"
+                            android:text="@={settingsViewModel._newCategory}"
+                            android:nextFocusDown="@id/idBtnAdd"
+                            android:maxLines="1" />
+                        <requestFocus/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/idBtnLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/idLCat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            android:id="@+id/idBtnClear"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:onClick="@{() -> settingsViewModel.fnClearNewCategory()}"
+                            android:gravity="center"
+                            android:text="@string/clear"
+                            android:textColor="?attr/colorPrimary"
+                            android:textColorLink="?attr/colorPrimary"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/idBtnAdd"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{() -> settingsViewModel.fnInsertCategories()}"
+                            android:background="@drawable/btn_background"
+                            android:text= "@string/add"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/idLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="20dp"
+                app:layout_constraintTop_toBottomOf="@id/idCategoryManage"
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp">
+                    <TextView
+                        android:id="@+id/idLanHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_language"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:textColor="?attr/colorPrimary"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <RadioGroup
+                        android:id="@+id/idOptionGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idLanHeader">
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:checked="true"
+                            app:drawableTint="?attr/colorPrimary"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@drawable/ic_eng_lan"
+                            android:text="@string/english" />
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:drawableTint="?attr/colorPrimary"
+                            android:drawableStart="@drawable/ic_tamil_lan"
+                            android:drawablePadding="10dp"
+                            android:text="@string/tamil" />
+                    </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/idTheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="20dp"
+                app:layout_constraintTop_toBottomOf="@id/idLanguage"
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/idThemeHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/theme"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:textColor="?attr/colorPrimary"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/idBtnLightTheme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.45"
+                        android:text="@string/light_theme"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_light_theme"
+                        app:iconGravity="textStart"
+                        app:iconSize="20sp"
+                        android:layout_margin="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idThemeHeader"
+                        android:backgroundTint="?attr/colorPrimary"
+                        />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/idBtnDarkTheme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.45"
+                        android:text="@string/dark_theme"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_dark_theme"
+                        app:iconGravity="textStart"
+                        app:iconSize="20sp"
+                        android:layout_margin="5dp"
+                        app:layout_constraintStart_toEndOf="@id/idBtnLightTheme"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idThemeHeader"
+                        android:backgroundTint="@color/color_grey"
+                        />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/idBtnSysTheme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.50"
+                        android:text="@string/system_theme"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_system_theme"
+                        app:iconGravity="textStart"
+                        app:iconSize="20sp"
+                        android:layout_margin="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idBtnDarkTheme"
+                        android:backgroundTint="@color/color_grey"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/idThemeColor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="20dp"
+                app:layout_constraintTop_toBottomOf="@id/idTheme"
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/idThemeColorHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/theme_color"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:textColor="?attr/colorPrimary"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/idColor1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary1"
+                        app:shapeAppearanceOverlay="@style/FabCustomShape" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/idColor2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary2"
+                        app:shapeAppearanceOverlay="@style/FabCustomShape" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/idColor3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary3"
+                        app:shapeAppearanceOverlay="@style/FabCustomShape" />
+
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:id="@+id/idColorRow1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:flow_horizontalGap="5dp"
+                        app:flow_horizontalStyle="spread"
+                        app:layout_constraintTop_toBottomOf="@id/idThemeColorHeader"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:constraint_referenced_ids="idColor1,idColor2,idColor3"
+                        />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/idColor4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary4"
+                        app:shapeAppearanceOverlay="@style/FabCustomShape" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/idColor5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary5"
+                        app:shapeAppearanceOverlay="@style/FabCustomShape" />
+
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:id="@+id/idColorRow2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:flow_horizontalGap="5dp"
+                        app:flow_horizontalStyle="spread"
+                        app:layout_constraintTop_toBottomOf="@id/idColorRow1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:constraint_referenced_ids="idColor4,idColor5"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
