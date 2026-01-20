@@ -8,13 +8,15 @@ import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.expensetrackerapplication.data.dao.CategoryDao
 import com.example.expensetrackerapplication.data.dao.ExpenseDao
+import com.example.expensetrackerapplication.data.dao.IncomeDao
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
+import com.example.expensetrackerapplication.data.entity.IncomeEntity
 import com.example.expensetrackerapplication.data.entity.UserEntity
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 
-@Database(entities = [UserEntity::class, CategoryEntitty :: class, ExpenseEntity :: class], version = 8, exportSchema = true)
+@Database(entities = [UserEntity::class, CategoryEntitty :: class, ExpenseEntity :: class, IncomeEntity :: class], version = 10, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
 
@@ -22,6 +24,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun CategoryDao() : CategoryDao
 
     abstract fun ExpenseDao() : ExpenseDao
+
+    abstract fun IncomeDao() : IncomeDao
 
     companion object{
         @Volatile

@@ -8,14 +8,16 @@
             name="addIncome"
             type="com.example.expensetrackerapplication.viewmodel.AddInComeViewModel" />
     </data>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="10dp">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:cardCornerRadius="30dp"-->
+<!--        app:cardElevation="10dp">-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_prompt"
+            android:elevation="10dp">
             <TextView
                 android:id="@+id/idHeader"
                 android:layout_width="match_parent"
@@ -58,12 +60,13 @@
                     android:textSize="15sp"
                     android:focusable="false"
                     android:cursorVisible="false"
+                    android:text="@{addIncome._selectedDate}"
                     android:inputType="none"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
-                android:id="@+id/idCalendarButton"
+                android:id="@+id/idBtnCalendar"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -82,7 +85,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/idDateLabel"
                 app:layout_constraintBottom_toTopOf="@+id/idLIncome"
-                app:constraint_referenced_ids="idLSelectDate,idCalendarButton"
+                app:constraint_referenced_ids="idLSelectDate,idBtnCalendar"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -106,8 +109,10 @@
                     android:hint="@string/income"
                     android:singleLine="true"
                     android:textSize="20sp"
+                    android:text="@={addIncome._income}"
                     android:nextFocusDown="@id/idENewPassword"
                     android:paddingStart="50dp"/>
+                <requestFocus/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -132,6 +137,7 @@
                     android:text="@string/cancel"
                     android:textColor="?attr/colorPrimary"
                     android:textColorLink="?attr/colorPrimary"
+                    android:onClick="@{() -> addIncome.onClickCancel()}"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -141,7 +147,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textSize="25sp"
-                    android:text="SUBMIT"
+                    android:text="@string/submit"
+                    android:onClick="@{() -> addIncome.onClickSubmit()}"
                     android:textColor="@android:color/white"
                     android:background="@drawable/btn_background"
                     app:backgroundTint="?attr/colorPrimary"
@@ -151,5 +158,5 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
 </layout>
