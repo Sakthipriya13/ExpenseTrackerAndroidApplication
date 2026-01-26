@@ -112,6 +112,11 @@
     <string name="category_management">செலவு வகை மேலாண்மை</string>
 
     <string name="default_categories">முன்னிருப்பு வகைகள்</string>
+    <string name="category_name">Category Name</string>
+    <string name="remove">நீக்கு</string>
 
+    <string name="do_you_want_to_delete_the_category">இந்த நீக்க செலவு வகையை விரும்புகிறீர்களா</string>
+
+    <string name="delete">நீக்கு</string>
 
 </resources>

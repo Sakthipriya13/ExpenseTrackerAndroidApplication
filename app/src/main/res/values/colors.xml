@@ -21,17 +21,17 @@
     <color name="text_color_white">#FFFFFFFF</color>
 
 
-    <color name ="colorPrimary1">#6C67E6</color>
-    <color name="colorAccent1">#9490f5</color>
-    <color name="colorSecondary1">#9490f5</color>
+    <color name ="colorPrimary1">#7e14f7</color>
+    <color name="colorAccent1">#b474fc</color>
+    <color name="colorSecondary1">#caa7f2</color>
 
     <color name ="colorPrimary2">#0F0E47</color>
     <color name="colorAccent2">#505081</color>
     <color name="colorSecondary2">#8686AC</color>
 
-    <color name ="colorPrimary3">#f5beab</color>
-    <color name="colorAccent3">#B7410E</color>
-    <color name="colorSecondary3">#f57d49</color>
+    <color name ="colorPrimary3">#e1341e</color>
+    <color name="colorAccent3">#eb8578</color>
+    <color name="colorSecondary3">#f0c5c0</color>
 
     <color name ="colorPrimary4">#069494</color>
     <color name="colorAccent4">#61d4d4</color>

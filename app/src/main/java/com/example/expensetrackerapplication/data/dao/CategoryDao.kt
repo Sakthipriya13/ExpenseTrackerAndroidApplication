@@ -22,4 +22,7 @@ interface CategoryDao {
     @Query("Select * from Categories LIMIT 5")
     suspend fun fnGetDefaultCategories() : List<CategoryEntitty>
 
+    @Query("DELETE FROM Categories WHERE categoryId = :categoryId AND UserId= :userId")
+    suspend fun fnDeleteCategoryFromDb(categoryId : Int, userId : Int) : Int
+
 }

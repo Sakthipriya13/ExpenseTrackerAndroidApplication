@@ -1,10 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="day_wise_report">DAY-WISE REPORT</string>
+    <string name="app_name">Expense Tracker</string>
+    <string name="login">Login</string>
+    <string name="noaccount">New User? Sign Up Now</string>
+    <string name="username">UserName</string>
+    <string name="password">Password</string>
+    <string name="mobileno">Mobile No</string>
+    <string name="email">Email</string>
+    <string name="signup">Sign Up</string>
+    <string name="alreadyaccount">Already have an account? Login</string>'
+    <string name="name_field_empty">Name Field Was Emplty So Please Fill It</string>
+    <string name="mobileno_field_empty">MobileNo Field Was Emplty So Please Fill It</string>
+    <string name="password_field_empty">Password Field Was Emplty So Please Fill It</string>
+    <string name="email_field_empty">Email Field Was Emplty So Please Fill It</string>
+    <string name="loginsuccess">Login Success! Welcome</string>
+    <string name="nameorpassword_fields_empty">Name Or Password Fields Are Empty. Please Fill Them In</string>
+    <string name="invalid_name_or_password">Invalid Name Or Password</string>
+    <string name="signupsuccess">User Signed Up!</string>
+    <string name="nameor_mobnoor_password_fields_empty">Name,MobileNO, Email Or Password  Fields Are Empty. Please Fill Them In</string>
+    <string name="select_language">SELECT LANGUAGE</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="clear">Clear</string>
 
+    <string name="dashboard_frag">Dashboard</string>
+    <string name="reports_frag">Reports</string>
+    <string name="add_expense_frag">Add New Expense</string>
+    <string name="category_management">CATEGORY MANAGEMENT</string>
+    <string name="setting_frag">Setting</string>
+    <string name="profile_frag">Profile</string>
+    <string name="logout">Logout</string>
+
+    <string name="day">DAY</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+
+    <string name="date">DATE</string>
+    <string name="expense">EXPENSE</string>
+    <string name="category">CATEGORY</string>
+    <string name="payment_type">PAYMENT TYPE</string>
+    <string name="remarks">REMARKS(OP)</string>
+
+    <string name="select_expense_category">Select Expense Category</string>
+    <string name="select_paymenttype">Select Payment Type</string>
+    <string name="add_remarks">Add Remarks</string>
+    <string name="select_date">Select Date</string>
+    <string name="enter_expense">Enter Expense</string>
+    <string name="next">NEXT</string>
+
+
+    <string-array name="language_list">
+        <item>English</item>
+        <item>Tamil</item>
+    </string-array>
+
+    <string-array name="language_code">
+        <item>en</item>
+        <item>ta</item>
+    </string-array>
+
+    <string-array name="payment_types">
+        <item>Cash</item>
+        <item>Card</item>
+        <item>Upi</item>
+        <item>Split</item>
+    </string-array>
+    <string name="add">ADD</string>
+
+    <string name="cash">Cash</string>
+    <string name="upi">Upi</string>
+    <string name="card">Card</string>
+    <string name="split">Split</string>
+    <string name="other">Other</string>
+
+    <string name="day_wise_report">DAY-WISE REPORT</string>
+    <string name="expense_summary">EXPENSE SUMMARY</string>
     <string name="warning">Warning!</string>
 
-    <string name="do_you_want_to_delete_the_expense">Do You Want To Delete The Expense?</string>
+    <string name="do_you_want_to_delete_the_expense">Do You Want To Delete This Expense?</string>
 
     <string name="edit">Edit</string>
 
@@ -12,9 +87,8 @@
     <string name="income">Income</string>
     <string name="change_password">Change Password</string>
     <string name="del_account">Delete Account</string>
-    <string name="logout">Logout</string>
-    <string name="confirm">CONFIRM</string>
 
+    <string name="confirm">CONFIRM</string>
 
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
@@ -29,9 +103,13 @@
     <string name="system_theme">System</string>
 
     <string name="theme_color">THEME COLOR</string>
-    <string name="category_management">CATEGORY MANAGEMENT</string>
 
     <string name="default_categories">Default Categories</string>
+    <string name="category_name">CATEGORY NAME</string>
+    <string name="remove">REMOVE</string>
 
+    <string name="do_you_want_to_delete_the_category">Do You Want To Delete This Category?</string>
+
+    <string name="delete">DELETE</string>
 
 </resources>

@@ -56,14 +56,30 @@ class CategoryRepository(val categoryDao: CategoryDao)
 
 
     suspend fun fnGetDefaultCategoriesFromDb() : List<CategoryEntitty>{
-        try {
+        return try {
             var categoryList = categoryDao.fnGetDefaultCategories()
-            return categoryList
+            categoryList
         }
         catch (e: Exception)
         {
             Log.e("GET CATEGORIES","Get Categories: "+e.message)
-            return mutableListOf()
+            mutableListOf()
+        }
+    }
+
+
+    suspend fun fnDeleteCategory(categoryId : Int, userId : Int):Boolean{
+        return try{
+            var res= categoryDao.fnDeleteCategoryFromDb(categoryId = categoryId,userId)
+
+            if(res > 0)
+                true
+            else
+                false
+        }
+        catch (e : Exception){
+            Log.e("GET CATEGORIES","Get Categories: "+e.message)
+            false
         }
     }
 }

@@ -10,6 +10,7 @@ import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.repositary.CategoryRepository
 import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.ui_event.ResultState
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application)
@@ -26,31 +27,14 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     var _newCategory = MutableLiveData<String?>()
     val newCategory : LiveData<String?> = _newCategory
 
-    var _defCat1 = MutableLiveData<String?>()
-    var defCat1 : LiveData<String?> = _defCat1
+    var _insertStatus = MutableLiveData<ResultState>()
+    var insertStaus : LiveData<ResultState> = _insertStatus
 
+    var _delStatus = MutableLiveData<ResultState>()
+    var delStatus : LiveData<ResultState> = _delStatus
 
-    var _defCat2 = MutableLiveData<String?>()
-    var defCat2 : LiveData<String?> = _defCat2
-
-
-    var _defCat3 = MutableLiveData<String?>()
-    var defCat3 : LiveData<String?> = _defCat3
-
-
-    var _defCat4 = MutableLiveData<String?>()
-    var defCat4 : LiveData<String?> = _defCat4
-
-
-    var _defCat5 = MutableLiveData<String?>()
-    var defCat5 : LiveData<String?> = _defCat5
-
-    var _lan_eng= MutableLiveData<Boolean>(true)
-    val lan_eng : LiveData<Boolean> = _lan_eng
-
-
-    var _lan_tam= MutableLiveData<Boolean>()
-    val lan_tam : LiveData<Boolean> = _lan_tam
+    var _isLoading= MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean> = _isLoading
 
     fun fnClearNewCategory(){
         _newCategory.value = ""
@@ -75,12 +59,23 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 //                }
 //                for(i in categories)
 //                {
-                    var categoryEntitty = CategoryEntitty(0,newCategory.value,Global.lUserId)
+                Log.v("CATEGORY NAME","Category Name: $newCategory.value")
+
+                var categoryEntitty = CategoryEntitty(0,newCategory.value,Global.lUserId)
                     var result = categoryRepository.fnInsertCategoriesToDb(
                         categoryEntitty
                     )
 
-                    Log.v("INSERT STAUS","Insert Status: "+result)
+                    if(result){
+                        fnGetAllCategories()
+                        fnClearNewCategory()
+                        _insertStatus.postValue(ResultState.success("Successfully Category Inserted"))
+                    }
+                    else{
+                        _insertStatus.postValue(ResultState.success("Category Insert Failed"))
+                    }
+
+                    Log.v("INSERT STAUS","Insert Status: $result")
 
 //                }
             }
@@ -98,11 +93,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 var category_List=categoryRepository.fnGetDefaultCategoriesFromDb()
 
                 if(category_List.isNotEmpty()){
-                    _defCat1.value=category_List.get(0).toString()
-                    _defCat2.value=category_List.get(1).toString()
-                    _defCat3.value=category_List.get(2).toString()
-                    _defCat4.value=category_List.get(3).toString()
-                    _defCat5.value=category_List.get(4).toString()
                 }
                 Log.v("CATEGORY LIST","Category List: $category_List")
             }
@@ -126,6 +116,23 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 Log.e("GET CATEGORIES FROM VIEW MODEL","Get Categories Froms" +
                         "s" +
                         "s ViewModel: "+e.message)
+            }
+        }
+    }
+
+    fun fnDeleteCategory(categoryId : Int, userId : Int)
+    {
+        viewModelScope.launch {
+            try {
+                var status = categoryRepository.fnDeleteCategory(categoryId,userId)
+                if(status) {
+                    fnGetAllCategories()
+                    _delStatus.postValue(ResultState.success("Successfully Category Deleted"))
+                }else
+                    _delStatus.postValue(ResultState.success("Category Delete Failed"))
+            }
+            catch (e: Exception){
+
             }
         }
     }

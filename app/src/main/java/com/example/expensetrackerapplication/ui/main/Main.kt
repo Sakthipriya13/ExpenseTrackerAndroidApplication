@@ -6,9 +6,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.MainBinding
@@ -17,19 +14,14 @@ import com.example.expensetrackerapplication.viewmodel.MainViewModel
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.reusefiles.BaseActivity
 import com.example.expensetrackerapplication.ui.auth.Auth
-import com.example.expensetrackerapplication.viewmodel.ProfileViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.time.delay
-import kotlinx.coroutines.withContext
 
-class Main : AppCompatActivity() {
+class Main : BaseActivity() {
     lateinit var mainDataBinding: MainBinding
     val mainViewModel : MainViewModel by viewModels()
 

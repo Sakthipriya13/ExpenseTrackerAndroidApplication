@@ -90,4 +90,6 @@ dependencies {
     implementation(libs.poi.ooxml)
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

@@ -22,6 +22,7 @@ import com.example.expensetrackerapplication.databinding.ConfirmationPromptBindi
 import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
 import com.example.expensetrackerapplication.databinding.MainBinding
+import com.example.expensetrackerapplication.model.CategoryModel
 import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
@@ -134,6 +135,7 @@ class DayWiseReport : Fragment() {
                         fnShowMessage("Expense Was Already Deleted",requireContext(),R.drawable.bg_info)
 
                 }
+
             })
         }
 

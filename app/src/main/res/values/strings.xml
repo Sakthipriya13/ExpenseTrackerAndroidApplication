@@ -25,7 +25,7 @@
     <string name="dashboard_frag">Dashboard</string>
     <string name="reports_frag">Reports</string>
     <string name="add_expense_frag">Add New Expense</string>
-    <string name="category_management">Category Management</string>
+    <string name="category_management">CATEGORY MANAGEMENT</string>
     <string name="setting_frag">Setting</string>
     <string name="profile_frag">Profile</string>
     <string name="logout">Logout</string>
@@ -79,7 +79,8 @@
     <string name="expense_summary">EXPENSE SUMMARY</string>
     <string name="warning">Warning!</string>
 
-    <string name="do_you_want_to_delete_the_expense">Do You Want To Delete The Expense?</string>
+    <string name="do_you_want_to_delete_the_expense">Do You Want To Delete This Expense?</string>
+    <string name="do_you_want_to_delete_the_category">Do You Want To Delete This Category?</string>
 
     <string name="edit">Edit</string>
 
@@ -105,5 +106,7 @@
     <string name="theme_color">THEME COLOR</string>
 
     <string name="default_categories">Default Categories</string>
+    <string name="category_name">CATEGORY NAME</string>
+    <string name="remove">REMOVE</string>
 
 </resources>

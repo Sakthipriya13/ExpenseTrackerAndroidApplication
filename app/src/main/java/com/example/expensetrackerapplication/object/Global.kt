@@ -37,7 +37,21 @@ object Global {
 
     var isCalendarSelected : Boolean = false
 
+    var displayDialogPrompt : Boolean = false
+
     val defaultCategories = listOf<String>("Food","Healthcare","Utilities","Groceries","Transportation")
+
+    val COLOR_CODE1 = 1
+    val COLOR_CODE2 = 2
+    val COLOR_CODE3 = 3
+    val COLOR_CODE4 = 4
+    val COLOR_CODE5 = 5
+
+    val THEME_DARK = 1
+
+    val THEME_LIGHT = 2
+
+    val THEME_SYSTEM = 3
 
     fun fnGetCurrentDate() : String {
 
