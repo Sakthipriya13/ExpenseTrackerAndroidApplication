@@ -6,5 +6,5 @@
     <attr name="warningBackground" format="color"/>
     <attr name="textColorWhite" format="color"/>
     <attr name="textColorBlack" format="color"/>
-    <attr name="greyColor" format="color"/>
+    <attr name="Color_Gray" format="color"/>
 </resources>

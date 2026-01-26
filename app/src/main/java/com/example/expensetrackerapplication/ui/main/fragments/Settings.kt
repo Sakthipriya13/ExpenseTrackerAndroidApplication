@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.ui.main.fragments
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +23,7 @@ import com.example.expensetrackerapplication.databinding.ConfirmationPromptBindi
 import com.example.expensetrackerapplication.databinding.SettingsBinding
 import com.example.expensetrackerapplication.datastore.LanguageDataStore
 import com.example.expensetrackerapplication.datastore.ThemeColorDataStore
+import com.example.expensetrackerapplication.datastore.ThemeDataStore
 import com.example.expensetrackerapplication.model.CategoryModel
 import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.`object`.Global
@@ -28,6 +32,8 @@ import com.example.expensetrackerapplication.ui_event.CategoryItemClickListener
 import com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener
 import com.example.expensetrackerapplication.ui_event.ResultState
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -57,6 +63,8 @@ class Settings : Fragment(){
 
     private lateinit var themeColorDataStore : ThemeColorDataStore
 
+    private lateinit var themeDataStore: ThemeDataStore
+
     override fun onResume() {
         super.onResume()
         (requireActivity() as AppCompatActivity).supportActionBar?.title= "Settings"
@@ -85,6 +93,12 @@ class Settings : Fragment(){
 
         languageDataStore= LanguageDataStore(requireContext())
         themeColorDataStore = ThemeColorDataStore(requireContext())
+        themeDataStore = ThemeDataStore(requireContext())
+
+        lifecycleScope.launch {
+            val themeCode = themeDataStore.fnGetTheme()
+            fnUpdateThemeBtnUi(themeCode)
+        }
 
         categoryAdapter = CategoryAdapter()
         settingsBinding.idAddedCategoryList.adapter=categoryAdapter
@@ -179,11 +193,125 @@ class Settings : Fragment(){
         }
 
 
+        settingsBinding.idBtnSysTheme.setOnClickListener {
+            fnUpdateTheme(Global.THEME_SYSTEM)
+        }
+        settingsBinding.idBtnDarkTheme.setOnClickListener {
+            fnUpdateTheme(Global.THEME_DARK)
+
+        }
+        settingsBinding.idBtnLightTheme.setOnClickListener {
+            fnUpdateTheme(Global.THEME_LIGHT)
+        }
 
 
 
     }
 
+    fun fnUpdateThemeBtnUi(themeCode : Int){
+        settingsBinding.idBtnSysTheme.setBackgroundColor(
+            ContextCompat.getColor(requireContext(),R.color.color_grey)
+        )
+        settingsBinding.idBtnDarkTheme.setBackgroundColor(
+            ContextCompat.getColor(requireContext(),R.color.color_grey)
+        )
+        settingsBinding.idBtnLightTheme.setBackgroundColor(
+            ContextCompat.getColor(requireContext(),R.color.color_grey)
+        )
+        when(themeCode){
+            Global.THEME_DARK -> {
+                settingsBinding.idBtnDarkTheme.setBackgroundColor(
+                    MaterialColors.getColor(
+                        requireView(),
+                        com.google.android.material.R.attr.colorOnPrimary
+                    )
+                )
+                settingsBinding.idBtnDarkTheme.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_color_white
+                    )
+                )
+                settingsBinding.idBtnDarkTheme.iconTint = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_color_white
+                    )
+                )
+
+            }
+            Global.THEME_LIGHT -> { settingsBinding.idBtnLightTheme.setBackgroundColor(
+                MaterialColors.getColor(
+                    requireView(),
+                    com.google.android.material.R.attr.colorOnPrimary
+                    )
+                )
+                settingsBinding.idBtnLightTheme.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_color_white
+                    )
+                )
+                settingsBinding.idBtnLightTheme.iconTint = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_color_white
+                    )
+                )
+
+            }
+            else -> {
+                settingsBinding.idBtnSysTheme.setBackgroundColor(
+                    MaterialColors.getColor(
+                        requireView(),
+                        com.google.android.material.R.attr.colorOnPrimary
+                    )
+                )
+                settingsBinding.idBtnSysTheme.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_color_white
+                    )
+                )
+                settingsBinding.idBtnSysTheme.iconTint = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_color_white
+                    )
+                )
+            }
+        }
+    }
+
+    fun fnUpdateTheme(themeCode : Int){
+        lifecycleScope.launch {
+            val curThemeCode = themeDataStore.fnGetTheme()
+
+            if(curThemeCode == themeCode) return@launch
+
+            settingsViewModel._isLoading.value = true
+
+            themeDataStore.fnSaveTheme(themeCode)
+
+            fnUpdateThemeBtnUi(themeCode)
+
+            when(themeCode){
+                Global.THEME_DARK -> AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
+
+                Global.THEME_LIGHT -> AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
+
+                else -> AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                )
+            }
+
+            settingsViewModel._isLoading.value = false
+        }
+    }
 
     fun fnUpdateThemeColor(colorCode : Int){
         lifecycleScope.launch {

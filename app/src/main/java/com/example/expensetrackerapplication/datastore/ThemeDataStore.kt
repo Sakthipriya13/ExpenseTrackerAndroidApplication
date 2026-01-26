@@ -23,7 +23,7 @@ class ThemeDataStore(private val context: Context?)
         }
     }
 
-    suspend fun fnGetTheme(){
+    suspend fun fnGetTheme(): Int{
         return withContext(Dispatchers.IO){
             context?.dataStore?.data?.map { it[THEME_KEY]?.toInt() ?: Global.THEME_SYSTEM }?.first() ?: Global.THEME_SYSTEM
         }

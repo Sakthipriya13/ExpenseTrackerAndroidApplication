@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.datastore.LanguageDataStore
 import com.example.expensetrackerapplication.datastore.ThemeColorDataStore
+import com.example.expensetrackerapplication.datastore.ThemeDataStore
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.`object`.LocaleHelper
 import kotlinx.coroutines.launch
@@ -27,6 +29,24 @@ abstract class BaseActivity : AppCompatActivity()
             Global.COLOR_CODE5 -> setTheme(R.style.Theme_App_Color5)
             else -> setTheme(R.style.Theme_App_Color1)
         }
+
+        val themeCode = runBlocking {
+            ThemeDataStore(this@BaseActivity).fnGetTheme()
+        }
+
+        when(themeCode){
+            Global.THEME_DARK -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+
+            Global.THEME_LIGHT -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+            )
+            else -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            )
+        }
+
         super.onCreate(savedInstanceState)
     }
 

@@ -21,7 +21,7 @@
         <item name="warningBackground">@color/warningBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
-        <item name="greyColor">@color/color_grey</item>
+        <item name="Color_Gray">@color/color_grey</item>
     </style>
 
     <style name="FabCustomShape" parent="">
@@ -58,6 +58,7 @@
         <item name="android:fontFamily">@font/kanit_regular</item>
         <item name="fontFamily">@font/kanit_regular</item>
         <item name="colorPrimary">@color/colorPrimary1</item>
+        <item name="colorOnPrimary">@color/colorPrimary1</item>
         <item name="colorSecondary">@color/colorSecondary1</item>
         <item name="colorTertiary">@color/colorAccent1</item>
         <item name="successBackground">@color/successBackground</item>
@@ -66,7 +67,7 @@
         <item name="errorBackground">@color/errorBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
-        <item name="greyColor">@color/color_grey</item>
+        <item name="Color_Gray">@color/color_grey</item>
     </style>
 
 
@@ -77,6 +78,7 @@
         <item name="android:fontFamily">@font/kanit_regular</item>
         <item name="fontFamily">@font/kanit_regular</item>
         <item name="colorPrimary">@color/colorPrimary2</item>
+        <item name="colorOnPrimary">@color/colorPrimary2</item>
         <item name="colorSecondary">@color/colorSecondary2</item>
         <item name="colorTertiary">@color/colorAccent2</item>
         <item name="successBackground">@color/successBackground</item>
@@ -85,7 +87,7 @@
         <item name="errorBackground">@color/errorBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
-        <item name="greyColor">@color/color_grey</item>
+        <item name="Color_Gray">@color/color_grey</item>
     </style>
 
 
@@ -96,6 +98,7 @@
         <item name="android:fontFamily">@font/kanit_regular</item>
         <item name="fontFamily">@font/kanit_regular</item>
         <item name="colorPrimary">@color/colorPrimary3</item>
+        <item name="colorOnPrimary">@color/colorPrimary3</item>
         <item name="colorSecondary">@color/colorSecondary3</item>
         <item name="colorTertiary">@color/colorAccent3</item>
         <item name="successBackground">@color/successBackground</item>
@@ -104,7 +107,7 @@
         <item name="errorBackground">@color/errorBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
-        <item name="greyColor">@color/color_grey</item>
+        <item name="Color_Gray">@color/color_grey</item>
     </style>
 
 
@@ -115,6 +118,7 @@
         <item name="android:fontFamily">@font/kanit_regular</item>
         <item name="fontFamily">@font/kanit_regular</item>
         <item name="colorPrimary">@color/colorPrimary4</item>
+        <item name="colorOnPrimary">@color/colorPrimary4</item>
         <item name="colorSecondary">@color/colorSecondary4</item>
         <item name="colorTertiary">@color/colorAccent4</item>
         <item name="successBackground">@color/successBackground</item>
@@ -123,7 +127,7 @@
         <item name="errorBackground">@color/errorBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
-        <item name="greyColor">@color/color_grey</item>
+        <item name="Color_Gray">@color/color_grey</item>
     </style>
 
 
@@ -134,6 +138,7 @@
         <item name="android:fontFamily">@font/kanit_regular</item>
         <item name="fontFamily">@font/kanit_regular</item>
         <item name="colorPrimary">@color/colorPrimary5</item>
+        <item name="colorOnPrimary">@color/colorPrimary5</item>
         <item name="colorSecondary">@color/colorSecondary5</item>
         <item name="colorTertiary">@color/colorAccent5</item>
         <item name="successBackground">@color/successBackground</item>
@@ -142,7 +147,8 @@
         <item name="errorBackground">@color/errorBackground</item>
         <item name="textColorWhite">@color/text_color_white</item>
         <item name="textColorBlack">@color/text_color_black</item>
-        <item name="greyColor">@color/color_grey</item>
+        <item name="Color_Gray">@color/color_grey</item>
     </style>
+
 
 </resources>
