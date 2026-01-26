@@ -79,6 +79,12 @@ class NewExpense : Fragment() {
         newExpenseBinding.newExpenseViewModel=newExpenseViewModel
         newExpenseBinding.lifecycleOwner=viewLifecycleOwner
 
+        return newExpenseBinding.root 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         // Apply default only on first load
 //        newExpenseViewModel.applyDefaultIfFirstOpen()
 
@@ -165,61 +171,61 @@ class NewExpense : Fragment() {
 //        newExpenseBinding.idSplitPayment.setOnCheckedChangeListener { _, isChecked ->
 //            if(isChecked)
 //            {
-         newExpenseViewModel.showSplitDialog.observe(viewLifecycleOwner){ isChecked ->
-             if(isChecked){
-                 val view = layoutInflater.inflate(R.layout.split_dialogue,null)
-                 var amtInCash = view.findViewById<TextInputEditText>(R.id.idEAmtInCash)
-                 var amtInCard = view.findViewById<TextInputEditText>(R.id.idEAmtInCard)
-                 var amtInUpi = view.findViewById<TextInputEditText>(R.id.idEAmtInUpi)
+        newExpenseViewModel.showSplitDialog.observe(viewLifecycleOwner){ isChecked ->
+            if(isChecked){
+                val view = layoutInflater.inflate(R.layout.split_dialogue,null)
+                var amtInCash = view.findViewById<TextInputEditText>(R.id.idEAmtInCash)
+                var amtInCard = view.findViewById<TextInputEditText>(R.id.idEAmtInCard)
+                var amtInUpi = view.findViewById<TextInputEditText>(R.id.idEAmtInUpi)
 
-                 var btnOk=view.findViewById<Button>(R.id.idBtnOk)
-                 var btnCancel=view.findViewById<TextView>(R.id.idBtnCancel)
+                var btnOk=view.findViewById<Button>(R.id.idBtnOk)
+                var btnCancel=view.findViewById<TextView>(R.id.idBtnCancel)
 
-                 var dialog = AlertDialog.Builder(requireContext())
-                     .setView(view)
-                     .setCancelable(false)
-                     .create()
+                var dialog = AlertDialog.Builder(requireContext())
+                    .setView(view)
+                    .setCancelable(false)
+                    .create()
 
-                 dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                 dialog.show()
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.show()
 
-                 btnOk.setOnClickListener {
-                     newExpenseViewModel._amtInCash.value=amtInCash.text.toString().toFloatOrNull() ?:0.0f
-                     newExpenseViewModel._amtInCard.value=amtInCard.text.toString().toFloatOrNull() ?:0.0f
-                     newExpenseViewModel._amtInUpi.value=amtInUpi.text.toString().toFloatOrNull() ?:0.0f
+                btnOk.setOnClickListener {
+                    newExpenseViewModel._amtInCash.value=amtInCash.text.toString().toFloatOrNull() ?:0.0f
+                    newExpenseViewModel._amtInCard.value=amtInCard.text.toString().toFloatOrNull() ?:0.0f
+                    newExpenseViewModel._amtInUpi.value=amtInUpi.text.toString().toFloatOrNull() ?:0.0f
 
-                     val totAmt = newExpenseViewModel._amtInCash.value!! +
-                             newExpenseViewModel._amtInCard.value!! +
-                             newExpenseViewModel._amtInUpi.value!!
+                    val totAmt = newExpenseViewModel._amtInCash.value!! +
+                            newExpenseViewModel._amtInCard.value!! +
+                            newExpenseViewModel._amtInUpi.value!!
 
-                     newExpenseViewModel._expenseAmt.value=totAmt.toString()
+                    newExpenseViewModel._expenseAmt.value=totAmt.toString()
 
-                     newExpenseBinding.idERemarks.requestFocus()
-                     newExpenseBinding.idERemarks.isFocusable=true
-
-
-                     Log.v("AMT IN CASH","Amt In Cash: ${newExpenseViewModel.amtInCash.value}")
-                     Log.v("AMT IN CARD","Amt In Card: ${newExpenseViewModel.amtInCard.value}")
-                     Log.v("AMT IN UPI","Amt In Upi: ${newExpenseViewModel.amtInUpi.value}")
-                     Log.v("TOTAL EXPENSE AMT","Total Expense Amt: ${newExpenseViewModel.expenseAmt.value}")
+                    newExpenseBinding.idERemarks.requestFocus()
+                    newExpenseBinding.idERemarks.isFocusable=true
 
 
-                     dialog.dismiss()
+                    Log.v("AMT IN CASH","Amt In Cash: ${newExpenseViewModel.amtInCash.value}")
+                    Log.v("AMT IN CARD","Amt In Card: ${newExpenseViewModel.amtInCard.value}")
+                    Log.v("AMT IN UPI","Amt In Upi: ${newExpenseViewModel.amtInUpi.value}")
+                    Log.v("TOTAL EXPENSE AMT","Total Expense Amt: ${newExpenseViewModel.expenseAmt.value}")
+
+
+                    dialog.dismiss()
 
 //                     Log.v("PAYMENT TYPE","Payment Type: SPLIT")
 //                     newExpenseViewModel._paymentType.value=Global.PAYMENT_TYPE_SPLIT
 //                     newExpenseViewModel._selectedpaymentType.value=R.id.idSplitPayment
 
-                 }
+                }
 
-                 btnCancel.setOnClickListener {
+                btnCancel.setOnClickListener {
 //                     newExpenseViewModel.fnCashPayment()
-                     newExpenseViewModel._paymentType.value=-1
-                     newExpenseViewModel._selectedpaymentType.value=-1
-                     dialog.dismiss()
-                 }
-             }
-         }
+                    newExpenseViewModel._paymentType.value=-1
+                    newExpenseViewModel._selectedpaymentType.value=-1
+                    dialog.dismiss()
+                }
+            }
+        }
 
 
 //            }
@@ -242,7 +248,6 @@ class NewExpense : Fragment() {
             }
         }
 
-        return newExpenseBinding.root 
     }
 
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

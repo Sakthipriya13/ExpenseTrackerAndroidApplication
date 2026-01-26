@@ -46,10 +46,15 @@ class SignUp : Fragment() {
         savedInstanceState: Bundle?
     ): View?
     {
-
         signUpDataBinding= DataBindingUtil.inflate(inflater,R.layout.sign_up, container, false)
         signUpDataBinding.lifecycleOwner=viewLifecycleOwner
         signUpDataBinding.signUpViewModel=signUpViewModel
+
+        return signUpDataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         signUpViewModel.clearAllFields.observe(viewLifecycleOwner){ ob ->
             if(ob){
@@ -102,8 +107,6 @@ class SignUp : Fragment() {
                 findNavController().navigate(R.id.action_signup_to_login)
             }
         }
-
-        return signUpDataBinding.root
     }
 
     companion object {

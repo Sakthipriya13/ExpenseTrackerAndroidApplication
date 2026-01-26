@@ -76,6 +76,12 @@ class DayWiseReport : Fragment() {
         dayWiseReportBinding.dayWiseReportViewModel=dayWiseReportViewModel
         dayWiseReportBinding.lifecycleOwner = viewLifecycleOwner
 
+        return dayWiseReportBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
 
         listAdapter = ListAdapter()
@@ -166,7 +172,6 @@ class DayWiseReport : Fragment() {
             }
         }
 
-        return dayWiseReportBinding.root
     }
 
     fun fnShowDeletePrompt(expense : DayWiseReportModel){

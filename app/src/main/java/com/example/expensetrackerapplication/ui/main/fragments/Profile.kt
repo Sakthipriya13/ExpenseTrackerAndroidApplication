@@ -128,6 +128,12 @@ class Profile : Fragment() {
         profileBinding.profile=profileViewModel
         profileBinding.lifecycleOwner=viewLifecycleOwner
 
+        return profileBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         profileViewModel.fnGetUserProfilePhotoUri()
 
@@ -246,7 +252,6 @@ class Profile : Fragment() {
 
 
 
-        return profileBinding.root
     }
 
     fun checkCameraPermissions(){

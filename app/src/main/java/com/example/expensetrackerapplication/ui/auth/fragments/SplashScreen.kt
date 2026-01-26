@@ -62,7 +62,12 @@ class SplashScreen : Fragment() {
         splashDataBinding.splashViewModel=viewModel
         splashDataBinding.lifecycleOwner=viewLifecycleOwner
 
+        // Inflate the layout for this fragment
+        return splashDataBinding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         topAnimation= AnimationUtils.loadAnimation(requireContext(), R.anim.top_animation)
         bottomAnimation= AnimationUtils.loadAnimation(requireContext(),R.anim.bottom_animation)
 
@@ -83,9 +88,6 @@ class SplashScreen : Fragment() {
             }
         }
 
-
-        // Inflate the layout for this fragment
-        return splashDataBinding.root
     }
 
     companion object {

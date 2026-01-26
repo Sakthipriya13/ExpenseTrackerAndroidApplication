@@ -55,6 +55,12 @@ class Login : Fragment() {
         loginDataBinding.loginViewModel=loginViewModel
         loginDataBinding.lifecycleOwner=viewLifecycleOwner
 
+        return loginDataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 //        loginDataBinding.idUserName.isFocusable=true
 //        loginDataBinding.idUserName.requestFocus()
 
@@ -130,9 +136,9 @@ class Login : Fragment() {
                 Log.e("GO TO SIGNUP", "Go To SignUp Value Was False")
             }
         }
-
-        return loginDataBinding.root
     }
+
+
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)
 //

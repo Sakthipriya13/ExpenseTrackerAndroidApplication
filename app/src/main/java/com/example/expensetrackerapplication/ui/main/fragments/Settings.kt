@@ -179,7 +179,11 @@ class Settings : Fragment(){
         }
 
 
+
+
+
     }
+
 
     fun fnUpdateThemeColor(colorCode : Int){
         lifecycleScope.launch {
