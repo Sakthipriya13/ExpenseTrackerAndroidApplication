@@ -38,6 +38,7 @@
                 android:textSize="25sp"
                 android:text="@string/date"
                 android:textStyle="bold"
+                android:textColor="?attr/textColorBlack"
                 android:layout_margin="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +111,7 @@
                     android:singleLine="true"
                     android:textSize="20sp"
                     android:text="@={addIncome._income}"
-                    android:nextFocusDown="@id/idENewPassword"
+                    android:nextFocusDown="@id/idBtnConfirm"
                     android:paddingStart="50dp"/>
                 <requestFocus/>
             </com.google.android.material.textfield.TextInputLayout>

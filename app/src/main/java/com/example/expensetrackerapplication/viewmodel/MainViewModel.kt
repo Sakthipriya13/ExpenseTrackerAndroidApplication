@@ -28,7 +28,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var _displayTransparentBg = MutableLiveData<Boolean>()
     var displayTransparentBg : LiveData<Boolean> = _displayTransparentBg
 
-    var _profileUri = MutableLiveData<Uri?>()
+    var _profileUri = MutableLiveData<Uri?>(null)
     var profileUri : LiveData<Uri?> = _profileUri
 
 

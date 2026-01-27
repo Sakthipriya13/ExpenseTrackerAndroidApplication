@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.ui.main
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -14,6 +15,7 @@ import com.example.expensetrackerapplication.viewmodel.MainViewModel
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.BaseActivity
@@ -75,7 +77,15 @@ class Main : BaseActivity() {
         setSupportActionBar(mainDataBinding.idToolBar)
 
         mainViewModel.profileUri.observe(this){ uri ->
-            mainDataBinding.idUserProfileImg.setImageURI(uri)
+            if(uri == null){
+                mainDataBinding.idUserProfileImg.setImageResource(R.drawable.user)
+                mainDataBinding.idUserProfileImg.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.text_color_white)
+                )
+            }
+            else{
+                mainDataBinding.idUserProfileImg.setImageURI(uri)
+            }
         }
 
         fnShrinkFab()
