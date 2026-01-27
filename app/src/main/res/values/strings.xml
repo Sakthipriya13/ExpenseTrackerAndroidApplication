@@ -33,6 +33,7 @@
     <string name="day">DAY</string>
     <string name="week">WEEK</string>
     <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
     <string name="open">open</string>
     <string name="close">close</string>
 
