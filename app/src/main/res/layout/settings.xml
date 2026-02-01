@@ -19,7 +19,8 @@
             android:layout_height="match_parent"
             tools:context=".ui.main.fragments.Settings"
             android:fillViewport="true"
-            android:fitsSystemWindows="true">
+            android:padding="0dp"
+            android:clipToPadding="false">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -21,9 +21,13 @@
     <color name="text_color_white">#FFFFFFFF</color>
 
 
-    <color name ="colorPrimary1">#7e14f7</color>
-    <color name="colorAccent1">#b474fc</color>
-    <color name="colorSecondary1">#caa7f2</color>
+<!--    <color name ="colorPrimary1">#7e14f7</color>-->
+<!--    <color name="colorAccent1">#b474fc</color>-->
+<!--    <color name="colorSecondary1">#caa7f2</color>-->
+
+    <color name ="colorPrimary1">#6C67E6</color>
+    <color name="colorAccent1">#9995FA</color>
+    <color name="colorSecondary1">#BDBBF0</color>
 
     <color name ="colorPrimary2">#0F0E47</color>
     <color name="colorAccent2">#505081</color>

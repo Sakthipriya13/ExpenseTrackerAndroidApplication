@@ -68,6 +68,13 @@
         <item>Upi</item>
         <item>Split</item>
     </string-array>
+
+    <string-array name="calendar_options">
+        <item>DAY</item>
+        <item>MONTH</item>
+        <item>YEAR</item>
+    </string-array>
+
     <string name="add">ADD</string>
 
     <string name="cash">Cash</string>
@@ -109,5 +116,15 @@
     <string name="default_categories">Default Categories</string>
     <string name="category_name">CATEGORY NAME</string>
     <string name="remove">REMOVE</string>
+
+    <string name="_income">Income</string>
+    <string name="_balance">Balance</string>
+    <string name="_expense">Expense</string>
+
+    <string name="_this_year">This Year</string>
+    <string name="_this_month">This Month</string>
+
+    <string name="category_overview">Category OverView</string>
+    <string name="select_day_or_month_or_year">Select Day Or Month Or Year</string>
 
 </resources>

@@ -117,7 +117,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
                         if(ex.expenseStatus == Global.EXPENSE_STATUS_DELETED) deletedExpenseAmtSum = deletedExpenseAmtSum + (ex.expenseAmt?.toFloat() ?:0.0f ) else addedExpenseAmtSum=addedExpenseAmtSum+ (ex.expenseAmt?.toFloat() ?:0.0f )
 
                     }
-                    _expenseList.value = list
+                    _expenseList.postValue(list)
                     _totalExpenseSummary.value= Global.fnFormatFloatTwoDigits(totalExpenseAmtSum) .toString()
                     _addedExpenseSummary.value =Global.fnFormatFloatTwoDigits(addedExpenseAmtSum) .toString()
                     _deletedExpenseSummary.value = Global. fnFormatFloatTwoDigits(deletedExpenseAmtSum) .toString()

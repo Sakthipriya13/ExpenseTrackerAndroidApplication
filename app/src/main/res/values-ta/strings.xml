@@ -35,6 +35,11 @@
     <string name="month">மாதம்</string>
     <string name="year">ஆண்டு</string>
 
+    <string-array name="calendar_options">
+        <item>நாள்</item>
+        <item>மாதம்</item>
+        <item>ஆண்டு</item>
+    </string-array>
 
     <string name="open">திற</string>
     <string name="close">மூடு</string>
@@ -119,5 +124,16 @@
     <string name="do_you_want_to_delete_the_category">இந்த நீக்க செலவு வகையை விரும்புகிறீர்களா</string>
 
     <string name="delete">நீக்கு</string>
+
+    <string name="_income">வருமானம்</string>
+    <string name="_balance">இருப்பு தொகை</string>
+    <string name="_expense">செலவு</string>
+
+    <string name="_this_year">இந்த ஆண்டு</string>
+    <string name="_this_month">இந்த மாதம்</string>
+
+    <string name="category_overview">செலவு வகை சுருக்கம்</string>
+    <string name="select_day_or_month_or_year">கால அளவை தேர்ந்தெடுக்கவும்</string>
+
 
 </resources>

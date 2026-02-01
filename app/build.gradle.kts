@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled = true
+
     }
 
     buildTypes {
@@ -89,7 +92,12 @@ dependencies {
     implementation(libs.poi)
     implementation(libs.poi.ooxml)
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
 
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.multidex)
+
+    implementation(libs.anychart.android)
+
 }

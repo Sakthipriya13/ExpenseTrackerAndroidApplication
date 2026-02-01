@@ -6,9 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
-
+    <!-- android:name=".ExpenseTracker"-->
     <application
-        android:name=".ExpenseTracker"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,6 +16,7 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Color2"
+        android:name="androidx.multidex.MultiDexApplication"
         android:requestLegacyExternalStorage="true">
         <activity
             android:name=".ui.auth.Auth"

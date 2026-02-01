@@ -150,6 +150,7 @@ class NewExpense : Fragment() {
         settingsViewModel.categoryList.observe(viewLifecycleOwner){ list ->
             categoryList = list
             val categoryNameList= list.map {it.categoryName}
+
             val autoCompleteAdapter= ArrayAdapter(
                 requireContext(),
                 R.layout.dropdown_item,

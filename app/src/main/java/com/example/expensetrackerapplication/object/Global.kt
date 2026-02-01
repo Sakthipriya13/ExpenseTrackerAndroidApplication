@@ -53,9 +53,33 @@ object Global {
 
     val THEME_SYSTEM = 3
 
+    val DAY_WISE = 0
+
+    val WEEKLY_WISE = 1
+
+    val MONTHLY_WISE = 2
+
+    val YEARLY_WISE = 3
+
     fun fnGetCurrentDate() : String {
 
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val currentDate = sdf.format(java.util.Date())
+
+        return currentDate
+    }
+
+    fun fnGetCurrentMonth() : String {
+
+        val sdf = SimpleDateFormat("MM", Locale.getDefault())
+        val currentDate = sdf.format(java.util.Date())
+
+        return currentDate
+    }
+
+    fun fnGetCurrentYear() : String {
+
+        val sdf = SimpleDateFormat("yyyy", Locale.getDefault())
         val currentDate = sdf.format(java.util.Date())
 
         return currentDate
