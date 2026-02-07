@@ -135,5 +135,8 @@
     <string name="category_overview">செலவு வகை சுருக்கம்</string>
     <string name="select_day_or_month_or_year">கால அளவை தேர்ந்தெடுக்கவும்</string>
 
+    <string name="recent_transactions">சமீபத்திய செலவுகள்</string>
+
+    <string name="payment_type_overview">கட்டண வகை கண்ணோட்டம்</string>
 
 </resources>

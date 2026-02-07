@@ -10,7 +10,7 @@ import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 import com.example.expensetrackerapplication.data.repositary.IncomeRepository
 import com.example.expensetrackerapplication.model.CategoryChartModel
-import com.example.expensetrackerapplication.model.DayWiseExpenseSummaryModel
+import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.launch
 
@@ -30,7 +30,6 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
         incomeRepository = IncomeRepository(incomeDao)
     }
 
-
     var _incomeAmt = MutableLiveData<String?>("0.00")
     var incomeAmt : LiveData<String?> = _incomeAmt
 
@@ -40,23 +39,11 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
     var _balanceAmt = MutableLiveData<String?>("0.00")
     var  balanceAmt : LiveData<String?> = _balanceAmt
 
-    var _categoryChartList = MutableLiveData<List<CategoryChartModel>>()
+    var _categoryChartList = MutableLiveData<List<CategoryChartModel>>(mutableListOf<CategoryChartModel>())
     var categoryChartList : LiveData<List<CategoryChartModel>> = _categoryChartList
 
-    var _dayWiseExpenseChartList = MutableLiveData<List<DayWiseExpenseSummaryModel>>()
-    var dayWiseExpenseChartList : LiveData<List<DayWiseExpenseSummaryModel>> = _dayWiseExpenseChartList
-
-//    var _dayWiseExpenseChartList = MutableLiveData<List<DayWiseExpenseSummaryModel>>()
-//    var dayWiseExpenseChartList : LiveData<List<DayWiseExpenseSummaryModel>> = _dayWiseExpenseChartList
-
-    var _daySummary = MutableLiveData<String?>()
-    var daySummary : LiveData<String?> = _daySummary
-
-    var _monthlySummary = MutableLiveData<String?>()
-    var monthlySummary : LiveData<String?> = _monthlySummary
-
-    var _yearSummary = MutableLiveData<String?>()
-    var yearSummary : LiveData<String?> = _yearSummary
+    var _paymentTypeChartList = MutableLiveData<List<PaymentTypeChartModel>>(mutableListOf<PaymentTypeChartModel>())
+    var paymentTypeChartList : LiveData<List<PaymentTypeChartModel>> = _paymentTypeChartList
 
     var _clickBtnThisMonth = MutableLiveData<Boolean>()
     val clickBtnThisMonth : LiveData<Boolean> = _clickBtnThisMonth
@@ -67,36 +54,12 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
     var _isLoading = MutableLiveData<Boolean>()
     var isLoading : LiveData<Boolean> = _isLoading
 
-    fun fnGetDaySummary(){
-        viewModelScope.launch {
-            var summaryAmt=newExpenseRepository.fnGetDaySummary(Global.fnGetCurrentDate())
-            if(summaryAmt!=0.0f){
-                _daySummary.postValue(summaryAmt.toString())
-            }
-        }
-    }
-
-    fun fnGetMonthlySummary(){
-        viewModelScope.launch {
-            var summaryAmt=newExpenseRepository.fnGetDaySummary(Global.fnGetCurrentMonth())
-            if(summaryAmt!=0.0f){
-                _monthlySummary.postValue(summaryAmt.toString())
-            }
-        }
-    }
-
-    fun fnGetYearlySummary(){
-        viewModelScope.launch {
-            var summaryAmt=newExpenseRepository.fnGetDaySummary(Global.fnGetCurrentYear())
-            if(summaryAmt!=0.0f){
-                _yearSummary.postValue(summaryAmt.toString())
-            }
-        }
-    }
-
     fun onCLickBtnThisMonth(){
         viewModelScope.launch {
             try{
+
+                _isLoading.postValue(true)
+
                 _incomeAmt.postValue("0.00")
                 _expenseAmt.postValue("0.00")
                 _balanceAmt.postValue("0.00")
@@ -106,27 +69,41 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
                 var income = incomeRepository.fnGetIncomePerMonth(Global.fnGetCurrentMonth())
                 var expense = newExpenseRepository.fnGetMonthSummary(Global.fnGetCurrentMonth())
                 var balance = income-expense
+
+                Log.i("INCOME & EXPENSE & BALANCE DETAILS FOR CUR YEAR","Income:$income & Expense:$expense & Balance:$balance")
+
                 if(income != 0.0f){
                     _incomeAmt.postValue(income.toString())
                 }
                 if(expense != 0.0f){
                     _expenseAmt.postValue(expense.toString())
                 }
-                _balanceAmt.postValue(balance.toString())
+                if(balance != 0.0f){
+                    _balanceAmt.postValue(balance.toString())
+                }
+                else{
+                    _balanceAmt.postValue(0.00f.toString())
+                }
 
 
-                var res1= newExpenseRepository.fnGetCateDetailsPerYear(Global.fnGetCurrentMonth(),Global.fnGetCurrentYear())
-                var list1 : MutableList<DayWiseExpenseSummaryModel> = mutableListOf()
-                if (res1.isNotEmpty()) {
-                    res1.forEach { ob ->
-                        list1.add(
-                            DayWiseExpenseSummaryModel(
-                                expenseDate = ob.expenseDate,
-                                expenseAmt = ob.expenseAmt,
+                var p_ChartRes = newExpenseRepository.fnGetPaymentTypeAmtSummaryPerMonth(Global.fnGetCurrentMonth())
+                var p_ChartList : MutableList<PaymentTypeChartModel> = mutableListOf()
+                if(p_ChartRes.isNotEmpty()){
+                    p_ChartRes.forEach { ob ->
+                        p_ChartList.add(
+                            PaymentTypeChartModel(
+                                userId = ob.userId,
+                                paymentType_CashAmt = ob.paymentType_CashAmt,
+                                paymentType_CardAmt = ob.paymentType_CardAmt,
+                                paymentType_UpiAmt = ob.paymentType_UpiAmt,
+                                paymentType_OthersAmt = ob.paymentType_OthersAmt
                             )
                         )
                     }
-                    _dayWiseExpenseChartList.postValue(list1)
+                    _paymentTypeChartList.postValue(p_ChartList)
+                }
+                else{
+                    _paymentTypeChartList.postValue(mutableListOf<PaymentTypeChartModel>())
                 }
             }
             catch (e : Exception){
@@ -138,6 +115,9 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
     fun onClickBtnThisYear(){
         viewModelScope.launch {
             try{
+
+                _isLoading.postValue(true)
+
                 _incomeAmt.postValue("0.00")
                 _expenseAmt.postValue("0.00")
                 _balanceAmt.postValue("0.00")
@@ -147,13 +127,41 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
                 val income = incomeRepository.fnGetIncomePerYear(Global.fnGetCurrentYear())
                 val expense = newExpenseRepository.fnGetYearSummary(Global.fnGetCurrentYear())
                 val balance = income-expense
+
+                Log.i("INCOME & EXPENSE & BALANCE DETAILS FOR CUR YEAR","Income:$income & Expense:$expense & Balance:$balance")
+
                 if(income != 0.0f){
                     _incomeAmt.postValue(income.toString())
                 }
                 if(expense != 0.0f){
                     _expenseAmt.postValue(expense.toString())
                 }
-                _balanceAmt.postValue(balance.toString())
+                if(balance != 0.0f){
+                    _balanceAmt.postValue(balance.toString())
+                }
+                else{
+                    _balanceAmt.postValue(0.00f.toString())
+                }
+
+                var p_ChartRes = newExpenseRepository.fnGetPaymentTypeAmtSummaryPerYear(Global.fnGetCurrentYear())
+                var p_ChartList : MutableList<PaymentTypeChartModel> = mutableListOf()
+                if(p_ChartRes.isNotEmpty()){
+                    p_ChartRes.forEach { ob ->
+                        p_ChartList.add(
+                            PaymentTypeChartModel(
+                                userId = ob.userId,
+                                paymentType_CashAmt = ob.paymentType_CashAmt,
+                                paymentType_CardAmt = ob.paymentType_CardAmt,
+                                paymentType_UpiAmt = ob.paymentType_UpiAmt,
+                                paymentType_OthersAmt = ob.paymentType_OthersAmt
+                            )
+                        )
+                    }
+                    _paymentTypeChartList.postValue(p_ChartList)
+                }
+                else{
+                    _paymentTypeChartList.postValue(mutableListOf<PaymentTypeChartModel>())
+                }
             }
             catch (e : Exception){
                 Log.e("GET INCOME PER YEAR","Get Income Per Year: ${e.message}")
@@ -166,18 +174,25 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
             try{
                 var res= newExpenseRepository.fnGetCateDetailsPerDay(Global.fnGetCurrentDate())
                 var list : MutableList<CategoryChartModel> = mutableListOf()
-                if (res.isNotEmpty()){
+                if (res.isNotEmpty()) {
                     res.forEach { ob ->
+                        Log.i(
+                            "CATEGORY DETAILS PER DAY",
+                            "Category Details per Day: Name: ${ob.categoryName} and Amt: ${ob.expenseAmt}"
+                        )
                         list.add(
                             CategoryChartModel(
                                 userId = ob.userId,
                                 categoryId = ob.categoryId,
                                 categoryName = ob.categoryName,
-                                expenseAmt= ob.expenseAmt
+                                expenseAmt = ob.expenseAmt
                             )
                         )
                     }
                     _categoryChartList.postValue(list)
+                }
+                else{
+                    _categoryChartList.postValue(mutableListOf<CategoryChartModel>())
                 }
             }
             catch (e : Exception){
@@ -189,21 +204,34 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
     fun fnGetCateDetailsPerMonth(){
         viewModelScope.launch {
             try{
-                var res= newExpenseRepository.fnGetCateDetailsPerMonth(Global.fnGetCurrentMonth())
+                var res= newExpenseRepository.fnGetCateDetailsPerMonth("02")
                 var list : MutableList<CategoryChartModel> = mutableListOf()
-                if (res.isNotEmpty()){
-                    res.forEach { ob ->
-                        list.add(
-                            CategoryChartModel(
-                                userId = ob.userId,
-                                categoryId = ob.categoryId,
-                                categoryName = ob.categoryName,
-                                expenseAmt= ob.expenseAmt
-                            )
+//                if (res.isNotEmpty()){
+//                    res.forEach { ob ->
+//                        Log.i("CATEGORY DETAILS PER MONTH","Category Details per Month: Name: ${ob.categoryName} and Amt: ${ob.expenseAmt}")
+//                        list.add(
+//                            CategoryChartModel(
+//                                userId = ob.userId,
+//                                categoryId = ob.categoryId,
+//                                categoryName = ob.categoryName,
+//                                expenseAmt= ob.expenseAmt
+//                            )
+//                        )
+//                    }
+//                    _categoryChartList.postValue(mutableListOf<CategoryChartModel>())
+//                    _categoryChartList.postValue(list)
+//                }
+                for(i in 1..3){
+                    list.add(
+                        CategoryChartModel(
+                            1,
+                            categoryId =1,
+                            categoryName = "Food $i",
+                            expenseAmt= (i*100).toFloat()
                         )
-                    }
-                    _categoryChartList.postValue(list)
+                    )
                 }
+                _categoryChartList.value=list
 
             }
             catch (e : Exception){
@@ -215,21 +243,34 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
     fun fnGetCateDetailsPerYear(){
         viewModelScope.launch {
             try{
-                var res= newExpenseRepository.fnGetCateDetailsPerYear(Global.fnGetCurrentDate())
+                var res= newExpenseRepository.fnGetCateDetailsPerYear("2026")
                 var list : MutableList<CategoryChartModel> = mutableListOf()
-                if (res.isNotEmpty()){
-                    res.forEach { ob ->
-                        list.add(
-                            CategoryChartModel(
-                                userId = ob.userId,
-                                categoryId = ob.categoryId,
-                                categoryName = ob.categoryName,
-                                expenseAmt= ob.expenseAmt
-                            )
+//                if (res.isNotEmpty()){
+//                    res.forEach { ob ->
+//                        Log.i("CATEGORY DETAILS PER YEAR","Category Details per Year: Name: ${ob.categoryName} and Amt: ${ob.expenseAmt}")
+//                        list.add(
+//                            CategoryChartModel(
+//                                userId = ob.userId,
+//                                categoryId = ob.categoryId,
+//                                categoryName = ob.categoryName,
+//                                expenseAmt= ob.expenseAmt
+//                            )
+//                        )
+//                    }
+//                    _categoryChartList.postValue(mutableListOf<CategoryChartModel>())
+//                    _categoryChartList.postValue(list)
+//                }
+                for(i in 1..4){
+                    list.add(
+                        CategoryChartModel(
+                            1,
+                            categoryId =1,
+                            categoryName = "Food $i",
+                            expenseAmt= (i*100).toFloat()
                         )
-                    }
-                    _categoryChartList.postValue(list)
+                    )
                 }
+                _categoryChartList.value=list
             }
             catch (e : Exception){
                 Log.e("GET CATEGORY LIST PER DAY","Get Category Details Per Day: ${e.message}")

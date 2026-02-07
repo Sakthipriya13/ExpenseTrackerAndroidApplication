@@ -129,5 +129,6 @@
     <string name="category_overview">Category OverView</string>
     <string name="select_day_or_month_or_year">Select Day Or Month Or Year</string>
 
-
+    <string name="recent_transactions">RECENT TRANSACTIONS</string>
+    <string name="payment_type_overview">PAYMENT TYPE OVERVIEW</string>
 </resources>

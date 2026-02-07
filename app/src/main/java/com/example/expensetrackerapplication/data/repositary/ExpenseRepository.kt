@@ -4,8 +4,8 @@ import android.util.Log
 import com.example.expensetrackerapplication.data.dao.ExpenseDao
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.model.CategoryChartModel
-import com.example.expensetrackerapplication.model.DayWiseExpenseSummaryModel
 import com.example.expensetrackerapplication.model.DayWiseReportModel
+import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
 
 class ExpenseRepository(val expenseDao: ExpenseDao)
@@ -85,7 +85,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetCateDetailsPerDay(day : String): List<CategoryChartModel>
     {
         return try {
-            expenseDao.fnGetCatDetailsPerDay(day)
+            expenseDao.fnGetCatDetailsPerDay(day,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -115,14 +115,27 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
         }
     }
 
-    suspend fun fnGetCateDetailsPerYear(month:String,year : String): List<DayWiseExpenseSummaryModel>
+    suspend fun fnGetPaymentTypeAmtSummaryPerMonth(curMonth: String): List<PaymentTypeChartModel>
     {
         return try {
-            expenseDao.fnGetMonthWiseExpense(month,year)
+            expenseDao.fnGetPaymentTypesForCurMonth(curMonth,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
-            Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
-            emptyList<DayWiseExpenseSummaryModel>()
+            Log.e("GET CURRENT MONTH PAYMENT TYPE SUMMARY AMOUNT","Get Current Month Payment Type Summary Amount: ${e.message}")
+            emptyList<PaymentTypeChartModel>()
         }
     }
+
+    suspend fun fnGetPaymentTypeAmtSummaryPerYear(curYear: String): List<PaymentTypeChartModel>
+    {
+        return try {
+            expenseDao.fnGetPaymentTypesForCurYear(curYear,Global.EXPENSE_STATUS_ADDED)
+        }
+        catch (e : Exception){
+            Log.e("GET CURRENT MONTH PAYMENT TYPE SUMMARY AMOUNT","Get Current Month Payment Type Summary Amount: ${e.message}")
+            emptyList<PaymentTypeChartModel>()
+        }
+    }
+
+
 }

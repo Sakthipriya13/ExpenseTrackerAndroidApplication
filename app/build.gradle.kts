@@ -100,4 +100,8 @@ dependencies {
 
     implementation(libs.anychart.android)
 
+    implementation(libs.mpandroidchart)
+
+    implementation(libs.williamchart)
+
 }

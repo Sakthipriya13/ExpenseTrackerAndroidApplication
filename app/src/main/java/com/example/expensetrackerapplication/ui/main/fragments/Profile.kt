@@ -140,22 +140,27 @@ class Profile : Fragment() {
 
         profileViewModel.isDelAccount.observe(viewLifecycleOwner){ isDelAc ->
             if(isDelAc){
-                val view = ConfirmationPromptBinding.inflate(layoutInflater)
-                view.tittle="Warning!"
-                view.message="Do You Want To Delete The Account?"
+                if(Global.isCalendarSelected==false) {
+                    Global.isCalendarSelected = true
+                    val view = ConfirmationPromptBinding.inflate(layoutInflater)
+                    view.tittle = "Warning!"
+                    view.message = "Do You Want To Delete The Account?"
 
-                var delAcPrompt = AlertDialog.Builder(requireContext())
-                    .setView(view.root)
-                    .setCancelable(false)
-                    .create()
-                delAcPrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                view.idBtnOk.setOnClickListener {
-                    profileViewModel.fnDeleteUserAccount()
+                    var delAcPrompt = AlertDialog.Builder(requireContext())
+                        .setView(view.root)
+                        .setCancelable(false)
+                        .create()
+                    delAcPrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    view.idBtnOk.setOnClickListener {
+                        Global.isCalendarSelected = false
+                        profileViewModel.fnDeleteUserAccount()
+                    }
+                    view.idBtnCancel.setOnClickListener {
+                        Global.isCalendarSelected = false
+                        delAcPrompt.dismiss()
+                    }
+                    delAcPrompt.show()
                 }
-                view.idBtnCancel.setOnClickListener {
-                    delAcPrompt.dismiss()
-                }
-                delAcPrompt.show()
             }
         }
 
@@ -168,45 +173,54 @@ class Profile : Fragment() {
             else{
                 fnShowMessage("User Account Delete Was Failed",requireContext(),R.drawable.bg_success)
             }
-        }
+    }
 
         profileViewModel.isChangePassword.observe(viewLifecycleOwner){ status ->
             if(status){
-                ChangePassword().show(parentFragmentManager,"ChangePasswordBottomSheet")
+                if(Global.isCalendarSelected==false) {
+                    Global.isCalendarSelected = true
+                    ChangePassword().show(parentFragmentManager, "ChangePasswordBottomSheet")
+                }
             }
         }
 
         profileViewModel.isEdit.observe(viewLifecycleOwner){ status ->
             if(status == true ){
-                val view = EditProfilePhotoBinding.inflate(layoutInflater)
+                if(Global.isCalendarSelected==false) {
+                    Global.isCalendarSelected = true
+                    val view = EditProfilePhotoBinding.inflate(layoutInflater)
 
-                var delAcPrompt = AlertDialog.Builder(requireContext())
-                    .setView(view.root)
-                    .setCancelable(false)
-                    .create()
-                delAcPrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    var delAcPrompt = AlertDialog.Builder(requireContext())
+                        .setView(view.root)
+                        .setCancelable(false)
+                        .create()
+                    delAcPrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-                view.idGalleryFlow.setOnClickListener {
-                    galleryLauncher.launch(arrayOf("image/*"))
+                    view.idGalleryFlow.setOnClickListener {
+                        galleryLauncher.launch(arrayOf("image/*"))
 //                    profileViewModel.fnUpdateUserProfilePhoto(profilePhotoUri)
-                    delAcPrompt.dismiss()
-                }
+                        Global.isCalendarSelected = false
+                        delAcPrompt.dismiss()
+                    }
 
-                view.idCameraFlow.setOnClickListener {
-                    checkCameraPermissions()
-                    delAcPrompt.dismiss()
-                }
+                    view.idCameraFlow.setOnClickListener {
+                        checkCameraPermissions()
+                        Global.isCalendarSelected = false
+                        delAcPrompt.dismiss()
+                    }
 
-                view.idBtnDelProfilePhoto.setOnClickListener {
-                    profileBinding.idProfileImage.setImageResource(R.drawable.user)
-                    profileViewModel.fnUpdateUserProfilePhoto(null)
-                    delAcPrompt.dismiss()
-                }
+                    view.idBtnDelProfilePhoto.setOnClickListener {
+                        profileBinding.idProfileImage.setImageResource(R.drawable.user)
+                        profileViewModel.fnUpdateUserProfilePhoto(null)
+                        Global.isCalendarSelected = false
+                        delAcPrompt.dismiss()
+                    }
 
-                view.idBtnCancel.setOnClickListener {
-                    delAcPrompt.dismiss()
-                }
-                delAcPrompt.show()
+                    view.idBtnCancel.setOnClickListener {
+                        Global.isCalendarSelected = false
+                        delAcPrompt.dismiss()
+                    }
+                    delAcPrompt.show()
 
 
 //                val editOptions = arrayOf("Gallery","Camera")
@@ -222,21 +236,19 @@ class Profile : Fragment() {
 //                        }
 //                    }
 //                    .show()
+                }
             }
         }
 
 
         profileViewModel.isAddIncome.observe(viewLifecycleOwner){ status ->
             if(status){
-                AddIncome().show(parentFragmentManager,"AddIncomeBottomSheet")
+                if(Global.isCalendarSelected==false){
+                    Global.isCalendarSelected=true
+                    AddIncome().show(parentFragmentManager,"AddIncomeBottomSheet")
+                }
             }
         }
-
-//        profileViewModel.isDelProfilePhoto.observe(viewLifecycleOwner){ isDelete ->
-//            if(isDelete){
-//                profileBinding.idProfileImage.setImageResource(R.drawable.user)
-//            }
-//        }
 
         profileViewModel.profileUri.observe(viewLifecycleOwner){ uri ->
             if(uri!=null){
@@ -249,9 +261,6 @@ class Profile : Fragment() {
                 fnShowMessage("Something Wrong , Can't Load Profile Photo",requireContext(),R.drawable.error_bg)
             }
         }
-
-
-
     }
 
     fun checkCameraPermissions(){
@@ -326,6 +335,7 @@ class ChangePassword : BottomSheetDialogFragment(){
 
         changePasswordViewModel.isCancel.observe(viewLifecycleOwner){ isCancel ->
             if(isCancel){
+                Global.isCalendarSelected = false
                 dismiss()
             }
         }
@@ -333,10 +343,12 @@ class ChangePassword : BottomSheetDialogFragment(){
             when(state){
                 is ResultState.success  -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    Global.isCalendarSelected = false
                     dismiss()
                 }
                 is ResultState.fail  -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    Global.isCalendarSelected = false
                     dismiss()
                 }
             }
@@ -396,6 +408,7 @@ class AddIncome : BottomSheetDialogFragment(){
 
         addIncomeViewModel.isLeave.observe(viewLifecycleOwner){ isLeave ->
             if(isLeave){
+                Global.isCalendarSelected=false
                 dismiss()
             }
         }
@@ -404,11 +417,13 @@ class AddIncome : BottomSheetDialogFragment(){
             when(state){
                 is ResultState.success -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    Global.isCalendarSelected=false
                     dismiss()
                 }
 
                 is ResultState.fail -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
+                    Global.isCalendarSelected=false
                     dismiss()
                 }
             }

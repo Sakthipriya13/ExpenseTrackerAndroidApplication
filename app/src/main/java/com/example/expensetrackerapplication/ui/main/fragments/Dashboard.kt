@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.ui.main.fragments
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,16 +13,30 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Pie
+import com.db.williamchart.view.BarChartView
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.DashboardBinding
+import com.example.expensetrackerapplication.model.CategoryChartModel
+import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.viewmodel.DashBoardViewModel
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.MaterialColors
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +60,8 @@ class Dashboard : Fragment() {
 
     val months = listOf("Jan","Feb","March")
     val earnings = listOf(500,400,300)
+
+    private val barChartAnimationDuration = 1000L
 
     override fun onResume() {
         super.onResume()
@@ -74,16 +91,9 @@ class Dashboard : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dashBoardViewModel._isLoading.value = true
-
-        fnAddCalendarOptions()
-
         dashBoardViewModel.onCLickBtnThisMonth()
 
-        fnDisplayChart()
-
         dashBoardViewModel.fnGetCateDetailsPerDay()
-
 
         dashBoardViewModel._clickBtnThisMonth.observe(viewLifecycleOwner){ isClick ->
             if(isClick){
@@ -103,156 +113,161 @@ class Dashboard : Fragment() {
             }
         }
 
-        dashBoardBinding.idDOptions.setOnItemClickListener { parent,_,position,_ ->
-            when(position)
-            {
-                Global.DAY_WISE -> {
-                    dashBoardViewModel._isLoading.value = true
-                    dashBoardViewModel.fnGetCateDetailsPerDay()
-                }
-                Global.MONTHLY_WISE -> {
-                    dashBoardViewModel._isLoading.value = true
-                    dashBoardViewModel.fnGetCateDetailsPerMonth()
-                }
-                Global.YEARLY_WISE-> {
-                    dashBoardViewModel._isLoading.value = true
-                    dashBoardViewModel.fnGetCateDetailsPerYear()
-                }
+        dashBoardViewModel.paymentTypeChartList.observe(viewLifecycleOwner){ list ->
+            if(list.isNotEmpty()){
+                dashBoardViewModel._isLoading.value=false
+                Log.i("PAYMENT TYPE CHART LIST","payment Type Chart List: List Was Observed")
+                renderBarChart(list)
+            }
+            else{
+                dashBoardViewModel._isLoading.value=false
             }
         }
 
         dashBoardViewModel.categoryChartList.observe(viewLifecycleOwner) { list ->
-            dashBoardViewModel._isLoading.value = false
-            var pie : Pie = AnyChart.pie()
-            val chartList : MutableList<DataEntry> = mutableListOf()
-//            for(i in months.indices){
-//                list.add(ValueDataEntry(
-//                    months.elementAt(i),earnings.elementAt(i)
-//                ))
-//            }
-            list.forEach { ob ->
-                chartList.add(
-                    ValueDataEntry(
-                        ob.categoryName,
-                        ob.expenseAmt
-                    )
-                )
-                Log.i("CATEGORY LIST","Category List: ${ob.categoryName}")
+            if(list.isNotEmpty())
+            {
+                dashBoardViewModel._isLoading.value=false
+                Log.i("CATEGORY LIST","Category List: List Was Observed")
+                renderPieChart(list)
             }
-
-            pie.data(chartList)
-            pie.title(resources.getString(R.string.category_overview))
-            dashBoardBinding.idCategoryPieChart.setChart(pie)
+            else{
+                dashBoardViewModel._isLoading.value=false
+            }
         }
-
-//        dashBoardViewModel.dayWiseExpenseChartList.observe(viewLifecycleOwner){ list ->
-//            // Create a Cartesian chart instance
-//            val cartesian: Cartesian = AnyChart.column()
-//
-//            // Prepare data: category name + value
-//            val data: MutableList<DataEntry?> = ArrayList<DataEntry?>()
-//            data.add(ValueDataEntry("Apples", 55))
-//            data.add(ValueDataEntry("Bananas", 78))
-//            data.add(ValueDataEntry("Oranges", 33))
-//            data.add(ValueDataEntry("Grapes", 90))
-//            data.add(ValueDataEntry("Pears", 41))
-//            data.add(ValueDataEntry("Apples1", 55))
-//            data.add(ValueDataEntry("Bananas1", 78))
-//            data.add(ValueDataEntry("Oranges1", 33))
-//            data.add(ValueDataEntry("Grapes1", 90))
-//            data.add(ValueDataEntry("Pears1", 41))
-//            data.add(ValueDataEntry("Apples2", 55))
-//            data.add(ValueDataEntry("Bananas2", 78))
-//            data.add(ValueDataEntry("Oranges2", 33))
-//            data.add(ValueDataEntry("Grapes2", 90))
-//            data.add(ValueDataEntry("Pears2", 41))
-//
-//            data.add(ValueDataEntry("Apples3", 55))
-//            data.add(ValueDataEntry("Bananas3", 78))
-//            data.add(ValueDataEntry("Oranges3", 33))
-//            data.add(ValueDataEntry("Grapes3", 90))
-//            data.add(ValueDataEntry("Pears3", 41))
-//            data.add(ValueDataEntry("Apples4", 55))
-//            data.add(ValueDataEntry("Bananas4", 78))
-//            data.add(ValueDataEntry("Oranges4", 33))
-//            data.add(ValueDataEntry("Grapes4", 90))
-//            data.add(ValueDataEntry("Pears4", 41))
-//            data.add(ValueDataEntry("Apples6", 55))
-//            data.add(ValueDataEntry("Bananas6", 78))
-//            data.add(ValueDataEntry("Oranges6", 33))
-//            data.add(ValueDataEntry("Grapes6", 90))
-//            data.add(ValueDataEntry("Pears6", 41))
-//
-//            data.add(ValueDataEntry("Apples7", 55))
-//
-//            // Add data to a Column series
-//            val column: Column? = cartesian.column(data)
-//
-//            // Optional: set chart title and labels
-//            cartesian.title("Fruit Sales Example")
-//            cartesian.xAxis(0).title("Fruit")
-//            cartesian.yAxis(0).title("Quantity")
-//
-//            // Set chart in AnyChartView
-//            dashBoardBinding.idCategoryPieChart1.setChart(cartesian)
-//        }
 
         dashBoardViewModel.isLoading.observe(viewLifecycleOwner){ isLoading ->
             if(isLoading){
-                dashBoardBinding.idProgressBar.visibility = View.VISIBLE
+                dashBoardBinding.idLoading.visibility = View.VISIBLE
             }
             else{
-                dashBoardBinding.idProgressBar.visibility = View.GONE
+                dashBoardBinding.idLoading.visibility = View.GONE
             }
         }
     }
 
-    fun fnDisplayChart(){
+    private fun renderBarChart(list : List<PaymentTypeChartModel>){
 
-        Log.i("DISPLAY COLUMN CHART1","Display Column Chart1")
+        if (list.isEmpty()) return
+        val ob = list[0]   // assuming single summary row
 
-        // Create a Cartesian chart instance
-        val cartesian = AnyChart.column()
+        // 🔹 Payment values
+        val labels = listOf("UPI", "Cash", "Card", "Others")
+        val values = listOf(
+            ob.paymentType_UpiAmt,
+            ob.paymentType_CashAmt,
+            ob.paymentType_CardAmt,
+            ob.paymentType_OthersAmt)
 
-        // Prepare data: category name + value
-        val data: MutableList<DataEntry?> = ArrayList<DataEntry?>()
-        data.add(ValueDataEntry("Apples", 55))
-        data.add(ValueDataEntry("Bananas", 78))
-        data.add(ValueDataEntry("Oranges", 33))
-        data.add(ValueDataEntry("Grapes", 90))
-        data.add(ValueDataEntry("Pears", 41))
-
-        // Add data to a Column series
-        val column = cartesian.column(data)
-
-        // Optional: set chart title and labels
-        cartesian.animation(true)
-        cartesian.title("Fruit Sales Example")
-        cartesian.xAxis(0).title("Fruit")
-        cartesian.yAxis(0).title("Quantity")
-
-        // Set chart in AnyChartView
-        dashBoardBinding.idChart.setChart(cartesian)
-
-        Log.i("DISPLAY COLUMN CHART2","Display Column Chart2")
-
-        var pie : Pie = AnyChart.pie()
-        val chartList : MutableList<DataEntry> = mutableListOf()
-        for(i in months.indices){
-            chartList.add(ValueDataEntry(
-                months.elementAt(i),earnings.elementAt(i)
-            ))
+        // 🔹 Bar Entries
+        val entries = ArrayList<BarEntry>()
+        values.forEachIndexed { index, value ->
+            entries.add(BarEntry(index.toFloat(), value))
         }
-        pie.data(chartList)
-        pie.title(resources.getString(R.string.category_overview))
-        dashBoardBinding.idChart1.setChart(pie)
 
-        Log.i("DISPLAY COLUMN CHART2","Display Column Chart3")
+        // 🔹 DataSet
+        val dataSet = BarDataSet(entries, resources.getString(R.string.payment_type))
+        dataSet.valueTextSize = 15f  //12
+        dataSet.setDrawValues(true)
+        dataSet.color = MaterialColors.getColor(
+            requireView(),
+            com.google.android.material.R.attr.colorOnPrimary
+        )
 
+        // 🔹 BarData
+        val barData = BarData(dataSet)
+        barData.barWidth = 0.6f
+
+        // 🔹 Assign data
+        dashBoardBinding.barChart.data = barData
+
+        // 🔹 X-Axis
+        val xAxis = dashBoardBinding.barChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.textSize= 20f
+        xAxis.yOffset=12f
+//        xAxis.textColor= ContextCompat.getColor(
+//            requireContext(),
+//            R.color.text_color_black
+//        )
+        xAxis.textColor= MaterialColors.getColor(
+            requireView(),
+            com.google.android.material.R.attr.colorOnPrimary
+        )
+        xAxis.setDrawGridLines(false)
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+
+        // 🔹 Y-Axis
+        val yAxisLeft = dashBoardBinding.barChart.axisLeft
+        yAxisLeft.textSize = 15f
+//        yAxisLeft.textColor = Color.BLACK
+        yAxisLeft.textColor= MaterialColors.getColor(
+            requireView(),
+            com.google.android.material.R.attr.colorOnPrimary
+        )
+
+        dashBoardBinding.barChart.axisRight.isEnabled = false
+        dashBoardBinding.barChart.axisLeft.axisMinimum = 0f
+
+        // Legend
+        val legend = dashBoardBinding.barChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        legend.orientation = Legend.LegendOrientation.HORIZONTAL
+        legend.setDrawInside(false)
+        legend.yOffset = 10f
+        legend.textSize = 15f
+        legend.textColor = MaterialColors.getColor(
+            requireView(),
+            com.google.android.material.R.attr.colorOnPrimary
+        )
+
+        // 🔹 Chart Settings
+        dashBoardBinding.barChart.setExtraOffsets(0f,0f,0f,25f)
+        dashBoardBinding.barChart.description.isEnabled = false
+        dashBoardBinding.barChart.legend.isEnabled = true
+        dashBoardBinding.barChart.setFitBars(true)
+        dashBoardBinding.barChart.animateY(1000)
+
+        dashBoardBinding.barChart.invalidate()
     }
 
+
+    private fun renderPieChart(list: List<CategoryChartModel>) {
+
+        // STEP 2.1 – Clear old chart
+//        dashBoardBinding.idCategoryPieChart.clear()
+//        dashBoardBinding.idCategoryPieChart.invalidate()
+
+        // 1️ BREAK old JS binding
+
+        // STEP 2.2 – Create NEW Pie object every time
+        val pie = AnyChart.pie()
+
+        // STEP 2.3 – Prepare fresh data
+        val data = mutableListOf<DataEntry>()
+
+        list.forEach {
+            Log.i("CATEGORY NAME","Category Name: ${it.categoryName} And Amt: ${it.expenseAmt}")
+            data.add(
+                ValueDataEntry(
+                    it.categoryName,
+                    it.expenseAmt
+                )
+            )
+        }
+
+        // STEP 2.4 – Set data to Pie
+        pie.data(data)
+        pie.title(getString(R.string.category_overview))
+
+        // STEP 2.5 – Set chart
+        dashBoardBinding.idCategoryPieChart.setChart(pie)
+    }
+
+
     fun fnUpdateBtnUi(btnId : MaterialButton,isClick : Boolean){
-        dashBoardViewModel._isLoading.value = false
         if(isClick){
             btnId.setBackgroundColor(
                 MaterialColors.getColor(
@@ -290,19 +305,8 @@ class Dashboard : Fragment() {
         }
     }
 
-
-    fun fnAddCalendarOptions(){
-        val options = resources.getStringArray(R.array.calendar_options)
-        val adapter = ArrayAdapter<String>(
-            requireContext(),
-            R.layout.dropdown_item,
-            options
-        )
-        dashBoardBinding.idDOptions.setAdapter(adapter)
-        dashBoardBinding.idDOptions.setText(adapter.getItem(0),false)
-    }
-
     companion object {
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

@@ -55,11 +55,11 @@ object Global {
 
     val DAY_WISE = 0
 
-    val WEEKLY_WISE = 1
+//    val WEEKLY_WISE = 1
 
-    val MONTHLY_WISE = 2
+    val MONTHLY_WISE = 1
 
-    val YEARLY_WISE = 3
+    val YEARLY_WISE = 2
 
     fun fnGetCurrentDate() : String {
 

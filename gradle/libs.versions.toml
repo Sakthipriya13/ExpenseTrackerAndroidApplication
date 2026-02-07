@@ -12,6 +12,7 @@ appcompat = "1.7.1"
 material = "1.13.0"
 activity = "1.11.0"
 constraintlayout = "2.2.1"
+mpandroidchart = "v3.1.0"
 navigationFragmentKtx = "2.9.5"
 navigationUiKtx = "2.9.5"
 poi = "5.5.1"
@@ -23,6 +24,7 @@ recyclerview = "1.4.0"
 gridlayout = "1.1.0"
 sqliteBundled = "2.6.2"
 multidex = "2.0.1"
+williamchart = "3.11.0"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -45,12 +47,14 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poiOoxml" }
 poi = { module = "org.apache.poi:poi", version.ref = "poi" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 protolite-well-known-types = { group = "com.google.firebase", name = "protolite-well-known-types", version.ref = "protoliteWellKnownTypes" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
+williamchart = { module = "com.diogobernardino:williamchart", version.ref = "williamchart" }
 # Lifecycle
 #androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 #androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
