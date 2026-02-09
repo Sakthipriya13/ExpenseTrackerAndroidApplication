@@ -25,17 +25,13 @@ import com.example.expensetrackerapplication.datastore.LanguageDataStore
 import com.example.expensetrackerapplication.datastore.ThemeColorDataStore
 import com.example.expensetrackerapplication.datastore.ThemeDataStore
 import com.example.expensetrackerapplication.model.CategoryModel
-import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui_event.CategoryItemClickListener
-import com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener
 import com.example.expensetrackerapplication.ui_event.ResultState
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match

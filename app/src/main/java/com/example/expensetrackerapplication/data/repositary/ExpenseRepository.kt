@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.expensetrackerapplication.data.dao.ExpenseDao
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.model.CategoryChartModel
-import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
 

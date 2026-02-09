@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Day Wise"
+                        android:text="DAY - WISE"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -67,7 +67,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- WEEKLY -->
+            <!-- MONTHLY SUMMARY -->
             <androidx.cardview.widget.CardView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
@@ -92,12 +92,12 @@
                         android:layout_height="50dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_weekly_report" />
+                        android:src="@drawable/ic_monthly_report" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Weekly"
+                        android:text="MONTHLY SUMMARY"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -105,7 +105,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- MONTHLY -->
+            <!-- CATEGORY -->
             <androidx.cardview.widget.CardView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
@@ -130,12 +130,12 @@
                         android:layout_height="50dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_monthly_report" />
+                        android:src="@drawable/ic_category_report" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Monthly"
+                        android:text="CATEGORY"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -168,19 +168,18 @@
                         android:layout_height="50dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_category_report" />
+                        android:src="@drawable/ic_payment_type" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Category"
+                        android:text="PAYMENT TYPE"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:gravity="center" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
         </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

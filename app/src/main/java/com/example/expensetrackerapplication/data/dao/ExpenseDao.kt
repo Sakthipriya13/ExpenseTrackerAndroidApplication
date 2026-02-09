@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.model.CategoryChartModel
-import com.example.expensetrackerapplication.model.DayWiseReportModel
 import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 
 @Dao

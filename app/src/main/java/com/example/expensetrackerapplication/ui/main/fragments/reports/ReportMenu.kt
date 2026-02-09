@@ -48,6 +48,11 @@ class ReportMenu : Fragment() {
         reportMenuBinding.reportMenuViewModel=reportMenuViewModel
         reportMenuBinding.lifecycleOwner=viewLifecycleOwner
 
+        return reportMenuBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         reportMenuViewModel.showDayWiseReport.observe(viewLifecycleOwner){ isShow ->
             if (isShow==true)
             {
@@ -78,10 +83,6 @@ class ReportMenu : Fragment() {
                 findNavController().navigate(R.id.idCategoryWiseReport)
             }
         }
-
-
-
-        return reportMenuBinding.root
     }
 
     companion object {

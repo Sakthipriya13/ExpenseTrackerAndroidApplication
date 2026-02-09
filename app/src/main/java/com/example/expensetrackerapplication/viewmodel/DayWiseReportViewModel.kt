@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
-class CurrentDayReportViewModel(application : Application) : AndroidViewModel(application = application)
+class DayWiseReportViewModel(application : Application) : AndroidViewModel(application = application)
 {
     val expenseRepository : ExpenseRepository
     init {

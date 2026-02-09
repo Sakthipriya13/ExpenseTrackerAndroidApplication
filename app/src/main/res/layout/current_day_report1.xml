@@ -5,7 +5,7 @@
     >
     <data>
         <variable name="currentDayReportViewModel"
-            type="com.example.expensetrackerapplication.viewmodel.CurrentDayReportViewModel"/>
+            type="com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

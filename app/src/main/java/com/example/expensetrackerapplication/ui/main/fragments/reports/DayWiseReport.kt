@@ -19,14 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.ConfirmationPromptBinding
-import com.example.expensetrackerapplication.databinding.CurrentDayReportBinding
+import com.example.expensetrackerapplication.databinding.DayWiseReportBinding
 import com.example.expensetrackerapplication.databinding.DayWiseReportListItemBinding
 import com.example.expensetrackerapplication.databinding.MainBinding
 import com.example.expensetrackerapplication.model.CurrentDayReportModel
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener
-import com.example.expensetrackerapplication.viewmodel.CurrentDayReportViewModel
+import com.example.expensetrackerapplication.viewmodel.DayWiseReportViewModel
 
 import com.example.expensetrackerapplication.viewmodel.MainViewModel
 import com.example.expensetrackerapplication.viewmodel.ReportMenuViewModel
@@ -48,9 +48,9 @@ class DayWiseReport : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var currentDayReportBinding : CurrentDayReportBinding
+    private lateinit var DayWiseReportBinding : DayWiseReportBinding
 
-    val CurrentDayReportViewModel: CurrentDayReportViewModel by viewModels()
+    val DayWiseReportViewModel: DayWiseReportViewModel by viewModels()
 
     val reportMenuViewModel : ReportMenuViewModel by activityViewModels()
 
@@ -75,30 +75,30 @@ class DayWiseReport : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        currentDayReportBinding = DataBindingUtil.inflate(inflater,R.layout.current_day_report, container, false)
-        currentDayReportBinding.currentDayReportViewModel=CurrentDayReportViewModel
+        DayWiseReportBinding = DataBindingUtil.inflate(inflater,R.layout.current_day_report2, container, false)
+        DayWiseReportBinding.currentDayReportViewModel=DayWiseReportViewModel
 
-        currentDayReportBinding.lifecycleOwner = viewLifecycleOwner
+        DayWiseReportBinding.lifecycleOwner = viewLifecycleOwner
 
-        return currentDayReportBinding.root
+        return DayWiseReportBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         listAdapter = ListAdapter()
-        currentDayReportBinding.idDayWiseReportView.adapter = listAdapter
-        currentDayReportBinding.idDayWiseReportView.layoutManager = LinearLayoutManager(requireContext())
+        DayWiseReportBinding.idDayWiseReportView.adapter = listAdapter
+        DayWiseReportBinding.idDayWiseReportView.layoutManager = LinearLayoutManager(requireContext())
 
-        CurrentDayReportViewModel.fnPreWarmExcelEngine()
+        DayWiseReportViewModel.fnPreWarmExcelEngine()
 
-        CurrentDayReportViewModel.closeDayWiseReport.observe(viewLifecycleOwner){ isClose ->
+        DayWiseReportViewModel.closeDayWiseReport.observe(viewLifecycleOwner){ isClose ->
             if(isClose==true){
                 findNavController().navigate(R.id.action_day_wise_report_to_report_menu)
             }
         }
 
-        currentDayReportBinding.idCalendarButton.setOnClickListener {
+        DayWiseReportBinding.idCalendarButton.setOnClickListener {
             if(Global.isCalendarSelected==false)
             {
                 Global.isCalendarSelected=true
@@ -114,7 +114,7 @@ class DayWiseReport : Fragment() {
                         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
                         val date = sdf.format(calendar.time)
 //                    var date =  "$d-${m+1}-$y"
-                        CurrentDayReportViewModel._selectedDate.value=date
+                        DayWiseReportViewModel._selectedDate.value=date
                         Global.isCalendarSelected=false
 
                     },year,month,day)
@@ -129,13 +129,13 @@ class DayWiseReport : Fragment() {
             }
         }
 
-        CurrentDayReportViewModel.selectedDate.observe(viewLifecycleOwner){ date ->
+        DayWiseReportViewModel.selectedDate.observe(viewLifecycleOwner){ date ->
             Log.i("SELECTED DATE","Selected Date1: $date")
-            CurrentDayReportViewModel.fnClearFields()
-            CurrentDayReportViewModel.fnGetExpenseDetails(date)
+            DayWiseReportViewModel.fnClearFields()
+            DayWiseReportViewModel.fnGetExpenseDetails(date)
         }
 
-        CurrentDayReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
+        DayWiseReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
             listAdapter.fnSubmitList(list, object : DayWiseReportClickListener {
                 override fun onDeleteClick(expense: CurrentDayReportModel) {
                     if(!expense.isDelete.equals("DELETED"))
@@ -148,7 +148,7 @@ class DayWiseReport : Fragment() {
             })
         }
 
-        CurrentDayReportViewModel.exportStatus.observe(viewLifecycleOwner){ status ->
+        DayWiseReportViewModel.exportStatus.observe(viewLifecycleOwner){ status ->
             if(status){
                 fnShowMessage("Report Successfully Exported",requireContext(),R.drawable.bg_success)
             }
@@ -157,7 +157,7 @@ class DayWiseReport : Fragment() {
             }
         }
 
-        CurrentDayReportViewModel.expenseDeleteStatus.observe(viewLifecycleOwner){ status ->
+        DayWiseReportViewModel.expenseDeleteStatus.observe(viewLifecycleOwner){ status ->
             if(status){
                 fnShowMessage("Successfully Expense Details Was Deleted",requireContext(),R.drawable.bg_success)
             }
@@ -166,12 +166,12 @@ class DayWiseReport : Fragment() {
             }
         }
 
-        CurrentDayReportViewModel.isExportLoading.observe(viewLifecycleOwner){ isLoading ->
+        DayWiseReportViewModel.isExportLoading.observe(viewLifecycleOwner){ isLoading ->
             if(isLoading){
-                currentDayReportBinding.isExportLoading.visibility=View.VISIBLE
+                DayWiseReportBinding.isExportLoading.visibility=View.VISIBLE
             }
             else{
-                currentDayReportBinding.isExportLoading.visibility=View.GONE
+                DayWiseReportBinding.isExportLoading.visibility=View.GONE
             }
         }
 
@@ -187,7 +187,7 @@ class DayWiseReport : Fragment() {
             .create()
         deletePrompt.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         promptBinding.idBtnOk.setOnClickListener {
-            CurrentDayReportViewModel.fnDeleteExpense(expense.expenseId)
+            DayWiseReportViewModel.fnDeleteExpense(expense.expenseId)
             deletePrompt.dismiss()
         }
         promptBinding.idBtnCancel.setOnClickListener {

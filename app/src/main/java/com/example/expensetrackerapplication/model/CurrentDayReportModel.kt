@@ -1,8 +1,6 @@
 package com.example.expensetrackerapplication.model
 
-import androidx.room.ColumnInfo
-
-data class DayWiseReportModel(
+data class CurrentDayReportModel(
     var expenseId : Int?,
     var categoryId : Int?,
     var catgeoryName : String?,
