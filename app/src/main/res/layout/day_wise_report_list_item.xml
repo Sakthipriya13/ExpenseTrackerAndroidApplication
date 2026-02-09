@@ -5,7 +5,7 @@
     <data>
         <variable
             name="dayWiseReportListItem"
-            type="com.example.expensetrackerapplication.model.DayWiseReportModel" />
+            type="com.example.expensetrackerapplication.model.CurrentDayReportModel" />
         <variable
             name="deleteClickListener"
             type="com.example.expensetrackerapplication.ui_event.DayWiseReportClickListener" />

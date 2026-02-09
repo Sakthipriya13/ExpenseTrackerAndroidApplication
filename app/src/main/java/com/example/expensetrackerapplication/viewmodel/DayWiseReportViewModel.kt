@@ -13,20 +13,15 @@ import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
-import com.example.expensetrackerapplication.model.DayWiseReportModel
+import com.example.expensetrackerapplication.model.CurrentDayReportModel
 import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.apache.poi.ss.usermodel.BorderStyle
-import org.apache.poi.ss.usermodel.FillPatternType
-import org.apache.poi.ss.usermodel.HorizontalAlignment
-import org.apache.poi.ss.usermodel.IndexedColors
-import org.apache.poi.ss.usermodel.VerticalAlignment
 import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
-class DayWiseReportViewModel(application : Application) : AndroidViewModel(application = application)
+class CurrentDayReportViewModel(application : Application) : AndroidViewModel(application = application)
 {
     val expenseRepository : ExpenseRepository
     init {
@@ -48,8 +43,8 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     var _deletedExpenseSummary = MutableLiveData<String>()
     var deletedExpenseSummary : LiveData<String> = _deletedExpenseSummary
 
-    var _expenseList = MutableLiveData<List<DayWiseReportModel>>()
-    var expenseList : LiveData<List<DayWiseReportModel>> = _expenseList
+    var _expenseList = MutableLiveData<List<CurrentDayReportModel>>()
+    var expenseList : LiveData<List<CurrentDayReportModel>> = _expenseList
 
     var _exportStatus = MutableLiveData<Boolean>()
     var exportStatus : LiveData<Boolean> = _exportStatus
@@ -69,7 +64,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
         _totalExpenseSummary.value=""
         _addedExpenseSummary.value=""
         _deletedExpenseSummary.value=""
-        _expenseList.value = emptyList<DayWiseReportModel>()
+        _expenseList.value = emptyList<CurrentDayReportModel>()
     }
 
     fun fnGetExpenseDetails(date: String?){
@@ -82,12 +77,12 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
                 var deletedExpenseAmtSum = 0.0f
 
                 val res = expenseRepository.fnGetExpenseDetailsPerDate(date)
-                var list : MutableList<DayWiseReportModel> = mutableListOf()
+                var list : MutableList<CurrentDayReportModel> = mutableListOf()
                 var exPaymentType = ""
                 if(res.isNotEmpty())
                 {
                     res.forEach { ex ->
-                        list.add(DayWiseReportModel(
+                        list.add(CurrentDayReportModel(
                             expenseId = ex.expenseId,
                             categoryId= ex.expenseCategoryId,
                             catgeoryName= ex.expenseCategoryName,
