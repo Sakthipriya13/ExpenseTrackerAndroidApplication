@@ -267,7 +267,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
                     //Table Data Row
                     expenseList.value?.forEachIndexed { index, expense ->
-                        var dataRow = sheet.createRow(index+8)
+                        var dataRow = sheet.createRow(index+7)
 
                         var dataCell0=dataRow.createCell(0)
                         dataCell0.setCellValue(expense.catgeoryName)
@@ -287,7 +287,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
                     }
 
-                    _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${Global.fnGetCurrentTime()}.xlsx")
+                    _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${selectedDate.value}_${Global.fnGetCurrentTime()}.xlsx")
 
                     Log.i("EXPORT LOADING VALUE","Export Loading Value3: ${isExportLoading.value}")
 

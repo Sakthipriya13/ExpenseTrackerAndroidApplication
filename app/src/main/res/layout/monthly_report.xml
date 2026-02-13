@@ -1,9 +1,372 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.fragments.reports.MonthlyReport">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="monthlySummaryViewModel"
+            type="com.example.expensetrackerapplication.viewmodel.MonthlySummaryViewModel" />
+    </data>
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.fragments.reports.MonthlyReport"
+    >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/isExportLoading"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="30dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="true"
+                android:layout_margin="20dp"
+                android:indeterminateTint="?attr/colorPrimary"
+                android:indeterminateTintMode="src_in"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/idHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="@string/monthly_summary"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="?attr/textColorBlack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/idBackLayout"/>
+
+            <LinearLayout
+                android:id="@+id/idBackLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/idHeader"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/idCloseBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/back"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorLink="?attr/colorPrimary"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_background"
+                    android:text="@string/export_excel"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:icon="@drawable/ic_export"
+                    app:iconGravity="start"
+                    app:iconPadding="6dp"
+                    app:iconTint="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/idYearLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/month"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="?attr/textColorBlack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idBackLayout"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/idLSelectYear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.75"
+                app:layout_constraintEnd_toStartOf="@+id/idBtnCalendar"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idESelectYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="20sp"
+                    android:focusable="false"
+                    android:cursorVisible="false"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/idBtnCalendar"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintStart_toEndOf="@+id/idLSelectYear"
+                app:layout_constraintWidth_percent="0.13"/>
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/idFlow1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flow_horizontalStyle="spread_inside"
+                app:flow_horizontalGap="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/idYearLabel"
+                app:constraint_referenced_ids="idLSelectYear,idBtnCalendar"
+                tools:ignore="MissingConstraints" />
+
+<!--            <androidx.core.widget.NestedScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:fillViewport="true"-->
+<!--                android:padding="0dp"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:layout_margin="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/idFlow1">-->
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    >-->
+                    <TextView
+                        android:id="@+id/idExpenseLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MONTHLY OVERVIEW SUMMARY"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textColor="?attr/textColorBlack"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idFlow1"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/idExpenseSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="20dp"
+                        android:layout_margin="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/idExpenseLabel"
+                        app:layout_constraintStart_toStartOf="parent">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            android:background="?attr/colorPrimary">
+                            <TextView
+                                android:id="@+id/idTotalLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_percent="0.50"
+                                android:textStyle="bold"
+                                android:text="@string/income"
+                                android:gravity="center"
+                                android:textSize="25sp"
+                                android:textColor="@color/text_color_white"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                />
+                            <TextView
+                                android:id="@+id/idTotalAmt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_percent="0.50"
+                                android:textStyle="bold"
+                                android:textSize="25sp"
+                                android:textColor="@color/text_color_white"
+                                android:drawableStart="@drawable/currency_rupee"
+                                android:drawablePadding="5dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/idTotalLabel"
+                                app:layout_constraintTop_toTopOf="parent"
+                                />
+
+                            <androidx.constraintlayout.helper.widget.Flow
+                                android:id="@+id/idTotalRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:constraint_referenced_ids="idTotalLabel,idTotalAmt"
+                                app:flow_horizontalGap="5dp"
+                                app:flow_horizontalStyle="spread_inside"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/idAddedLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_percent="0.50"
+                                android:textStyle="bold"
+                                android:text="@string/_expense"
+                                android:gravity="center"
+                                android:textSize="25sp"
+                                android:textColor="@color/text_color_white"
+                                />
+                            <TextView
+                                android:id="@+id/idAddedAmt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_percent="0.50"
+                                android:textStyle="bold"
+                                android:textSize="25sp"
+                                android:drawableStart="@drawable/currency_rupee"
+                                android:drawablePadding="5dp"
+                                android:textColor="@color/text_color_white"
+                                />
+                            <androidx.constraintlayout.helper.widget.Flow
+                                android:id="@+id/idExpenseRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:flow_horizontalStyle="spread_inside"
+                                app:flow_horizontalGap="5dp"
+                                android:layout_margin="10dp"
+                                app:layout_constraintTop_toBottomOf="@id/idTotalRow"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:constraint_referenced_ids="idAddedLabel,idAddedAmt"/>
+                            <TextView
+                                android:id="@+id/idDelLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_percent="0.50"
+                                android:textStyle="bold"
+                                android:text="@string/_balance"
+                                android:gravity="center"
+                                android:textSize="25sp"
+                                android:textColor="@color/text_color_white"
+                                />
+                            <TextView
+                                android:id="@+id/idDeletedAmt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_percent="0.50"
+                                android:textStyle="bold"
+                                android:textSize="25sp"
+                                android:drawableStart="@drawable/currency_rupee"
+                                android:drawablePadding="5dp"
+                                android:textColor="@color/text_color_white"
+                                />
+                            <androidx.constraintlayout.helper.widget.Flow
+                                android:id="@+id/idDeletedRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:flow_horizontalStyle="spread_inside"
+                                app:flow_horizontalGap="5dp"
+                                android:layout_margin="10dp"
+                                app:layout_constraintTop_toBottomOf="@id/idExpenseRow"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:constraint_referenced_ids="idDelLabel,idDeletedAmt"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:id="@+id/idListHeaderLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:background="?attr/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idExpenseSummary">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="start|center"
+                            android:textColor="?attr/textColorWhite"
+                            android:textSize="20sp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:layout_weight="1"
+                            android:text="@string/date"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="start|center"
+                            android:textColor="?attr/textColorWhite"
+                            android:textSize="20sp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="@string/transactions"
+                            android:layout_weight="0.7"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="start|center"
+                            android:textColor="?attr/textColorWhite"
+                            android:textSize="20sp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:text="@string/expense"/>
+
+                    </LinearLayout>
+
+                    <!-- RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/idDayWiseReportView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:overScrollMode="never"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/idListHeaderLayout"/>
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--            </androidx.core.widget.NestedScrollView>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

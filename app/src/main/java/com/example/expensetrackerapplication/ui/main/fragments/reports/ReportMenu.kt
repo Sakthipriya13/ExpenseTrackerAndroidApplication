@@ -66,21 +66,27 @@ class ReportMenu : Fragment() {
             }
         }
 
-        reportMenuViewModel.showWeeklyReport.observe(viewLifecycleOwner){ isShow ->
+        reportMenuViewModel.showPaymentTypeReport.observe(viewLifecycleOwner){ isShow ->
             if (isShow==true){
-                findNavController().navigate(R.id.idWeeklyReport)
+                findNavController().navigate(R.id.idPaymentTypeReport)
             }
         }
 
-        reportMenuViewModel.showMonthlyReport.observe(viewLifecycleOwner){ isShow ->
+        reportMenuViewModel.showMonthlySummaryReport.observe(viewLifecycleOwner){ isShow ->
             if (isShow==true){
-                findNavController().navigate(R.id.idMonthlyReport)
+                findNavController().navigate(R.id.idMonthlySummaryReport)
             }
         }
 
         reportMenuViewModel.showCategoryReport.observe(viewLifecycleOwner){ isShow ->
             if (isShow==true){
                 findNavController().navigate(R.id.idCategoryWiseReport)
+            }
+        }
+
+        reportMenuViewModel.showYearlyReport.observe(viewLifecycleOwner){ isShow ->
+            if (isShow==true){
+                findNavController().navigate(R.id.idYearlyReport)
             }
         }
     }

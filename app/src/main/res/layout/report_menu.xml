@@ -80,7 +80,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{() -> reportMenuViewModel.fnShowWeeklyReport()}"
+                    android:onClick="@{() -> reportMenuViewModel.fnShowMonthlySummaryReport()}"
                     android:gravity="center"
                     android:background="?attr/colorPrimary"
                     android:orientation="vertical"
@@ -105,7 +105,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- CATEGORY -->
+            <!-- YEARLY SUMMARY -->
             <androidx.cardview.widget.CardView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
@@ -118,7 +118,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{() -> reportMenuViewModel.fnShowMonthlyReport()}"
+                    android:onClick="@{() -> reportMenuViewModel.fnShowYearlyReport()}"
                     android:gravity="center"
                     android:background="?attr/colorPrimary"
                     android:orientation="vertical"
@@ -130,12 +130,12 @@
                         android:layout_height="50dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_category_report" />
+                        android:src="@drawable/ic_yearly_summary" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CATEGORY"
+                        android:text="YEARLY SUMMARY"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -157,6 +157,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="@{() -> reportMenuViewModel.fnShowCategoryReport()}"
+                    android:gravity="center"
+                    android:background="?attr/colorPrimary"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="57dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_category_report" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="CATEGORY"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CATEGORY -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_columnWeight="1"
+                app:layout_rowWeight="1"
+                android:layout_margin="6dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> reportMenuViewModel.fnShowPaymentTypeReport()}"
                     android:gravity="center"
                     android:background="?attr/colorPrimary"
                     android:orientation="vertical"

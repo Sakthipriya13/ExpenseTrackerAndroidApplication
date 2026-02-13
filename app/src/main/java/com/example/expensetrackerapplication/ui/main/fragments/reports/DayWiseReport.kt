@@ -75,7 +75,7 @@ class DayWiseReport : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        DayWiseReportBinding = DataBindingUtil.inflate(inflater,R.layout.current_day_report2, container, false)
+        DayWiseReportBinding = DataBindingUtil.inflate(inflater,R.layout.day_wise_report, container, false)
         DayWiseReportBinding.currentDayReportViewModel=DayWiseReportViewModel
 
         DayWiseReportBinding.lifecycleOwner = viewLifecycleOwner

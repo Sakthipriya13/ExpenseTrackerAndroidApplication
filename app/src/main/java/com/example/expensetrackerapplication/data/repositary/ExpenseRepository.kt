@@ -81,7 +81,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
         }
     }
 
-    suspend fun fnGetCateDetailsPerDay(day : String): List<CategoryChartModel>
+    suspend fun fnGetCateDetailsPerDay(day: String?): List<CategoryChartModel>
     {
         return try {
             expenseDao.fnGetCatDetailsPerDay(day,Global.EXPENSE_STATUS_ADDED)
@@ -111,6 +111,17 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
             emptyList<CategoryChartModel>()
+        }
+    }
+
+    suspend fun fnGetPaymentTypeAmtSummaryPerDay(day: String): List<PaymentTypeChartModel>
+    {
+        return try {
+            expenseDao.fnGetPaymentTypesPerDay(day,Global.EXPENSE_STATUS_ADDED)
+        }
+        catch (e : Exception){
+            Log.e("GET PAYMENT TYPE SUMMARY AMOUNT PER DAY","Get Payment Type Summary Amount Per Day: ${e.message}")
+            emptyList<PaymentTypeChartModel>()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.expensetrackerapplication.`object`
 
+import com.google.android.material.color.MaterialColors
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.Font
@@ -148,6 +149,10 @@ object Global {
 
             alignment = HorizontalAlignment.CENTER
             fillForegroundColor = IndexedColors.LAVENDER.index
+//            fillForegroundColor = MaterialColors.getColor(
+//                requireView(),
+//                com.google.android.material.R.attr.colorOnPrimary
+//            )
             fillPattern = FillPatternType.SOLID_FOREGROUND
             setFont(workBook.createFont().apply { bold = true })
         }

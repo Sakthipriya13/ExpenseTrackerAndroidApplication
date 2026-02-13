@@ -3,28 +3,29 @@ agp = "9.0.0"
 anychartAndroid = "1.1.5"
 datastorePreferences = "1.2.0"
 glide = "5.0.5"
-kotlin = "2.2.10"
+kotlin = "2.3.10"
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
-activity = "1.11.0"
+activity = "1.12.3"
 constraintlayout = "2.2.1"
 mpandroidchart = "v3.1.0"
-navigationFragmentKtx = "2.9.5"
-navigationUiKtx = "2.9.5"
+navigationFragmentKtx = "2.9.7"
+navigationUiKtx = "2.9.7"
 poi = "5.5.1"
 poiOoxml = "5.5.1"
-roomCompiler = "2.8.3"
-roomRuntime = "2.8.3"
+roomCompiler = "2.8.4"
+roomRuntime = "2.8.4"
 protoliteWellKnownTypes = "18.0.1"
 recyclerview = "1.4.0"
 gridlayout = "1.1.0"
 sqliteBundled = "2.6.2"
 multidex = "2.0.1"
 williamchart = "3.11.0"
+uiText = "1.10.2"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -55,6 +56,8 @@ protolite-well-known-types = { group = "com.google.firebase", name = "protolite-
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
 williamchart = { module = "com.diogobernardino:williamchart", version.ref = "williamchart" }
+androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
+
 # Lifecycle
 #androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 #androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
@@ -62,7 +65,6 @@ williamchart = { module = "com.diogobernardino:williamchart", version.ref = "wil
 # Intuit (for sdp/ssp)
 #com-intuit-sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "intuit-sdp" }
 #com-intuit-ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "intuit-ssp" }
-
 
 
 [plugins]

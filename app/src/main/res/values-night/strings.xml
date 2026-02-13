@@ -131,4 +131,20 @@
     <string name="recent_transactions">RECENT TRANSACTIONS</string>
     <string name="payment_type_overview">PAYMENT TYPE OVERVIEW</string>
 
+    <string name="export_excel">EXPORT</string>
+
+    <string name="total">TOTAL</string>
+    <string name="added">ADDED</string>
+    <string name="deleted">DELETED</string>
+
+    <string name="expense_status">EXPENSE STATUS</string>
+
+    <string name="del">DELETE</string>
+    <string name="monthly_summary">MONTHLY SUMMARY</string>
+    <string name="transactions">TRANSACTIONS</string>
+    <string name="enter_cash_amount">Enter Cash Amount</string>
+    <string name="enter_card_amount">Enter Card Amount</string>
+    <string name="enter_upi_amount">Enter Upi Amount</string>
+    <string name="split_payment_type">SPLIT PAYMENT TYPE</string>
+
 </resources>

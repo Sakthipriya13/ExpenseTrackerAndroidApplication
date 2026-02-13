@@ -1,11 +1,19 @@
 package com.example.expensetrackerapplication.ui.main.fragments.reports
 
+import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.MonthlyReportBinding
+import com.example.expensetrackerapplication.viewmodel.MonthlySummaryViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +30,10 @@ class MonthlyReport : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var monthlySummaryBinding : MonthlyReportBinding
+
+    private val monthlySummaryViewModel : MonthlySummaryViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,9 +46,47 @@ class MonthlyReport : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        monthlySummaryBinding = DataBindingUtil.inflate(inflater,R.layout.monthly_report, container, false)
+        monthlySummaryBinding.monthlySummaryViewModel = monthlySummaryViewModel
+        monthlySummaryBinding.lifecycleOwner = viewLifecycleOwner
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.monthly_report, container, false)
+        return monthlySummaryBinding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        monthlySummaryBinding.idBtnCalendar.setOnClickListener{
+            showMonthPicker()
+        }
+    }
+
+
+    private fun showMonthPicker() {
+
+        val picker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select Month")
+            .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
+            .build()
+
+        picker.show(parentFragmentManager, "MONTH_PICKER")
+
+        picker.addOnPositiveButtonClickListener { selection ->
+
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = selection
+
+            val month = calendar.get(Calendar.MONTH) + 1
+            val year = calendar.get(Calendar.YEAR)
+
+            println("Selected Month: $month Year: $year")
+
+            // Example UI update
+            // binding.txtMonth.text = "$month-$year"
+        }
+    }
+
 
     companion object {
         /**

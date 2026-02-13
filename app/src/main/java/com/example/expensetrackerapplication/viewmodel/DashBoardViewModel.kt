@@ -13,6 +13,7 @@ import com.example.expensetrackerapplication.model.CategoryChartModel
 import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class DashBoardViewModel(application : Application) : AndroidViewModel(application = application)
 {
@@ -70,7 +71,7 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
                 var expense = newExpenseRepository.fnGetMonthSummary(Global.fnGetCurrentMonth())
                 var balance = income-expense
 
-                Log.i("INCOME & EXPENSE & BALANCE DETAILS FOR CUR YEAR","Income:$income & Expense:$expense & Balance:$balance")
+                Log.i("INCOME & EXPENSE & BALANCE DETAILS FOR CUR MONTH","Income:$income & Expense:$expense & Balance:$balance")
 
                 if(income != 0.0f){
                     _incomeAmt.postValue(income.toString())
@@ -79,7 +80,7 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
                     _expenseAmt.postValue(expense.toString())
                 }
                 if(balance != 0.0f){
-                    _balanceAmt.postValue(balance.toString())
+                    _balanceAmt.postValue(abs(balance).toString())
                 }
                 else{
                     _balanceAmt.postValue(0.00f.toString())
@@ -137,7 +138,7 @@ class DashBoardViewModel(application : Application) : AndroidViewModel(applicati
                     _expenseAmt.postValue(expense.toString())
                 }
                 if(balance != 0.0f){
-                    _balanceAmt.postValue(balance.toString())
+                    _balanceAmt.postValue(abs(balance).toString())
                 }
                 else{
                     _balanceAmt.postValue(0.00f.toString())

@@ -10,32 +10,39 @@ class ReportMenuViewModel(application : Application) : AndroidViewModel(applicat
     var _showDayWiseReport = MutableLiveData<Boolean>()
     var showDayWiseReport : LiveData<Boolean> = _showDayWiseReport
 
-    var _showMonthlyReport = MutableLiveData<Boolean>()
-    var showMonthlyReport : LiveData<Boolean> = _showMonthlyReport
-
-    var _showWeeklyReport = MutableLiveData<Boolean>()
-    var showWeeklyReport : LiveData<Boolean> = _showWeeklyReport
+    var _showMonthlySummaryReport = MutableLiveData<Boolean>()
+    var showMonthlySummaryReport : LiveData<Boolean> = _showMonthlySummaryReport
 
     var _showCategoryReport = MutableLiveData<Boolean>()
     var showCategoryReport : LiveData<Boolean> = _showCategoryReport
+
+    var _showYearlyReport = MutableLiveData<Boolean>()
+    var showYearlyReport : LiveData<Boolean> = _showYearlyReport
+
+    var _showPaymentTypeReport = MutableLiveData<Boolean>()
+    var showPaymentTypeReport : LiveData<Boolean> = _showPaymentTypeReport
 
     fun fnShowDayWiseReport()
     {
         _showDayWiseReport.value=true
     }
 
-    fun fnShowWeeklyReport()
+    fun fnShowMonthlySummaryReport()
     {
-        _showWeeklyReport.value=true
-    }
-
-    fun fnShowMonthlyReport()
-    {
-        _showMonthlyReport.value=true
+        _showMonthlySummaryReport.value=true
     }
 
     fun fnShowCategoryReport()
     {
         _showCategoryReport.value=true
+    }
+
+    fun fnShowPaymentTypeReport()
+    {
+        _showPaymentTypeReport.value=true
+    }
+
+    fun fnShowYearlyReport(){
+        _showYearlyReport.value = true
     }
 }

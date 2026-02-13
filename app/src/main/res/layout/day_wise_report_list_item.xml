@@ -39,6 +39,8 @@
                 android:gravity="start|center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:drawableStart="@drawable/currency_rupee"
+                android:drawablePadding="5dp"
                 android:text="@{dayWiseReportListItem.expenseAmt}"
                 android:textColor="?attr/textColorBlack"
                 android:textSize="20sp" />

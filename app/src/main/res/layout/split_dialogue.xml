@@ -22,7 +22,7 @@
             android:id="@+id/idHeading"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="SPLIT PAYMENT TYPE"
+            android:text="@string/split_payment_type"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -52,7 +52,7 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/cash"
                 android:drawablePadding="10dp"
-                android:hint="Enter Cash Amount"/>
+                android:hint="@string/enter_cash_amount"/>
                 <requestFocus/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +74,7 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/card"
                 android:drawablePadding="10dp"
-                android:hint="Enter Card Amount"/>
+                android:hint="@string/enter_card_amount"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/idLAmtInUpi"
@@ -93,8 +93,9 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/upi"
                 android:drawablePadding="10dp"
-                android:hint="Enter Upi Amount"
+                android:hint="@string/enter_upi_amount"
                 android:inputType="numberDecimal"
+                android:nextFocusDown="@id/idBtnOk"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 

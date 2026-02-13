@@ -139,4 +139,23 @@
 
     <string name="payment_type_overview">கட்டண வகை கண்ணோட்டம்</string>
 
+    <string name="export_excel">வெளியேற்று</string>
+
+    <string name="total">மொத்தம்</string>
+    <string name="added">சேர்க்கப்பட்டது</string>
+    <string name="deleted">நீக்கப்பட்டது</string>
+
+    <string name="expense_status">செலவின் நிலை</string>
+
+    <string name="del">நீக்கு</string>
+
+    <string name="monthly_summary">மாதாந்திர சுருக்க அறிக்கை</string>
+    <string name="transactions">TRANSACTIONS</string>
+
+
+    <string name="enter_cash_amount">ரொக்கத் தொகையை உள்ளிடவும்</string>
+    <string name="enter_card_amount">கார்டு தொகையை உள்ளிடவும்</string>
+    <string name="enter_upi_amount">யுபிஐ தொகையை உள்ளிடவும்</string>
+    <string name="split_payment_type">பிரிப்பு கட்டணம்</string>
+
 </resources>
