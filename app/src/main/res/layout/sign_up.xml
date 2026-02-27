@@ -197,7 +197,7 @@
                     android:id="@+id/idSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.8"
                     android:textColor="@color/text_color_white"
                     android:onClick="@{() -> signUpViewModel.fnStoreUserDetails()}"
                     android:background="@drawable/btn_background"
@@ -232,7 +232,7 @@
             <TextView
                 android:id="@+id/idGoToLoginPage"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="70dp"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:onClick="@{() -> signUpViewModel.fnGoToLogin()}"

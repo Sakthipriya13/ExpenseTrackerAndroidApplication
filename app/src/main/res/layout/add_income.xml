@@ -50,7 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent="0.77"
-                app:layout_constraintEnd_toStartOf="@+id/idCalendarButton"
+                app:layout_constraintEnd_toStartOf="@+id/idBtnCalendar"
                 tools:ignore="MissingConstraints">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -61,7 +61,7 @@
                     android:textSize="15sp"
                     android:focusable="false"
                     android:cursorVisible="false"
-                    android:text="@{addIncome._selectedDate}"
+                    android:text="@{addIncome._selectedDateUi}"
                     android:inputType="none"
                     />
             </com.google.android.material.textfield.TextInputLayout>

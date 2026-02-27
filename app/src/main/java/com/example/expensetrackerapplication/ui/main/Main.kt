@@ -15,10 +15,13 @@ import com.example.expensetrackerapplication.viewmodel.MainViewModel
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.BaseActivity
+import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui.auth.Auth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -56,6 +59,8 @@ class Main : BaseActivity() {
         AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)
     }
 
+    private lateinit var navController : NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -63,6 +68,7 @@ class Main : BaseActivity() {
         mainDataBinding.mainViewModel=mainViewModel
         mainDataBinding.lifecycleOwner=this
         setContentView(mainDataBinding.root)
+
 
         mainViewModel.fnGetUserProfilePhotoUri()
 
@@ -112,33 +118,62 @@ class Main : BaseActivity() {
             }
         }
         mainDataBinding.idReportFab.setOnClickListener {
-            fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.idParentReport)
+            navController = findNavController(R.id.idContainer)
+            if (navController.currentDestination?.id != R.id.idParentReport) {
+                fnShrinkFab()
+                findNavController(R.id.idContainer).navigate(R.id.idParentReport)
+            }
+            else {
+                fnShowMessage("Already You Are In Report",this,R.drawable.error_bg)
+            }
         }
 
         mainDataBinding.idDashboardFab.setOnClickListener {
-            fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.idDashBoard)
+            navController = findNavController(R.id.idContainer)
+            if(navController.currentDestination?.id != R.id.idDashBoard) {
+                fnShrinkFab()
+                findNavController(R.id.idContainer).navigate(R.id.idDashBoard)
+            }
+            else {
+                fnShowMessage("Already You Are In Dashboard",this,R.drawable.error_bg)
+            }
         }
 
         mainDataBinding.idAddExpenseFab.setOnClickListener {
-            lifecycleScope.launch {
-                fnShrinkFab()
-                delay(200)
-                findNavController(R.id.idContainer).navigate(R.id.idNewExpense)
-
+            navController = findNavController(R.id.idContainer)
+            if(navController.currentDestination?.id != R.id.idNewExpense) {
+                lifecycleScope.launch {
+                    fnShrinkFab()
+                    delay(200)
+                    findNavController(R.id.idContainer).navigate(R.id.idNewExpense)
+                }
+            }
+            else{
+                fnShowMessage("Already You Are In Add Expense",this,R.drawable.error_bg)
             }
 
         }
 
         mainDataBinding.idSettingsFab.setOnClickListener {
-            fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.idSettings)
+            navController = findNavController(R.id.idContainer)
+            if(navController.currentDestination?.id != R.id.idSettings) {
+                fnShrinkFab()
+                findNavController(R.id.idContainer).navigate(R.id.idSettings)
+            }
+            else{
+                fnShowMessage("Already You Are In Settings",this,R.drawable.error_bg)
+            }
         }
 
         mainDataBinding.idProfileFab.setOnClickListener {
-            fnShrinkFab()
-            findNavController(R.id.idContainer).navigate(R.id.idProfile)
+            navController = findNavController(R.id.idContainer)
+            if(navController.currentDestination?.id != R.id.idProfile) {
+                fnShrinkFab()
+                findNavController(R.id.idContainer).navigate(R.id.idProfile)
+            }
+            else{
+                fnShowMessage("Already You Are In Profile",this,R.drawable.error_bg)
+            }
         }
 
         mainViewModel.displayTransparentBg.observe(this){ isDisplay ->

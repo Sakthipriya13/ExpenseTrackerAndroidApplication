@@ -12,6 +12,8 @@ import com.example.expensetrackerapplication.data.repositary.CategoryRepository
 import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.ui_event.ResultState
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
+import com.google.android.libraries.places.api.model.LocalDate
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -35,6 +37,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     var _isLoading= MutableLiveData<Boolean>()
     val isLoading : LiveData<Boolean> = _isLoading
+
+    val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     fun fnClearNewCategory(){
         _newCategory.value = ""
@@ -60,8 +65,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 //                for(i in categories)
 //                {
                 Log.v("CATEGORY NAME","Category Name: $newCategory.value")
-
-                var categoryEntitty = CategoryEntitty(0,newCategory.value,Global.lUserId)
+                var expenseDate = Global.fnGetCurrentDate()
+                var categoryEntitty = CategoryEntitty(0,newCategory.value,
+                    Global.lUserId,expenseDate)
                     var result = categoryRepository.fnInsertCategoriesToDb(
                         categoryEntitty
                     )
@@ -71,7 +77,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                         fnClearNewCategory()
                         _insertStatus.postValue(ResultState.success("Successfully Category Inserted"))
                     }
-                    else{
+                     else{
                         _insertStatus.postValue(ResultState.success("Category Insert Failed"))
                     }
 

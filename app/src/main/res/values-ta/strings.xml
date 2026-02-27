@@ -73,6 +73,34 @@
         <item>பகிர்</item>
     </string-array>
 
+    <string-array name = "months">
+        <item>ஜனவரி</item>
+        <item>பிப்ரவரி</item>
+        <item>மார்ச்</item>
+        <item>ஏப்ரல்</item>
+        <item>மே</item>
+        <item>ஜூன்</item>
+        <item>ஜூலை</item>
+        <item>ஆகஸ்ட்</item>
+        <item>செப்டம்பர்</item>
+        <item>அக்டோபர்</item>
+        <item>நவம்பர்</item>
+        <item>டிசம்பர்</item>
+    </string-array>
+
+<!--    <string name="jan">ஜனவரி</string>-->
+<!--    <string name="feb">பிப்ரவரி</string>-->
+<!--    <string name="mar">மார்ச்</string>-->
+<!--    <string name="apr">ஏப்ரல்</string>-->
+<!--    <string name="may">மே</string>-->
+<!--    <string name="june">ஜூன்</string>-->
+<!--    <string name="july">ஜூலை</string>-->
+<!--    <string name="aug">ஆகஸ்ட்</string>-->
+<!--    <string name="sep">செப்டம்பர்</string>-->
+<!--    <string name="oct">அக்டோபர்</string>-->
+<!--    <string name="nov">நவம்பர்</string>-->
+<!--    <string name="dec">டிசம்பர்</string>-->
+
     <string name="next">அடுத்து</string>
 
     <string name="add">சேர்க்க‌</string>
@@ -84,7 +112,7 @@
     <string name="other">மற்றவை</string>
 
     <string name="day_wise_report">நாள் வாரியான அறிக்கை</string>
-    <string name="expense_summary">EXPENSE SUMMARY</string>
+    <string name="expense_summary">செலவு சுருக்கம்</string>
 
     <string name="warning">முன் எச்சரிக்கை!</string>
 
@@ -126,7 +154,7 @@
     <string name="delete">நீக்கு</string>
 
     <string name="_income">வருமானம்</string>
-    <string name="_balance">இருப்பு தொகை</string>
+    <string name="_balance">இருப்பு</string>
     <string name="_expense">செலவு</string>
 
     <string name="_this_year">இந்த ஆண்டு</string>
@@ -145,17 +173,30 @@
     <string name="added">சேர்க்கப்பட்டது</string>
     <string name="deleted">நீக்கப்பட்டது</string>
 
-    <string name="expense_status">செலவின் நிலை</string>
+    <string name="expense_status">நிலை</string>
 
     <string name="del">நீக்கு</string>
 
     <string name="monthly_summary">மாதாந்திர சுருக்க அறிக்கை</string>
-    <string name="transactions">TRANSACTIONS</string>
+    <string name="transactions">பரிவர்த்தனை</string>
 
 
     <string name="enter_cash_amount">ரொக்கத் தொகையை உள்ளிடவும்</string>
     <string name="enter_card_amount">கார்டு தொகையை உள்ளிடவும்</string>
     <string name="enter_upi_amount">யுபிஐ தொகையை உள்ளிடவும்</string>
     <string name="split_payment_type">பிரிப்பு கட்டணம்</string>
+
+    <string name="yearly_overview">ஆண்டு சுருக்கம்</string>
+    <string name="name">Name</string>
+    <string name="day_wise">நாள் வாரியாக</string>
+    <string name="monthly_summary1">மாதாந்திர சுருக்கம்</string>
+    <string name="yearly_summary">வருடாந்திர சுருக்கம்</string>
+    <string name="monthly_overview_summary">மாதாந்திர சுருக்கம்</string>
+    <string name="yearly_overview_summary">ஆண்டு சுருக்கம்</string>
+    <string name="yearly_summary_report">ஆண்டுச் சுருக்க அறிக்கை</string>
+    <string name="category_wise_report">செலவு வகை அறிக்கை</string>
+    <string name="payment_type_report">கட்டண வகை அறிக்கை</string>
+    <string name="no_transaction">எந்த பரிவர்த்தனையும் இல்லை</string>
+    <string name="forget_password">கடவுச்சொல் மறந்துவிட்டதா?</string>
 
 </resources>

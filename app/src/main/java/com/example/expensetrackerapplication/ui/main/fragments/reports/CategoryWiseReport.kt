@@ -70,6 +70,8 @@ class CategoryWiseReport : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        categoryWiseReportViewModel.fnPreWarmExcelEngine()
         
         categoryAdapter = CategoryAdapter()
         categoryWiseReportBinding.idCategoryListView.adapter = categoryAdapter
@@ -87,9 +89,13 @@ class CategoryWiseReport : Fragment() {
                 var datePickerDialog = DatePickerDialog(requireContext(),
                     { _,y,m,d ->
                         caledar.set(y,m,d)
-                        val sdf = SimpleDateFormat("dd-MM-yyyy", java.util.Locale.US)
+                        val sdf1 = SimpleDateFormat("dd-MM-yyyy", java.util.Locale.US)
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
                         val date = sdf.format(caledar.time)
+                        val dateUi = sdf1.format(caledar.time)
                         categoryWiseReportViewModel._selectedDate.value = date
+                        categoryWiseReportViewModel._selectedDateUi.value = date
+
                         Global.isCalendarSelected=false
                     },year,month,day
                 )
@@ -109,11 +115,17 @@ class CategoryWiseReport : Fragment() {
 
         categoryWiseReportViewModel.categoryList.observe(viewLifecycleOwner){ list ->
             if(list.isNotEmpty()){
+                categoryWiseReportBinding.idScrollView.visibility = View.VISIBLE
+                categoryWiseReportBinding.idNoReportsText.visibility = View.GONE
+
                 categoryWiseReportViewModel._isExportLoading.value = false
-                fnRenderPieChart(list)
+//                fnRenderPieChart(list)
                 categoryAdapter.fnSubmitList(list)
             }
             else{
+                categoryWiseReportBinding.idScrollView.visibility = View.GONE
+                categoryWiseReportBinding.idNoReportsText.visibility = View.VISIBLE
+
                 categoryWiseReportViewModel._isExportLoading.value = false
             }
         }
@@ -143,30 +155,30 @@ class CategoryWiseReport : Fragment() {
         }
     }
 
-    fun fnRenderPieChart(list : List<CategoryChartModel>)
-    {
-        val pie = AnyChart.pie()
-
-        // STEP 2.3 – Prepare fresh data
-        val data = mutableListOf<DataEntry>()
-
-        list.forEach {
-            Log.i("CATEGORY NAME","Category Name: ${it.categoryName} And Amt: ${it.expenseAmt}")
-            data.add(
-                ValueDataEntry(
-                    it.categoryName,
-                    it.expenseAmt
-                )
-            )
-        }
-
-        // STEP 2.4 – Set data to Pie
-        pie.data(data)
-        pie.title(getString(R.string.category_overview))
-
-        // STEP 2.5 – Set chart
-        categoryWiseReportBinding.idChartView.setChart(pie)
-    }
+//    fun fnRenderPieChart(list : List<CategoryChartModel>)
+//    {
+//        val pie = AnyChart.pie()
+//
+//        // STEP 2.3 – Prepare fresh data
+//        val data = mutableListOf<DataEntry>()
+//
+//        list.forEach {
+//            Log.i("CATEGORY NAME","Category Name: ${it.categoryName} And Amt: ${it.expenseAmt}")
+//            data.add(
+//                ValueDataEntry(
+//                    it.categoryName,
+//                    it.expenseAmt
+//                )
+//            )
+//        }
+//
+//        // STEP 2.4 – Set data to Pie
+//        pie.data(data)
+//        pie.title(getString(R.string.category_overview))
+//
+//        // STEP 2.5 – Set chart
+//        categoryWiseReportBinding.idChartView.setChart(pie)
+//    }
 
     companion object {
         /**

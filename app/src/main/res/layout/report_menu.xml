@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DAY - WISE"
+                        android:text="@string/day_wise"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -97,7 +97,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MONTHLY SUMMARY"
+                        android:text="@string/monthly_summary1"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -135,7 +135,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="YEARLY SUMMARY"
+                        android:text="@string/yearly_summary"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="CATEGORY"
+                        android:text="@string/category"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -211,7 +211,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PAYMENT TYPE"
+                        android:text="@string/payment_type"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:textSize="18sp"

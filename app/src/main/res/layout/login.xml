@@ -128,6 +128,19 @@
                         android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/idBtnForgetPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forget_password"
+                    android:gravity="end"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:layout_gravity="end"
+                    android:textColor="?attr/colorPrimary"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_margin="10dp"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
@@ -177,6 +190,7 @@
                     android:onClick="@{() -> loginViewModel.fnActionGoToSignUp()}"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
+                    android:textColor="@color/text_color_black"
                     android:text="@string/noaccount"
                     android:textSize="20sp"
                     android:textStyle="bold" />

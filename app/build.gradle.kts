@@ -71,6 +71,9 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.gridlayout)
     implementation(libs.androidx.ui.text)
+    implementation(libs.androidx.glance)
+    implementation(libs.androidx.core.i18n)
+    implementation(libs.places)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -109,4 +112,6 @@ dependencies {
     implementation(libs.mpandroidchart)
 
     implementation(libs.williamchart)
+
+
 }

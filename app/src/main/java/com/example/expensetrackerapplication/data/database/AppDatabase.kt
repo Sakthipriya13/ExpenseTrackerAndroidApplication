@@ -16,7 +16,7 @@ import com.example.expensetrackerapplication.data.entity.IncomeEntity
 import com.example.expensetrackerapplication.data.entity.UserEntity
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 
-@Database(entities = [UserEntity::class, CategoryEntitty :: class, ExpenseEntity :: class, IncomeEntity :: class], version = 10, exportSchema = true)
+@Database(entities = [UserEntity::class, CategoryEntitty :: class, ExpenseEntity :: class, IncomeEntity :: class], version = 11, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
 

@@ -25,6 +25,9 @@ data class CategoryEntitty(
     var categoryName : String?,
 
     @ColumnInfo(name = "UserId")
-    var userId : Int
+    var userId : Int,
+
+    @ColumnInfo(name = "SignUpDate")
+    var signUpDate : String
 
 )

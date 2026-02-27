@@ -16,6 +16,7 @@ import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 import com.example.expensetrackerapplication.model.CategoryChartModel
 import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.poi.ss.util.CellRangeAddress
@@ -32,6 +33,10 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
 
     var _selectedDate = MutableLiveData<String>(Global.fnGetCurrentDate())
     var selectedDate : LiveData<String> = _selectedDate
+
+    var _selectedDateUi = MutableLiveData<String>(Global.fnGetCurrentDateUi())
+    var selectedDateUi : LiveData<String> = _selectedDateUi
+
 
     var _closeReport = MutableLiveData<Boolean>()
     var closeReport : LiveData<Boolean> = _closeReport
@@ -65,6 +70,13 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
         viewModelScope.launch {
             try{
                 _isExportLoading.postValue(true)
+
+                _paymentTypeList.postValue(emptyList<PaymentTypeChartModel>())
+                _cashAmt.postValue(0.00f)
+                _cardAmt.postValue(0.00f)
+                _upiAmt.postValue(0.00f)
+                _othersAmt.postValue(0.00f)
+
                 var res = expenseRepository.fnGetPaymentTypeAmtSummaryPerDay(date)
                 var list : MutableList<PaymentTypeChartModel> = mutableListOf()
                 if(res.isNotEmpty())
@@ -87,7 +99,16 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
                     _paymentTypeList.postValue(list)
                 }
                 else{
-                    _paymentTypeList.postValue(mutableListOf<PaymentTypeChartModel>())
+//                    list.add(
+//                        PaymentTypeChartModel(
+//                            userId = Global.lUserId,
+//                            paymentType_CashAmt=0.00f,
+//                            paymentType_CardAmt=0.00f,
+//                            paymentType_UpiAmt=0.00f,
+//                            paymentType_OthersAmt=0.00f
+//                        )
+//                    )
+                    _paymentTypeList.postValue(emptyList<PaymentTypeChartModel>())
                 }
             }
             catch(e : Exception)
@@ -142,26 +163,37 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
                         )
                     )
 
-                    var dateRow = sheet.createRow(1)
+                    var dateRow = sheet.createRow(2)
                     var dateCell0 = dateRow.createCell(0)
-                    dateCell0.setCellValue("DATE: ${selectedDate.value}")
+                    dateCell0.setCellValue("SELECTED DATE: ${selectedDateUi.value}")
                     dateCell0.cellStyle=summaryStyle
-
-                    sheet.addMergedRegion(
-                        CellRangeAddress(1,1,0,4)
-                    )
-                    var timeRow = sheet.createRow(2)
-                    var timeCell0 = timeRow.createCell(0)
-                    timeCell0.setCellValue("TIME: ${Global.fnGetCurrentTime()}")
-                    timeCell0.cellStyle=summaryStyle
-
 
                     sheet.addMergedRegion(
                         CellRangeAddress(2,2,0,4)
                     )
 
+                    var dateRow2 = sheet.createRow(3)
+                    var dateCell20 = dateRow2.createCell(0)
+                    dateCell20.setCellValue("EXPORT DATE:    ${Global.fnGetCurrentDateUi()}")
+                    dateCell20.cellStyle=summaryStyle
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(3,3,0,4)
+                    )
+
+
+                    var timeRow = sheet.createRow(4)
+                    var timeCell0 = timeRow.createCell(0)
+                    timeCell0.setCellValue("EXPORT TIME:    ${Global.fnGetCurrentTime()}")
+                    timeCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(4,4,0,4)
+                    )
+
                     //Table Header Row
-                    var tableHeaderRow = sheet.createRow(3)
+                    var tableHeaderRow = sheet.createRow(6)
                     var cell0 = tableHeaderRow.createCell(0)
                     cell0.setCellValue("PAYMENT TYPE")
                     cell0.cellStyle=tableHeaderStyle
@@ -170,16 +202,16 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
                     cell1.cellStyle=tableHeaderStyle
 
                     //Table Data Row
-                    var dataRow4 = sheet.createRow(4)
+                    var dataRow4 = sheet.createRow(7)
                     var dataCell40=dataRow4.createCell(0)
-                    dataCell40.setCellValue("Upi")
+                    dataCell40.setCellValue("Cash")
                     dataCell40.cellStyle=dataStyle
                     var dataCell41=dataRow4.createCell(1)
                     dataCell41.setCellValue("${cashAmt.value}")
                     dataCell41.cellStyle=dataStyle
 
                     //Table Data Row
-                    var dataRow5 = sheet.createRow(5)
+                    var dataRow5 = sheet.createRow(8)
                     var dataCell50=dataRow5.createCell(0)
                     dataCell50.setCellValue("Upi")
                     dataCell50.cellStyle=dataStyle
@@ -188,7 +220,7 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
                     dataCell51.cellStyle=dataStyle
 
                     //Table Data Row
-                    var dataRow6 = sheet.createRow(6)
+                    var dataRow6 = sheet.createRow(9)
                     var dataCell60=dataRow6.createCell(0)
                     dataCell60.setCellValue("Card")
                     dataCell60.cellStyle=dataStyle
@@ -198,7 +230,7 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
 
 
                     //Table Data Row
-                    var dataRow7 = sheet.createRow(7)
+                    var dataRow7 = sheet.createRow(10)
                     var dataCell70=dataRow7.createCell(0)
                     dataCell70.setCellValue("Others")
                     dataCell70.cellStyle=dataStyle
@@ -252,6 +284,16 @@ class PaymentTypeReportViewModel(application: Application) : AndroidViewModel(ap
             false
         }
 
+    }
+
+    fun fnPreWarmExcelEngine() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val wb = XSSFWorkbook()
+                wb.createSheet("warmup")
+                wb.close()
+            } catch (_: Exception) {}
+        }
     }
 
 }

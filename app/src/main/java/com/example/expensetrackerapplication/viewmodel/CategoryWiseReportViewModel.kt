@@ -16,9 +16,11 @@ import com.example.expensetrackerapplication.`object`.Global
 import kotlinx.coroutines.launch
 import android.util.Log
 import androidx.lifecycle.application
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import java.time.format.DateTimeFormatter
 
 class CategoryWiseReportViewModel(application: Application) : AndroidViewModel(application = application)
 {
@@ -31,6 +33,9 @@ class CategoryWiseReportViewModel(application: Application) : AndroidViewModel(a
 
     var _selectedDate = MutableLiveData<String>(Global.fnGetCurrentDate())
     var selectedDate : LiveData<String> = _selectedDate
+
+    var _selectedDateUi = MutableLiveData<String>(Global.fnGetCurrentDateUi())
+    var selectedDateUi : LiveData<String> = _selectedDateUi
 
     var _categoryList = MutableLiveData<List<CategoryChartModel>>(mutableListOf<CategoryChartModel>())
     var categoryList : LiveData<List<CategoryChartModel>> = _categoryList
@@ -52,6 +57,9 @@ class CategoryWiseReportViewModel(application: Application) : AndroidViewModel(a
 
     var _deletedExpenseSummary = MutableLiveData<String>("0.00")
     var deletedExpenseSummary : LiveData<String> = _deletedExpenseSummary
+
+    val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     fun fnGetCategoryDetailsPerDay(date : String?){
         viewModelScope.launch {
@@ -131,55 +139,36 @@ class CategoryWiseReportViewModel(application: Application) : AndroidViewModel(a
                         )
                     )
 
-                    var dateRow = sheet.createRow(1)
+                    var dateRow = sheet.createRow(2)
                     var dateCell0 = dateRow.createCell(0)
-                    dateCell0.setCellValue("DATE: ${selectedDate.value}")
+                    dateCell0.setCellValue("SELECTED DATE: ${selectedDateUi.value}")
                     dateCell0.cellStyle=summaryStyle
-
-                    sheet.addMergedRegion(
-                        CellRangeAddress(1,1,0,4)
-                    )
-                    var timeRow = sheet.createRow(2)
-                    var timeCell0 = timeRow.createCell(0)
-                    timeCell0.setCellValue("TIME: ${Global.fnGetCurrentTime()}")
-                    timeCell0.cellStyle=summaryStyle
-
 
                     sheet.addMergedRegion(
                         CellRangeAddress(2,2,0,4)
                     )
 
-//                    var totalExpenseRow = sheet.createRow(3)
-//                    var totalExpenseCell0 = totalExpenseRow.createCell(0)
-//                    totalExpenseCell0.setCellValue("TOTAL EXPENSE: ${totalExpenseSummary.value}")
-//                    totalExpenseCell0.cellStyle=summaryStyle
-//
-//
-//                    sheet.addMergedRegion(
-//                        CellRangeAddress(3,3,0,4)
-//                    )
-//
-//                    var addedExpenseRow = sheet.createRow(4)
-//                    var addedExpenseCell0 = addedExpenseRow.createCell(0)
-//                    addedExpenseCell0.setCellValue("ADDED EXPENSE: ${addedExpenseSummary.value}")
-//                    addedExpenseCell0.cellStyle=summaryStyle
-//
-//
-//                    sheet.addMergedRegion(
-//                        CellRangeAddress(4,4,0,4)
-//                    )
-//
-//                    var deletedExpenseRow = sheet.createRow(5)
-//                    var deletedExpenseCell0 = deletedExpenseRow.createCell(0)
-//                    deletedExpenseCell0.setCellValue("DELETED EXPENSE: ${deletedExpenseSummary.value}")
-//                    deletedExpenseCell0.cellStyle=summaryStyle
-//
-//                    sheet.addMergedRegion(
-//                        CellRangeAddress(5,5,0,4)
-//                    )
+                    var dateRow2 = sheet.createRow(3)
+                    var dateCell20 = dateRow2.createCell(0)
+                    dateCell20.setCellValue("EXPORT DATE:    ${Global.fnGetCurrentDateUi()}")
+                    dateCell20.cellStyle=summaryStyle
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(3,3,0,4)
+                    )
+
+                    var timeRow = sheet.createRow(4)
+                    var timeCell0 = timeRow.createCell(0)
+                    timeCell0.setCellValue("EXPORT TIME:    ${Global.fnGetCurrentTime()}")
+                    timeCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(4,4,0,4)
+                    )
 
                     //Table Header Row
-                    var tableHeaderRow = sheet.createRow(3)
+                    var tableHeaderRow = sheet.createRow(6)
                     var cell0 = tableHeaderRow.createCell(0)
                     cell0.setCellValue("CATEGORY")
                     cell0.cellStyle=tableHeaderStyle
@@ -189,7 +178,7 @@ class CategoryWiseReportViewModel(application: Application) : AndroidViewModel(a
 
                     //Table Data Row
                     categoryList.value?.forEachIndexed { index, expense ->
-                        var dataRow = sheet.createRow(index+4)
+                        var dataRow = sheet.createRow(index+7)
 
                         var dataCell0=dataRow.createCell(0)
                         dataCell0.setCellValue(expense.categoryName)
@@ -246,6 +235,16 @@ class CategoryWiseReportViewModel(application: Application) : AndroidViewModel(a
             false
         }
 
+    }
+
+    fun fnPreWarmExcelEngine() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val wb = XSSFWorkbook()
+                wb.createSheet("warmup")
+                wb.close()
+            } catch (_: Exception) {}
+        }
     }
 
 }

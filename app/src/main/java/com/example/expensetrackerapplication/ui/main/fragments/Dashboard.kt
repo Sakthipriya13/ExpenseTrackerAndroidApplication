@@ -65,7 +65,7 @@ class Dashboard : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Dashboard"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title= resources.getString(R.string.dashboard_frag)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,7 +152,11 @@ class Dashboard : Fragment() {
         val ob = list[0]   // assuming single summary row
 
         // 🔹 Payment values
-        val labels = listOf("UPI", "Cash", "Card", "Others")
+        val labels = listOf(resources.getString(R.string.upi),
+            resources.getString(R.string.cash),
+            resources.getString(R.string.card),
+            resources.getString(R.string.other))
+
         val values = listOf(
             ob.paymentType_UpiAmt,
             ob.paymentType_CashAmt,

@@ -109,7 +109,7 @@ class Profile : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Profile"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title= resources.getString(R.string.profile_frag)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -177,8 +177,8 @@ class Profile : Fragment() {
 
         profileViewModel.isChangePassword.observe(viewLifecycleOwner){ status ->
             if(status){
-                if(Global.isCalendarSelected==false) {
-                    Global.isCalendarSelected = true
+                if(Global.isBottomSheetSelected==false) {
+                    Global.isBottomSheetSelected = true
                     ChangePassword().show(parentFragmentManager, "ChangePasswordBottomSheet")
                 }
             }
@@ -243,8 +243,8 @@ class Profile : Fragment() {
 
         profileViewModel.isAddIncome.observe(viewLifecycleOwner){ status ->
             if(status){
-                if(Global.isCalendarSelected==false){
-                    Global.isCalendarSelected=true
+                if(Global.isBottomSheetSelected==false){
+                    Global.isBottomSheetSelected=true
                     AddIncome().show(parentFragmentManager,"AddIncomeBottomSheet")
                 }
             }
@@ -335,7 +335,7 @@ class ChangePassword : BottomSheetDialogFragment(){
 
         changePasswordViewModel.isCancel.observe(viewLifecycleOwner){ isCancel ->
             if(isCancel){
-                Global.isCalendarSelected = false
+                Global.isBottomSheetSelected = false
                 dismiss()
             }
         }
@@ -343,12 +343,12 @@ class ChangePassword : BottomSheetDialogFragment(){
             when(state){
                 is ResultState.success  -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
-                    Global.isCalendarSelected = false
+                    Global.isBottomSheetSelected = false
                     dismiss()
                 }
                 is ResultState.fail  -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
-                    Global.isCalendarSelected = false
+                    Global.isBottomSheetSelected = false
                     dismiss()
                 }
             }
@@ -389,9 +389,15 @@ class AddIncome : BottomSheetDialogFragment(){
                 val datePickerDialog = DatePickerDialog(
                     requireContext(), { _,y,m,d ->
                        calendar.set(y,m,d)
-                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val sdf1 = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+
                         var date = sdf.format(calendar.time)
+                        var dateUi = sdf1.format(calendar.time)
+
                         addIncomeViewModel._selectedDate.value=date
+                        addIncomeViewModel._selectedDateUi.value=dateUi
+
                         Global.isCalendarSelected=false
                     },year,month,day
                 )
@@ -408,7 +414,7 @@ class AddIncome : BottomSheetDialogFragment(){
 
         addIncomeViewModel.isLeave.observe(viewLifecycleOwner){ isLeave ->
             if(isLeave){
-                Global.isCalendarSelected=false
+                Global.isBottomSheetSelected=false
                 dismiss()
             }
         }
@@ -417,13 +423,13 @@ class AddIncome : BottomSheetDialogFragment(){
             when(state){
                 is ResultState.success -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
-                    Global.isCalendarSelected=false
+                    Global.isBottomSheetSelected=false
                     dismiss()
                 }
 
                 is ResultState.fail -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
-                    Global.isCalendarSelected=false
+                    Global.isBottomSheetSelected=false
                     dismiss()
                 }
             }

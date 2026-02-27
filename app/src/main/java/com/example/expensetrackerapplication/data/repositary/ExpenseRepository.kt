@@ -4,8 +4,10 @@ import android.util.Log
 import com.example.expensetrackerapplication.data.dao.ExpenseDao
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.model.CategoryChartModel
+import com.example.expensetrackerapplication.model.ExpenseDetailsPerMonth
 import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
+import kotlin.collections.List
 
 class ExpenseRepository(val expenseDao: ExpenseDao)
 {
@@ -51,7 +53,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetDaySummary(curDate : String): Float
     {
         return try {
-            expenseDao.fnGetDaySummary(curDate)
+            expenseDao.fnGetDaySummary(curDate,Global.lUserId,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -62,7 +64,18 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetMonthSummary(curMonth : String): Float
     {
         return try {
-            expenseDao.fnGetMonthSummary(curMonth)
+            expenseDao.fnGetMonthSummary(curMonth,Global.lUserId,Global.EXPENSE_STATUS_ADDED)
+        }
+        catch (e : Exception){
+            Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
+            0.0f
+        }
+    }
+
+    suspend fun fnGetExpensePerMonthAndYear(month : String,year: String): Float
+    {
+        return try {
+            expenseDao.fnGetExpensePerMonthAndYear(month,year,Global.lUserId,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -73,7 +86,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetYearSummary(curYear : String): Float
     {
         return try {
-            expenseDao.fnGetYearSummary(curYear)
+            expenseDao.fnGetYearSummary(curYear,Global.lUserId,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -84,7 +97,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetCateDetailsPerDay(day: String?): List<CategoryChartModel>
     {
         return try {
-            expenseDao.fnGetCatDetailsPerDay(day,Global.EXPENSE_STATUS_ADDED)
+            expenseDao.fnGetCatDetailsPerDay(day,Global.EXPENSE_STATUS_ADDED,Global.lUserId)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -95,7 +108,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetCateDetailsPerMonth(month : String): List<CategoryChartModel>
     {
         return try {
-            expenseDao.fnGetCatDetailsPerMonth(month)
+            expenseDao.fnGetCatDetailsPerMonth(month,Global.lUserId,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -106,7 +119,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetCateDetailsPerYear(year : String): List<CategoryChartModel>
     {
         return try {
-            expenseDao.fnGetCatDetailsPerYear(year)
+            expenseDao.fnGetCatDetailsPerYear(year,Global.lUserId,Global.EXPENSE_STATUS_ADDED)
         }
         catch (e : Exception){
             Log.e("GET CURRENT DAY SUMMARY AMOUNT","Get Current Day Summary Amount: ${e.message}")
@@ -117,7 +130,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetPaymentTypeAmtSummaryPerDay(day: String): List<PaymentTypeChartModel>
     {
         return try {
-            expenseDao.fnGetPaymentTypesPerDay(day,Global.EXPENSE_STATUS_ADDED)
+            expenseDao.fnGetPaymentTypesPerDay(day,Global.EXPENSE_STATUS_ADDED,Global.lUserId)
         }
         catch (e : Exception){
             Log.e("GET PAYMENT TYPE SUMMARY AMOUNT PER DAY","Get Payment Type Summary Amount Per Day: ${e.message}")
@@ -128,7 +141,7 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetPaymentTypeAmtSummaryPerMonth(curMonth: String): List<PaymentTypeChartModel>
     {
         return try {
-            expenseDao.fnGetPaymentTypesForCurMonth(curMonth,Global.EXPENSE_STATUS_ADDED)
+            expenseDao.fnGetPaymentTypesForCurMonth(curMonth,Global.EXPENSE_STATUS_ADDED,Global.lUserId)
         }
         catch (e : Exception){
             Log.e("GET CURRENT MONTH PAYMENT TYPE SUMMARY AMOUNT","Get Current Month Payment Type Summary Amount: ${e.message}")
@@ -139,11 +152,33 @@ class ExpenseRepository(val expenseDao: ExpenseDao)
     suspend fun fnGetPaymentTypeAmtSummaryPerYear(curYear: String): List<PaymentTypeChartModel>
     {
         return try {
-            expenseDao.fnGetPaymentTypesForCurYear(curYear,Global.EXPENSE_STATUS_ADDED)
+            expenseDao.fnGetPaymentTypesForCurYear(curYear,Global.EXPENSE_STATUS_ADDED,Global.lUserId)
         }
         catch (e : Exception){
             Log.e("GET CURRENT MONTH PAYMENT TYPE SUMMARY AMOUNT","Get Current Month Payment Type Summary Amount: ${e.message}")
             emptyList<PaymentTypeChartModel>()
+        }
+    }
+
+    suspend fun fnGetExpenseDetailsPerMonth(month:String,year:String): List<ExpenseDetailsPerMonth>
+    {
+        return try {
+            expenseDao.fnGetExpenseDetailsPerMonth(month,year,Global.EXPENSE_STATUS_ADDED,Global.lUserId)
+        }
+        catch (e : Exception){
+            Log.e("GET EXPENSE PER MONTH","Get Expense Per Month: ${e.message}")
+            emptyList<ExpenseDetailsPerMonth>()
+        }
+    }
+
+    suspend fun fnGetExpenseDetailsPerYear(year:String): List<ExpenseDetailsPerMonth>
+    {
+        return try {
+            expenseDao.fnGetExpenseDataPerYear(year,Global.EXPENSE_STATUS_ADDED,Global.lUserId)
+        }
+        catch (e : Exception){
+            Log.e("GET EXPENSE PER MONTH","Get Expense Per Month: ${e.message}")
+            emptyList<ExpenseDetailsPerMonth>()
         }
     }
 

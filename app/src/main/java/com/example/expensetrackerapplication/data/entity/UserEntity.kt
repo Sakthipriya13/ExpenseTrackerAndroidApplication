@@ -24,6 +24,9 @@ data class UserEntity(
     var userPassword : String?,
 
     @ColumnInfo(name = "UserProfilePhotoUri")
-    var userProfilePhotoUri : String?
+    var userProfilePhotoUri : String?,
+
+    @ColumnInfo(name = "SignUpDate")
+    var signUpDate : String?
 
 )

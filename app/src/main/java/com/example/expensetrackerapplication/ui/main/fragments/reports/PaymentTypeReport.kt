@@ -70,6 +70,8 @@ class PaymentTypeReport : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        paymentTypeReportViewModel.fnPreWarmExcelEngine()
+
         paymentTypeReportBinding.idBtnCalendar.setOnClickListener {
             if(Global.isCalendarSelected==false){
                 Global.isCalendarSelected=true
@@ -81,9 +83,13 @@ class PaymentTypeReport : Fragment() {
                 val datePickerDialog = DatePickerDialog(requireContext(),
                     {_,y,m,d, ->
                         calendar.set(y,m,d)
-                        val sdf = SimpleDateFormat("dd-MM-yyyy", java.util.Locale.US)
+                        val sdf1 = SimpleDateFormat("dd-MM-yyyy", java.util.Locale.US)
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
                         val date = sdf.format(calendar.time)
+                        val dateUi = sdf1.format(calendar.time)
+
                         paymentTypeReportViewModel._selectedDate.value=date
+                        paymentTypeReportViewModel._selectedDateUi.value=dateUi
                         Global.isCalendarSelected=false
                     },year,month,day
                 )
@@ -110,10 +116,15 @@ class PaymentTypeReport : Fragment() {
         
         paymentTypeReportViewModel.paymentTypeList.observe(viewLifecycleOwner){ list ->
             if(list.isNotEmpty()){
+                paymentTypeReportBinding.idNoReportsText.visibility=View.GONE
+                paymentTypeReportBinding.idScrollView.visibility = View.VISIBLE
                 paymentTypeReportViewModel._isExportLoading.value = false
                 fnCreateChart(list)
             }
             else{
+//                fnCreateChart(list)
+                paymentTypeReportBinding.idNoReportsText.visibility=View.VISIBLE
+                paymentTypeReportBinding.idScrollView.visibility = View.GONE
                 paymentTypeReportViewModel._isExportLoading.value = false
             }
         }
@@ -144,7 +155,10 @@ class PaymentTypeReport : Fragment() {
         val ob = list[0]   // assuming single summary row
 
         // 🔹 Payment values
-        val labels = listOf("UPI", "Cash", "Card", "Others")
+        val labels = listOf(resources.getString(R.string.upi),
+            resources.getString(R.string.cash),
+            resources.getString(R.string.card),
+            resources.getString(R.string.other))
         val values = listOf(
             ob.paymentType_UpiAmt,
             ob.paymentType_CashAmt,

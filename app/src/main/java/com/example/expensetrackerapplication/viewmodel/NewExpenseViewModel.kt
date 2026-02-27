@@ -11,8 +11,10 @@ import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.ExpenseEntity
 import com.example.expensetrackerapplication.data.repositary.ExpenseRepository
 import com.example.expensetrackerapplication.`object`.Global
+import com.google.android.libraries.places.api.model.LocalDate
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class NewExpenseViewModel(application: Application) : AndroidViewModel(application)
@@ -26,6 +28,9 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
 
     var _selectedDate = MutableLiveData<String?>(Global.fnGetCurrentDate() )
     var selectedDate : LiveData<String?> = _selectedDate
+
+    var _selectedDateUi = MutableLiveData<String?>(Global.fnGetCurrentDateUi() )
+    var selectedDateUi : LiveData<String?> = _selectedDateUi
 
     var _expenseAmt = MutableLiveData<String?>("")
     var expenseAmt : LiveData<String?> = _expenseAmt
@@ -81,11 +86,16 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     var _cateFieldsEmptyError = MutableLiveData<String?>()
     var cateFieldsEmptyError : LiveData<String?> = _cateFieldsEmptyError
 
+    val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
     fun fnClearViews(){
 
         _clearAllFields.value=true
 
         _selectedDate.value=Global.fnGetCurrentDate()
+        _selectedDateUi.value=Global.fnGetCurrentDateUi()
+
         _expenseAmt.value=""
         _selectedCategoryId.value=-1
         _selectedCategoryName.value=""
@@ -136,6 +146,7 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun fnInsertExpense() {
         _insertFlag.value=1
+//        var expenseDate = selectedDate.value ?: ""
         viewModelScope.launch {
             var expenseEntity = ExpenseEntity(
                 expenseId =0,

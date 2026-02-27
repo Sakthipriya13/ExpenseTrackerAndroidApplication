@@ -58,7 +58,7 @@
                         android:layout_height="match_parent"
                         android:maxLines="1"
                         android:textSize="15sp"
-                        android:text="@={newExpenseViewModel._selectedDate}"
+                        android:text="@={newExpenseViewModel._selectedDateUi}"
                         android:focusable="false"
                         android:cursorVisible="false"
                         android:inputType="none"

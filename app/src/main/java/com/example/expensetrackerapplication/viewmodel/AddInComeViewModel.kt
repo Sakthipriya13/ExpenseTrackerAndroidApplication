@@ -20,9 +20,12 @@ class AddInComeViewModel(application : Application) : AndroidViewModel(applicati
         var incomeDao = AppDatabase.getdatabase(application).IncomeDao()
         incomeRepository = IncomeRepository(incomeDao)
     }
-
     var _selectedDate = MutableLiveData<String>(Global.fnGetCurrentDate())
     var selectedDate : LiveData<String> = _selectedDate
+
+
+    var _selectedDateUi = MutableLiveData<String>(Global.fnGetCurrentDateUi())
+    var selectedDateUi : LiveData<String> = _selectedDateUi
 
     var _income = MutableLiveData<String>()
     var income : LiveData<String> = _income

@@ -34,13 +34,16 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     var _selectedDate = MutableLiveData<String>(Global.fnGetCurrentDate())
     var selectedDate : LiveData<String> = _selectedDate
 
-    var _totalExpenseSummary = MutableLiveData<String>()
+    var _selectedDateUi = MutableLiveData<String>(Global.fnGetCurrentDateUi())
+    var selectedDateUi : LiveData<String> = _selectedDateUi
+
+    var _totalExpenseSummary = MutableLiveData<String>("0.00")
     var totalExpenseSummary : LiveData<String> = _totalExpenseSummary
 
-    var _addedExpenseSummary = MutableLiveData<String>()
+    var _addedExpenseSummary = MutableLiveData<String>("0.00")
     var addedExpenseSummary : LiveData<String> = _addedExpenseSummary
 
-    var _deletedExpenseSummary = MutableLiveData<String>()
+    var _deletedExpenseSummary = MutableLiveData<String>("0.00")
     var deletedExpenseSummary : LiveData<String> = _deletedExpenseSummary
 
     var _expenseList = MutableLiveData<List<CurrentDayReportModel>>()
@@ -61,9 +64,9 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
     }
 
     fun fnClearFields(){
-        _totalExpenseSummary.value=""
-        _addedExpenseSummary.value=""
-        _deletedExpenseSummary.value=""
+        _totalExpenseSummary.value="0.00"
+        _addedExpenseSummary.value="0.00"
+        _deletedExpenseSummary.value="0.00"
         _expenseList.value = emptyList<CurrentDayReportModel>()
     }
 
@@ -72,9 +75,16 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
         viewModelScope.launch {
             try
             {
+                _isExportLoading.postValue(true)
+
                 var totalExpenseAmtSum = 0.0f
                 var addedExpenseAmtSum = 0.0f
                 var deletedExpenseAmtSum = 0.0f
+
+                _totalExpenseSummary.value= "0.00"
+                _addedExpenseSummary.value ="0.00"
+                _deletedExpenseSummary.value ="0.00"
+
 
                 val res = expenseRepository.fnGetExpenseDetailsPerDate(date)
                 var list : MutableList<CurrentDayReportModel> = mutableListOf()
@@ -121,6 +131,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
                 }
                 else
                 {
+                    _expenseList.postValue(emptyList<CurrentDayReportModel>())
                     Log.i("EXPENSE DETAILS PER DATE","Expense Details Per Date2: $list")
                 }
             }
@@ -175,9 +186,12 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
 
                     val headerFont = Global.fnHeaderFont(workBook)
+                    val subHeaderFont = Global.fnHeaderFont(workBook)
                     val summaryFont =  Global.fnSummaryFont(workBook)
                     //Header Style
                     val headerStyle = Global.fnHeaderStyle(workBook,headerFont)
+                    //Sub Header Style
+                    val subHeaderStyle = Global.fnHeaderStyle(workBook,subHeaderFont)
                     //Summary Style
                     val summaryStyle = Global.fnSummaryStyle(workBook,summaryFont)
                     //Create Table Header Style
@@ -200,55 +214,74 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
                         )
                     )
 
-                    var dateRow = sheet.createRow(1)
+                    var dateRow = sheet.createRow(2)
                     var dateCell0 = dateRow.createCell(0)
-                    dateCell0.setCellValue("DATE: ${selectedDate.value}")
+                    dateCell0.setCellValue("SELECTED DATE: ${selectedDateUi.value}")
                     dateCell0.cellStyle=summaryStyle
-
-                    sheet.addMergedRegion(
-                        CellRangeAddress(1,1,0,4)
-                    )
-                    var timeRow = sheet.createRow(2)
-                    var timeCell0 = timeRow.createCell(0)
-                    timeCell0.setCellValue("TIME: ${Global.fnGetCurrentTime()}")
-                    timeCell0.cellStyle=summaryStyle
-
 
                     sheet.addMergedRegion(
                         CellRangeAddress(2,2,0,4)
                     )
 
-                    var totalExpenseRow = sheet.createRow(3)
-                    var totalExpenseCell0 = totalExpenseRow.createCell(0)
-                    totalExpenseCell0.setCellValue("TOTAL EXPENSE: ${totalExpenseSummary.value}")
-                    totalExpenseCell0.cellStyle=summaryStyle
-
+                    var dateRow2 = sheet.createRow(3)
+                    var dateCell20 = dateRow2.createCell(0)
+                    dateCell20.setCellValue("EXPORT DATE:    ${Global.fnGetCurrentDateUi()}")
+                    dateCell20.cellStyle=summaryStyle
 
                     sheet.addMergedRegion(
                         CellRangeAddress(3,3,0,4)
                     )
 
-                    var addedExpenseRow = sheet.createRow(4)
-                    var addedExpenseCell0 = addedExpenseRow.createCell(0)
-                    addedExpenseCell0.setCellValue("ADDED EXPENSE: ${addedExpenseSummary.value}")
-                    addedExpenseCell0.cellStyle=summaryStyle
+                    var timeRow = sheet.createRow(4)
+                    var timeCell0 = timeRow.createCell(0)
+                    timeCell0.setCellValue("EXPORT TIME:    ${Global.fnGetCurrentTime()}")
+                    timeCell0.cellStyle=summaryStyle
 
 
                     sheet.addMergedRegion(
                         CellRangeAddress(4,4,0,4)
                     )
 
-                    var deletedExpenseRow = sheet.createRow(5)
+                    var expenseSummaryRow = sheet.createRow(6)
+                    var expenseSummaryCell = expenseSummaryRow.createCell(0)
+                    expenseSummaryCell.setCellValue("EXPENSE SUMMARY")
+                    expenseSummaryCell.cellStyle=subHeaderStyle
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(6,6,0,4)
+                    )
+
+                    var totalExpenseRow = sheet.createRow(7)
+                    var totalExpenseCell0 = totalExpenseRow.createCell(0)
+                    totalExpenseCell0.setCellValue("TOTAL:     ${totalExpenseSummary.value}")
+                    totalExpenseCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(7,7,0,4)
+                    )
+
+                    var addedExpenseRow = sheet.createRow(8)
+                    var addedExpenseCell0 = addedExpenseRow.createCell(0)
+                    addedExpenseCell0.setCellValue("ADDED:    ${addedExpenseSummary.value}")
+                    addedExpenseCell0.cellStyle=summaryStyle
+
+
+                    sheet.addMergedRegion(
+                        CellRangeAddress(8,8,0,4)
+                    )
+
+                    var deletedExpenseRow = sheet.createRow(9)
                     var deletedExpenseCell0 = deletedExpenseRow.createCell(0)
-                    deletedExpenseCell0.setCellValue("DELETED EXPENSE: ${deletedExpenseSummary.value}")
+                    deletedExpenseCell0.setCellValue("DELETED: ${deletedExpenseSummary.value}")
                     deletedExpenseCell0.cellStyle=summaryStyle
 
                     sheet.addMergedRegion(
-                        CellRangeAddress(5,5,0,4)
+                        CellRangeAddress(9,9,0,4)
                     )
 
                     //Table Header Row
-                    var tableHeaderRow = sheet.createRow(6)
+                    var tableHeaderRow = sheet.createRow(11)
                     var cell0 = tableHeaderRow.createCell(0)
                     cell0.setCellValue("CATEGORY")
                     cell0.cellStyle=tableHeaderStyle
@@ -267,7 +300,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
                     //Table Data Row
                     expenseList.value?.forEachIndexed { index, expense ->
-                        var dataRow = sheet.createRow(index+7)
+                        var dataRow = sheet.createRow(index+12)
 
                         var dataCell0=dataRow.createCell(0)
                         dataCell0.setCellValue(expense.catgeoryName)
@@ -287,7 +320,7 @@ class DayWiseReportViewModel(application : Application) : AndroidViewModel(appli
 
                     }
 
-                    _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${selectedDate.value}_${Global.fnGetCurrentTime()}.xlsx")
+                    _exportStatus.value = fnExportReportToDownloads(workBook,"DayWiseReport_${Global.fnGetCurrentDateUi()}_${Global.fnGetCurrentTime()}.xlsx")
 
                     Log.i("EXPORT LOADING VALUE","Export Loading Value3: ${isExportLoading.value}")
 

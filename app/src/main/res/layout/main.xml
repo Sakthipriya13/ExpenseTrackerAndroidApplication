@@ -32,20 +32,16 @@
                 app:titleTextAppearance="@style/ToolBarTittle"
                 android:elevation="5dp"
                 >
-
-
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/idUserProfileImg"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     app:shapeAppearanceOverlay="@style/Circular"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/user"
+                    android:src="@drawable/profile_default_img"
                     android:layout_margin="10dp"
                     android:layout_gravity="end"
                     />
-
-
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="match_parent"

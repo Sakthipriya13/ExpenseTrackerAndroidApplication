@@ -63,7 +63,7 @@ class Settings : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title= "Settings"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title= resources.getString(R.string.setting_frag)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

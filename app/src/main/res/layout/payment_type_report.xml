@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="PAYMENT TYPE REPORT"
+                android:text="@string/payment_type_report"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="?attr/textColorBlack"
@@ -134,7 +134,7 @@
                     android:cursorVisible="false"
                     android:inputType="none"
                     android:maxLines="1"
-                    android:text="@{paymentTypeReportViewModel._selectedDate}"
+                    android:text="@{paymentTypeReportViewModel._selectedDateUi}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,7 +162,23 @@
                 app:constraint_referenced_ids="idLSelectDate,idBtnCalendar"
                 tools:ignore="MissingConstraints" />
 
+            <TextView
+                android:id="@+id/idNoReportsText"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_margin="16dp"
+                android:text="No Transaction"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idLSelectDate"/>
+
+
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/idScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:fillViewport="true"

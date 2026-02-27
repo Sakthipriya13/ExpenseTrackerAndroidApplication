@@ -33,6 +33,7 @@ import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
@@ -57,9 +58,12 @@ class NewExpense : Fragment() {
     val settingsViewModel : SettingsViewModel by activityViewModels()
     var categoryList =emptyList<CategoryEntitty>()
 
+    val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title= "New Expense"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title= resources.getString(R.string.add_expense_frag)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,9 +136,12 @@ class NewExpense : Fragment() {
                     { _,y,m,d ->
 
                         calendar.set(y,m,d)
-                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val sdf1 = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
                         val date = sdf.format(calendar.time)
+                        val dateUi = sdf1.format(calendar.time)
                         newExpenseViewModel._selectedDate.value=date
+                        newExpenseViewModel._selectedDateUi.value=dateUi
                         Global.isCalendarSelected=false
                     } , year,month,day)
                 datePickerDialog.setCancelable(false)

@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="CATEGORY-WISE REPORT"
+                android:text="@string/category_wise_report"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="?attr/textColorBlack"
@@ -138,7 +138,7 @@
                     android:cursorVisible="false"
                     android:inputType="none"
                     android:maxLines="1"
-                    android:text="@{categoryWiseReportViewModel._selectedDate}"
+                    android:text="@{categoryWiseReportViewModel._selectedDateUi}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,7 +166,23 @@
                 app:constraint_referenced_ids="idLSelectDate,idBtnCalendar"
                 tools:ignore="MissingConstraints" />
 
+            <TextView
+                android:id="@+id/idNoReportsText"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_margin="16dp"
+                android:text="No Transaction"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idLSelectDate"/>
+
+
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/idScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:fillViewport="true"
@@ -195,20 +211,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         />
-                    <RelativeLayout
-                        android:id="@+id/idChartLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="500dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/idChartHeading">
-                        <com.anychart.AnyChartView
-                            android:id="@+id/idChartView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="16dp"
-                            app:chart_barsRadius="10dp"
-                            />
-                    </RelativeLayout>
+<!--                    <RelativeLayout-->
+<!--                        android:id="@+id/idChartLayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="500dp"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/idChartHeading">-->
+<!--                        <com.anychart.AnyChartView-->
+<!--                            android:id="@+id/idChartView"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_margin="16dp"-->
+<!--                            app:chart_barsRadius="10dp"-->
+<!--                            />-->
+<!--                    </RelativeLayout>-->
                     
                     <LinearLayout
                         android:id="@+id/idListHeaderLayout"
@@ -218,7 +234,7 @@
                         android:orientation="horizontal"
                         android:background="?attr/colorPrimary"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/idChartLayout">
+                        app:layout_constraintTop_toBottomOf="@id/idChartHeading">
 
                         <TextView
                             android:layout_width="match_parent"

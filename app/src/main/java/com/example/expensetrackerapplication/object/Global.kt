@@ -1,6 +1,9 @@
 package com.example.expensetrackerapplication.`object`
 
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.color.MaterialColors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.Font
@@ -38,6 +41,8 @@ object Global {
 
     var isCalendarSelected : Boolean = false
 
+    var isBottomSheetSelected : Boolean = false
+
     var displayDialogPrompt : Boolean = false
 
     val defaultCategories = listOf<String>("Food","Healthcare","Utilities","Groceries","Transportation")
@@ -62,9 +67,29 @@ object Global {
 
     val YEARLY_WISE = 2
 
+
+    var isDashboardSelected = false
+    var isReportSelected = false
+    var isAddExpenseSelected = false
+    var isSettingsSelected = false
+    var isProfileSelected = false
+
+
     fun fnGetCurrentDate() : String {
 
+//        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        val currentDate = sdf.format(java.util.Date())
+
+        return currentDate
+    }
+
+    fun fnGetCurrentDateUi() : String {
+
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
         val currentDate = sdf.format(java.util.Date())
 
         return currentDate
@@ -108,9 +133,18 @@ object Global {
         return workBook.createFont().apply {
             bold = true
             fontHeightInPoints = 15
-            color = IndexedColors.BLACK.index
+            color = IndexedColors.MAROON.index
         }
     }
+
+    fun fnSubHeaderFont(workBook: XSSFWorkbook) : Font {
+        return workBook.createFont().apply {
+            bold = true
+            fontHeightInPoints = 15
+            color = IndexedColors.OLIVE_GREEN.index
+        }
+    }
+
 
     fun fnSummaryFont(workBook: XSSFWorkbook) : Font {
         return workBook.createFont().apply {

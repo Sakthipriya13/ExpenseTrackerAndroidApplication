@@ -125,7 +125,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
             {
                 val user= UserEntity(
                     userName = name.value, userMobileNo = mobileNo.value,
-                    userEmail = email.value, userPassword = password.value, userProfilePhotoUri = null,userId = 0
+                    userEmail = email.value, userPassword = password.value, userProfilePhotoUri = null,userId = 0, signUpDate = Global.fnGetCurrentDate()
                 )
 
                 val userId = userRepository.fnInsertUserDetails(user)
@@ -135,7 +135,8 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                         CategoryEntitty(
                             categoryId = 0,
                             categoryName = it,
-                            userId = userId.toInt()
+                            userId = userId.toInt(),
+                            signUpDate = Global.fnGetCurrentDate()
                         )
                     }
 

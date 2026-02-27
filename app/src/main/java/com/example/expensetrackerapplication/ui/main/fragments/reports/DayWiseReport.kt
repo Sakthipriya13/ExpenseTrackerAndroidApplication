@@ -111,10 +111,13 @@ class DayWiseReport : Fragment() {
                     { _,y,m,d ->
 
                         calendar.set(y,m,d)
-                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val sdf1 = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
                         val date = sdf.format(calendar.time)
+                        val dateUi = sdf1.format(calendar.time)
 //                    var date =  "$d-${m+1}-$y"
                         DayWiseReportViewModel._selectedDate.value=date
+                        DayWiseReportViewModel._selectedDateUi.value=dateUi
                         Global.isCalendarSelected=false
 
                     },year,month,day)
@@ -136,16 +139,28 @@ class DayWiseReport : Fragment() {
         }
 
         DayWiseReportViewModel.expenseList.observe(viewLifecycleOwner){ list ->
-            listAdapter.fnSubmitList(list, object : DayWiseReportClickListener {
-                override fun onDeleteClick(expense: CurrentDayReportModel) {
-                    if(!expense.isDelete.equals("DELETED"))
-                        fnShowDeletePrompt(expense)
-                    else
-                        fnShowMessage("Expense Was Already Deleted",requireContext(),R.drawable.bg_info)
+            if(list.isNotEmpty()){
+                DayWiseReportViewModel._isExportLoading.value = false
 
-                }
+                DayWiseReportBinding.idNoReportsText.visibility = View.GONE
+                DayWiseReportBinding.idContentLayout.visibility = View.VISIBLE
 
-            })
+                listAdapter.fnSubmitList(list, object : DayWiseReportClickListener {
+                    override fun onDeleteClick(expense: CurrentDayReportModel) {
+                        if(!expense.isDelete.equals("DELETED"))
+                            fnShowDeletePrompt(expense)
+                        else
+                            fnShowMessage("Expense Was Already Deleted",requireContext(),R.drawable.bg_info)
+
+                    }
+
+                })
+            }
+            else{
+                DayWiseReportViewModel._isExportLoading.value = false
+                DayWiseReportBinding.idNoReportsText.visibility = View.VISIBLE
+                DayWiseReportBinding.idContentLayout.visibility = View.GONE
+            }
         }
 
         DayWiseReportViewModel.exportStatus.observe(viewLifecycleOwner){ status ->

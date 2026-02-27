@@ -3,6 +3,7 @@ package com.example.expensetrackerapplication.data.repositary
 import android.util.Log
 import com.example.expensetrackerapplication.data.dao.CategoryDao
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
+import com.example.expensetrackerapplication.`object`.Global
 
 class CategoryRepository(val categoryDao: CategoryDao)
 {
@@ -44,7 +45,7 @@ class CategoryRepository(val categoryDao: CategoryDao)
 
     suspend fun fnGetAllCategoriesFromDb() : List<CategoryEntitty>{
         try {
-            var categoryList = categoryDao.fnGetAllCategories()
+            var categoryList = categoryDao.fnGetAllCategories(Global.lUserId)
             return categoryList
         }
         catch (e: Exception)
@@ -57,7 +58,7 @@ class CategoryRepository(val categoryDao: CategoryDao)
 
     suspend fun fnGetDefaultCategoriesFromDb() : List<CategoryEntitty>{
         return try {
-            var categoryList = categoryDao.fnGetDefaultCategories()
+            var categoryList = categoryDao.fnGetDefaultCategories(Global.lUserId)
             categoryList
         }
         catch (e: Exception)
