@@ -161,6 +161,8 @@
     <string name="payment_type_report">PAYMENT TYPE REPORT</string>
     <string name="no_transaction">No Transaction</string>
     <string name="forget_password">Forget Password?</string>
+    <string name="new_password">New Password</string>
+    <string name="reset">RESET</string>
 
     <string-array name = "months">
         <item>Jan</item>

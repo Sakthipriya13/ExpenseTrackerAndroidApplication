@@ -333,6 +333,13 @@ class ChangePassword : BottomSheetDialogFragment(){
         changePasswordBinding.changePassword=changePasswordViewModel
         changePasswordBinding.lifecycleOwner=viewLifecycleOwner
 
+//        return super.onCreateView(inflater, container, savedInstanceState)
+        return changePasswordBinding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         changePasswordViewModel.isCancel.observe(viewLifecycleOwner){ isCancel ->
             if(isCancel){
                 Global.isBottomSheetSelected = false
@@ -353,9 +360,6 @@ class ChangePassword : BottomSheetDialogFragment(){
                 }
             }
         }
-//        return super.onCreateView(inflater, container, savedInstanceState)
-        return changePasswordBinding.root
-
     }
 }
 
@@ -377,6 +381,11 @@ class AddIncome : BottomSheetDialogFragment(){
         addIncomeBinding.addIncome = addIncomeViewModel
         addIncomeBinding.lifecycleOwner=viewLifecycleOwner
 
+        return addIncomeBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         addIncomeBinding.idBtnCalendar.setOnClickListener {
             if(Global.isCalendarSelected==false)
             {
@@ -388,7 +397,7 @@ class AddIncome : BottomSheetDialogFragment(){
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(), { _,y,m,d ->
-                       calendar.set(y,m,d)
+                        calendar.set(y,m,d)
                         val sdf1 = SimpleDateFormat("dd-MM-yyyy", Locale.US)
                         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
@@ -434,8 +443,6 @@ class AddIncome : BottomSheetDialogFragment(){
                 }
             }
         }
-
-        return addIncomeBinding.root
     }
 }
 

@@ -22,6 +22,8 @@ interface UserDao {
     @Query("UPDATE USER SET UserPassword= :newPassword WHERE UserId= :userId AND UserPassword= :currentPassword")
     suspend fun fnUpdateUserPassword(newPassword: String?, userId: Int, currentPassword: String?) : Int
 
+    @Query("UPDATE USER SET UserPassword= :newPassword WHERE UserEmail= :email")
+    suspend fun fnResetUserPassword(newPassword: String?,email:String?) : Int
 
     @Query("UPDATE USER SET UserProfilePhotoUri= :uri WHERE UserId= :userId")
     suspend fun fnUpdateUserProfilePhoto(uri: String?, userId: Int) : Int

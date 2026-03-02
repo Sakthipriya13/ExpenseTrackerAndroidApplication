@@ -13,10 +13,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
+import com.example.expensetrackerapplication.databinding.ForgetPasswordBinding
 import com.example.expensetrackerapplication.databinding.LoginBinding
+import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui.main.Main
+import com.example.expensetrackerapplication.ui_event.ResultState
+import com.example.expensetrackerapplication.viewmodel.ForgetViewModel
 import com.example.expensetrackerapplication.viewmodel.LoginViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,8 +50,6 @@ class Login : Fragment() {
     }
 
     override fun onCreateView(
-
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -136,6 +139,15 @@ class Login : Fragment() {
                 Log.e("GO TO SIGNUP", "Go To SignUp Value Was False")
             }
         }
+
+        loginViewModel.isPasswordForget.observe(viewLifecycleOwner){ status ->
+            if(status){
+                if(Global.isBottomSheetSelected == false){
+                    Global.isBottomSheetSelected = true
+                    ForgetPassword().show(parentFragmentManager,"ForgetBottomSheet")
+                }
+            }
+        }
     }
 
 
@@ -174,5 +186,53 @@ class Login : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+}
+
+class ForgetPassword : BottomSheetDialogFragment(){
+    private lateinit var forgetBinding : ForgetPasswordBinding
+    private val forgetViewModel : ForgetViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCancelable = false
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        forgetBinding = DataBindingUtil.inflate(inflater,R.layout.forget_password,container,false)
+        forgetBinding.forget = forgetViewModel
+        forgetBinding.lifecycleOwner = viewLifecycleOwner
+
+        return forgetBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        forgetViewModel.isCancel.observe(viewLifecycleOwner){
+            Global.isBottomSheetSelected = false
+            dismiss()
+        }
+
+        forgetViewModel.resetStatus.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ResultState.success -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    Global.isBottomSheetSelected=false
+                    dismiss()
+                }
+
+                is ResultState.fail -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
+                    Global.isBottomSheetSelected=false
+                    dismiss()
+                }
+            }
+        }
+
     }
 }

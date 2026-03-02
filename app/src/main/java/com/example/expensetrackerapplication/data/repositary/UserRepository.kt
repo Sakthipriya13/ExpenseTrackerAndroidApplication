@@ -1,6 +1,5 @@
 package com.example.expensetrackerapplication.data.repositary
 
-import android.net.Uri
 import android.util.Log
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.entity.UserEntity
@@ -57,6 +56,16 @@ class UserRepository(var userDao: UserDao)
     suspend fun fnUpdateLoginUserPassword(currentPassword: String?, userId: Int, newPassword: String?):Boolean{
         return try {
             var result = userDao.fnUpdateUserPassword(newPassword = newPassword,userId, currentPassword = currentPassword)
+            if(result>0) true else false
+        } catch (e : Exception){
+            Log.e("UPDATE USER PASSWORD","Update User Password: ${e.message}")
+            false
+        }
+    }
+
+    suspend fun fnResetLoginUserPassword(newPassword: String?, email: String?):Boolean {
+        return try {
+            var result = userDao.fnResetUserPassword(newPassword = newPassword,email)
             if(result>0) true else false
         } catch (e : Exception){
             Log.e("UPDATE USER PASSWORD","Update User Password: ${e.message}")

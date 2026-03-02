@@ -198,5 +198,7 @@
     <string name="payment_type_report">கட்டண வகை அறிக்கை</string>
     <string name="no_transaction">எந்த பரிவர்த்தனையும் இல்லை</string>
     <string name="forget_password">கடவுச்சொல் மறந்துவிட்டதா?</string>
+    <string name="new_password">புதிய கடவுச்சொல்</string>
+    <string name="reset">மீட்டமைக்கவும்</string>
 
 </resources>

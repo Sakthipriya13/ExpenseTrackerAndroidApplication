@@ -55,6 +55,15 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
     var _clearAllFields = MutableLiveData<Boolean>()
     var clearAllFields : LiveData<Boolean> = _clearAllFields
 
+    var _isPasswordForget = MutableLiveData<Boolean>(false)
+    var isPasswordForget : LiveData<Boolean> = _isPasswordForget
+
+
+
+    fun fnIsForgetPassword(){
+        _isPasswordForget.value = true
+    }
+
     fun fnCheckUser()
     {
         viewModelScope.launch {

@@ -138,6 +138,7 @@
                     android:textSize="17sp"
                     android:layout_gravity="end"
                     android:textColor="?attr/colorPrimary"
+                    android:onClick="@{() -> loginViewModel.fnIsForgetPassword()}"
                     android:background="?attr/selectableItemBackground"
                     android:layout_margin="10dp"/>
 
