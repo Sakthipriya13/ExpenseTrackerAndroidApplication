@@ -30,6 +30,7 @@ import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui_event.CategoryItemClickListener
 import com.example.expensetrackerapplication.ui_event.ResultState
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
+import com.google.android.gms.common.wrappers.Wrappers.packageManager
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -309,11 +310,11 @@ class Settings : Fragment(){
         }
     }
 
-    fun fnUpdateThemeColor(colorCode : Int){
+    fun fnUpdateThemeColor(colorCode : Int) {
         lifecycleScope.launch {
             val currColor = themeColorDataStore.fnGetThemeColor()
 
-            if(currColor == colorCode) return@launch
+            if (currColor == colorCode) return@launch
 
             settingsViewModel._isLoading.value = true
 

@@ -47,4 +47,6 @@
 
     <color name="color_grey">#898989</color>
 
+    <color name="icon_color">?attr/colorPrimary</color>
+
 </resources>
