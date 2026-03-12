@@ -4,15 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.data.entity.UserEntity
 import com.example.expensetrackerapplication.data.repositary.CategoryRepository
 import com.example.expensetrackerapplication.data.repositary.UserRepository
 import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.ui_event.ResultState
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(application: Application) : AndroidViewModel(application) {
@@ -48,8 +47,8 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
     var _actionGoToLogin = MutableLiveData<Boolean>()
     var actionGoToLogin : LiveData<Boolean> = _actionGoToLogin
 
-    var _insertStatus = MutableLiveData<Boolean>()
-    var insertStatus : LiveData<Boolean> = _insertStatus
+    var _insertStatus = MutableLiveData<ResultState>()
+    var insertStatus : LiveData<ResultState> = _insertStatus
 
     var _nameErrorStatus = MutableLiveData<Boolean>()
     var nameErrorStatus : LiveData<Boolean> = _nameErrorStatus
@@ -57,8 +56,8 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
     var _mobileNoErrorStatus = MutableLiveData<Boolean>()
     var mobileNoErrorStatus : LiveData<Boolean> = _mobileNoErrorStatus
 
-    var _emailErrorStatus = MutableLiveData<Boolean>()
-    var emailErrorStatus : LiveData<Boolean> = _emailErrorStatus
+    var _emailErrorStatus = MutableLiveData<ResultState>()
+    var emailErrorStatus : LiveData<ResultState> = _emailErrorStatus
 
     var _passwordErrorStatus = MutableLiveData<Boolean>()
     var passwordErrorStatus : LiveData<Boolean> = _passwordErrorStatus
@@ -69,6 +68,9 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
 
     var _clearAllFields = MutableLiveData<Boolean>()
     var clearAllFields : LiveData<Boolean> = _clearAllFields
+
+    var _firestoreCloudId = MutableLiveData<String>()
+    var firestoreCloudId : LiveData<String> = _firestoreCloudId
     fun fnClearInputs()
     {
         _clearAllFields.value=true
@@ -101,8 +103,12 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                 _mobileNoErrorStatus.value=true
             }
 
-            email.value.isNullOrBlank() -> {
-                _emailErrorStatus.value=true
+            email.value.isNullOrBlank()  -> {
+                _emailErrorStatus.value=ResultState.fail("Email Field Was An Empty")
+            }
+
+            Global.fnIsEmailValid(email.value) == false -> {
+                _emailErrorStatus.value = ResultState.fail("Email Was Invalid")
             }
 
             password.value.isNullOrBlank() -> {
@@ -120,40 +126,55 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             if(!name.value.isNullOrBlank() &&
                 !mobileNo.value.isNullOrBlank() &&
-                !email.value.isNullOrBlank() &&
+                !email.value.isNullOrBlank() && Global.fnIsEmailValid(email.value)==true &&
                 !password.value.isNullOrBlank())
             {
-                val user= UserEntity(
-                    userName = name.value, userMobileNo = mobileNo.value,
-                    userEmail = email.value, userPassword = password.value, userProfilePhotoUri = null,userId = 0, signUpDate = Global.fnGetCurrentDate()
-                )
-
-                val userId = userRepository.fnInsertUserDetails(user)
-                if(userId > 0)
-                {
-                    var categoryEntities=Global.defaultCategories.map{
-                        CategoryEntitty(
-                            categoryId = 0,
-                            categoryName = it,
-                            userId = userId.toInt(),
-                            signUpDate = Global.fnGetCurrentDate()
-                        )
-                    }
-
-                    var categoryInsertStatus = categoryRepository.fnInsertDefaultCategoriesToDb(categoryEntities)
-
-                    if(categoryInsertStatus.isNotEmpty() && categoryInsertStatus.all {it > 0})
+//                val isEmailValid = Global.fnIsEmailValid(email.value)
+//                if(isEmailValid==true)
+//                {
+                    val user= UserEntity(
+                        userName = name.value,
+                        userMobileNo = mobileNo.value,
+                        userEmail = email.value,
+                        userPassword = password.value,
+                        userProfilePhotoUri = null,userId = 0,
+                        signUpDate = Global.fnGetCurrentDate(),
+                        cloudId = firestoreCloudId.value ?:"",
+                        isSynced = 0
+                    )
+                    val userId = userRepository.fnInsertUserDetails(user)
+                    if(userId > 0)
                     {
-                        _insertStatus.postValue(true)
+                        var categoryEntities=Global.defaultCategories.map{
+                            CategoryEntitty(
+                                categoryId = 0,
+                                categoryName = it,
+                                userId = userId.toInt(),
+                                signUpDate = Global.fnGetCurrentDate(),
+                                cloudId = firestoreCloudId.value ?:"",
+                                isSynced = 0
+                            )
+                        }
+
+                        var categoryInsertStatus = categoryRepository.fnInsertDefaultCategoriesToDb(categoryEntities)
+
+                        if(categoryInsertStatus.isNotEmpty() && categoryInsertStatus.all {it > 0})
+                        {
+                            _insertStatus.postValue(ResultState.success("Successfully New SUer Added"))
+                        }
+                        else{
+                            _insertStatus.postValue(ResultState.fail("New User Account Was Created, But Default Categories Not Added. No Problem You Can Add Manually"))
+                        }
                     }
-                    else{
-                        _insertStatus.value=false
+                    else
+                    {
+                        _insertStatus.postValue(ResultState.fail("Add New User Failed"))
                     }
-                }
-                else
-                {
-                    _insertStatus.value=false
-                }
+//                }
+//                else{
+//                    _insertStatus.postValue(ResultState.fail("Email Was Invalid"))
+//                }
+
             }
         }
     }

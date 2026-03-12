@@ -4,15 +4,27 @@ import android.util.Log
 import com.example.expensetrackerapplication.data.dao.IncomeDao
 import com.example.expensetrackerapplication.data.entity.IncomeEntity
 import com.example.expensetrackerapplication.`object`.Global
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 class IncomeRepository(val incomeDao : IncomeDao) {
-
-    suspend fun fnInsertIncome(incomeEntity: IncomeEntity): Boolean{
+    var fireStore = FirebaseFirestore.getInstance()
+    var auth = FirebaseAuth.getInstance()
+    suspend fun fnInsertIncome(income: IncomeEntity): Boolean{
         return try {
-            var result = incomeDao.fnInsertIncome(incomeEntity)
-            if(result>0) true else false
+            var result = incomeDao.fnInsertIncome(income)
+            if(result <= 0)
+            {
+                Log.e("INSERT INCOME TO LOCAL STATUS","Insert Income To Local Status: Failed")
+                return false
+            }
+
+            true
         }
         catch (e : Exception){
+            Log.e("INSERT INCOME TO LOCAL AND CLOUD","Insert Income To Local And Cloud: Failed(${e.message})")
             false
         }
     }

@@ -11,6 +11,15 @@ data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     var userId : Int,
 
+    @ColumnInfo(name = "CloudId")
+    var cloudId : String ="",
+
+    @ColumnInfo(name="IsSynced")
+    var isSynced : Int,
+
+    @ColumnInfo(name = "SignUpDate")
+    var signUpDate : String?,
+
     @ColumnInfo(name = "UserName")
     var userName : String?,
 
@@ -24,9 +33,6 @@ data class UserEntity(
     var userPassword : String?,
 
     @ColumnInfo(name = "UserProfilePhotoUri")
-    var userProfilePhotoUri : String?,
-
-    @ColumnInfo(name = "SignUpDate")
-    var signUpDate : String?
+    var userProfilePhotoUri : String?
 
 )

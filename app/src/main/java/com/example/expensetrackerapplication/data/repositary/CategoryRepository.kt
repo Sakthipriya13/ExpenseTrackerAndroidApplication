@@ -4,26 +4,27 @@ import android.util.Log
 import com.example.expensetrackerapplication.data.dao.CategoryDao
 import com.example.expensetrackerapplication.data.entity.CategoryEntitty
 import com.example.expensetrackerapplication.`object`.Global
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 class CategoryRepository(val categoryDao: CategoryDao)
 {
-
-    suspend fun fnInsertCategoriesToDb(categoryEntitty: CategoryEntitty): Boolean
+    suspend fun fnInsertCategoriesToDb(category: CategoryEntitty): Boolean
     {
-        try{
-            val insertStatus=categoryDao.fnInsertCategories(categoryEntitty)
-            if(insertStatus>0)
+        return try{
+            val insertStatus=categoryDao.fnInsertCategories(category)
+            if(insertStatus<=0)
             {
-                return true
-            }
-            else
-            {
+                Log.e("INSERT CATEGORY STATUS LOCAL","Insert Category Status Local: Failed")
                 return false
             }
+            true
         }
         catch (e: Exception)
         {
-            Log.e("INSERT CATEGORIES","Insert Categories: "+e.message)
+            Log.e("INSERT CATEGORIES STATUS LOCAL","Insert Categories Status Local: Failed(${e.message})")
             return false
         }
 

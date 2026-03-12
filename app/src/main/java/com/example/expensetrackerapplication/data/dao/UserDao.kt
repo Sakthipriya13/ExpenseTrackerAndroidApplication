@@ -13,8 +13,12 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun fnInsertUser(user: UserEntity) : Long
 
-    @Query("SELECT * FROM User WHERE UserName=:name AND UserPassword=:password")
-    suspend fun fnGetUserBasedOnUserName(name:String?,password:String?): List<UserEntity>
+//    @Query("SELECT * FROM User WHERE UserName=:name AND UserPassword=:password")
+//    suspend fun fnGetUserBasedOnUserName(name:String?,password:String?): List<UserEntity>
+
+    @Query("SELECT * FROM User WHERE UserName=:name")
+    suspend fun fnGetUserBasedOnUserName(name:String?): List<UserEntity>
+
 
     @Query("DELETE FROM User WHERE UserId= :id")
     suspend fun fnDeleteUserAccountFromDb(id: Int) : Int
@@ -30,4 +34,5 @@ interface UserDao {
 
     @Query("SELECT UserProfilePhotoUri FROM User WHERE userId= :userId")
     suspend fun fnGetUserProfilePhotoUri(userId : Int) : String
+
 }

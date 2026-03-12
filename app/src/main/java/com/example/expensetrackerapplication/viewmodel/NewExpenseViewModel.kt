@@ -89,6 +89,9 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
     val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
+    var _fireStoreCloudId = MutableLiveData<String>()
+    var fireStoreCloudId : LiveData<String> = _fireStoreCloudId
+
     fun fnClearViews(){
 
         _clearAllFields.value=true
@@ -161,7 +164,9 @@ class NewExpenseViewModel(application: Application) : AndroidViewModel(applicati
                 expenseAmtInUpi = amtInUpi.value ?:0.0f,
                 expenseAmtInOthers = amtInOthers.value ?:0.0f,
                 expenseRemarks = expenseRemarks.value ?: "",
-                expenseStatus = Global.EXPENSE_STATUS_ADDED
+                expenseStatus = Global.EXPENSE_STATUS_ADDED,
+                cloudId = fireStoreCloudId.value ?:"",
+                isSynced = 0
             )
 
             var result = expenseRepository.fnInsertExpenseDatasToDb(expenseEntity)

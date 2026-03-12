@@ -3,30 +3,33 @@ package com.example.expensetrackerapplication.data.repositary
 import android.util.Log
 import com.example.expensetrackerapplication.data.dao.UserDao
 import com.example.expensetrackerapplication.data.entity.UserEntity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 class UserRepository(var userDao: UserDao)
 {
     suspend fun fnInsertUserDetails(user: UserEntity) : Long
     {
-        try {
-            return userDao.fnInsertUser(user)
-//            if(insertStatus>0)
-//                return true
-//            else
-//                return false
-        }
-        catch (e: Exception)
-        {
-            Log.e("INSERT USER","Insert User In The Database: $e.message")
-            return 0
-        }
+        return try {
+            val insertStatus = userDao.fnInsertUser(user)
 
+            if (insertStatus <= 0) {
+                return 0
+            }
+            insertStatus
+
+        } catch (e: Exception)
+        {
+            0
+        }
     }
 
-    suspend fun fnGetUserDetailsBasedOnUserName(name: String?, password : String?): List<UserEntity>
+    suspend fun fnGetUserDetailsBasedOnUserName(name: String?): List<UserEntity>
     {
         return try {
-            userDao.fnGetUserBasedOnUserName(name,password)
+            userDao.fnGetUserBasedOnUserName(name)
         }
         catch (e: Exception)
         {

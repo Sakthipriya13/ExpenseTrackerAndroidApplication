@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id ("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -113,5 +114,16 @@ dependencies {
 
     implementation(libs.williamchart)
 
+    // Firebase BOM
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
 
+    // Firestore
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // Analytics (optional)
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 }

@@ -18,15 +18,24 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["UserId"])])
 data class IncomeEntity(
 
-    @PrimaryKey(autoGenerate = true)
-    var incomeId : Int,
-
     @ColumnInfo(name = "UserId")
     var userId : Int,
+
+    @ColumnInfo(name ="CloudId")
+    var cloudId : String = "",
+
+    @ColumnInfo(name="IsSynced")
+    var isSynced : Int,
+
+    @PrimaryKey(autoGenerate = true)
+    var incomeId : Int,
 
     @ColumnInfo(name="Date")
     var date : String?,
 
     @ColumnInfo(name="Income")
-    var income : Float?
+    var income : Float?,
+
+
+
 )

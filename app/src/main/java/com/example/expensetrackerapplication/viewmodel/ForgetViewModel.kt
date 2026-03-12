@@ -46,7 +46,7 @@ class ForgetViewModel(application: Application) : AndroidViewModel(application =
                 if (updateStatus)
                     _resetStatus.postValue(ResultState.success("Successfully User Password Reset"))
                 else
-                    _resetStatus.postValue(ResultState.fail("Password Reset Failed1"))
+                    _resetStatus.postValue(ResultState.fail("Password Reset Failed , Check Email"))
             }
             catch (e : Exception){
                 Log.e("PASSWORD RESET","Password Reset: ${e.message}")

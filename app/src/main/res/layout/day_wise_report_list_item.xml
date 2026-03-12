@@ -68,6 +68,21 @@
                 android:text="@{dayWiseReportListItem.expenseRemarks}"
                 android:textColor="?attr/textColorBlack"
                 android:textSize="20sp" />
+
+
+            <Button
+                android:id="@+id/idEditExpense"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textStyle="bold"
+                android:background="?attr/selectableItemBackground"
+                android:textColor="?attr/successBackground"
+                android:text="@string/edit"
+                android:textSize="20sp"/>
+
             <TextView
                 android:id="@+id/idExpenseStatus"
                 android:layout_width="200dp"
@@ -78,6 +93,7 @@
                 android:textColor="?attr/textColorBlack"
                 android:text="@{dayWiseReportListItem.isDelete}"
                 android:textSize="20sp" />
+
 
             <ImageView
                 android:id="@+id/idDeleteExpense"

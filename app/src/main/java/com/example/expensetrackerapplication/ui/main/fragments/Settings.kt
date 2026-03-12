@@ -30,10 +30,13 @@ import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.ui_event.CategoryItemClickListener
 import com.example.expensetrackerapplication.ui_event.ResultState
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
+import com.example.expensetrackerapplication.viewmodel.SplashViewModel
 import com.google.android.gms.common.wrappers.Wrappers.packageManager
 import com.google.android.material.color.MaterialColors
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +64,9 @@ class Settings : Fragment(){
     private lateinit var themeColorDataStore : ThemeColorDataStore
 
     private lateinit var themeDataStore: ThemeDataStore
+
+    val splashViewModel : SplashViewModel by viewModels()
+
 
     override fun onResume() {
         super.onResume()
@@ -91,6 +97,10 @@ class Settings : Fragment(){
         languageDataStore= LanguageDataStore(requireContext())
         themeColorDataStore = ThemeColorDataStore(requireContext())
         themeDataStore = ThemeDataStore(requireContext())
+
+//        lifecycleScope.launch {
+            settingsViewModel._firestoreCloudId.value = splashViewModel.cloudUserId.value
+//        }
 
         lifecycleScope.launch {
             val themeCode = themeDataStore.fnGetTheme()
@@ -203,6 +213,16 @@ class Settings : Fragment(){
 
 
 
+    }
+
+    suspend fun fnGetCloudUserId():String{
+        val auth = FirebaseAuth.getInstance()
+
+        if(auth.currentUser == null){
+            auth.signInAnonymously().await()
+        }
+
+        return auth.currentUser!!.uid
     }
 
     fun fnUpdateThemeBtnUi(themeCode : Int){

@@ -18,16 +18,18 @@ import androidx.room.PrimaryKey
     indices =[Index(value = ["UserId"])]
     )
 data class CategoryEntitty(
-    @PrimaryKey(autoGenerate = true)
-    var categoryId : Int,
-
-    @ColumnInfo(name = "CategoryName")
-    var categoryName : String?,
 
     @ColumnInfo(name = "UserId")
     var userId : Int,
-
+    @ColumnInfo(name ="CloudId")
+    var cloudId : String = "",
+    @ColumnInfo(name="IsSynced")
+    var isSynced : Int,
+    @PrimaryKey(autoGenerate = true)
+    var categoryId : Int,
     @ColumnInfo(name = "SignUpDate")
-    var signUpDate : String
+    var signUpDate : String,
+    @ColumnInfo(name = "CategoryName")
+    var categoryName : String?
 
 )

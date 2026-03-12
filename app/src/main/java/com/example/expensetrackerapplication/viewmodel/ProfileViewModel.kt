@@ -51,6 +51,8 @@ class ProfileViewModel(application : Application) : AndroidViewModel(application
     var _isDelProfilePhoto = MutableLiveData<Boolean>()
     var isDelProfilePhoto : LiveData<Boolean> = _isDelProfilePhoto
 
+
+
     fun onClickEditProfilePicture(){
         _isEdit.value=true
     }
@@ -66,6 +68,8 @@ class ProfileViewModel(application : Application) : AndroidViewModel(application
     fun onClickDeleteAccount(){
         _isDelAccount.value=true
     }
+
+
 
 
     fun fnUpdateUserProfilePhoto(imgUri : Uri?){

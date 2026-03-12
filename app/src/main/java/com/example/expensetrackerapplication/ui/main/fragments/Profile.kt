@@ -24,6 +24,7 @@ import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LOG_TAG
 import com.bumptech.glide.Glide
 import com.example.expensetrackerapplication.R
@@ -42,8 +43,10 @@ import com.example.expensetrackerapplication.viewmodel.ChangePasswordViewModel
 import com.example.expensetrackerapplication.viewmodel.EditProfilePhotoViewModel
 import com.example.expensetrackerapplication.viewmodel.MainViewModel
 import com.example.expensetrackerapplication.viewmodel.ProfileViewModel
+import com.example.expensetrackerapplication.viewmodel.SplashViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.security.Permissions
 import java.text.SimpleDateFormat
@@ -368,6 +371,9 @@ class AddIncome : BottomSheetDialogFragment(){
     private lateinit var addIncomeBinding : AddIncomeBinding
     val addIncomeViewModel : AddInComeViewModel by viewModels()
 
+    val splashViewModel : SplashViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = false
@@ -420,6 +426,11 @@ class AddIncome : BottomSheetDialogFragment(){
                 datePickerDialog.show()
             }
         }
+
+
+//        lifecycleScope.launch {
+            addIncomeViewModel._firestoreCloudId.value = splashViewModel.cloudUserId.value
+//        }
 
         addIncomeViewModel.isLeave.observe(viewLifecycleOwner){ isLeave ->
             if(isLeave){

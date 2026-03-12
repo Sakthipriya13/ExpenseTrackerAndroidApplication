@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,6 +37,9 @@ class AddInComeViewModel(application : Application) : AndroidViewModel(applicati
     var _insertStatus = MutableLiveData<ResultState>()
     var insertStatus : LiveData<ResultState> = _insertStatus
 
+    var _firestoreCloudId = MutableLiveData<String>()
+    var firestoreCloudId : LiveData<String> = _firestoreCloudId
+
     fun onClickCancel(){
         _isLeave.value = true
     }
@@ -44,10 +48,10 @@ class AddInComeViewModel(application : Application) : AndroidViewModel(applicati
 
         when{
             selectedDate.value.isNullOrBlank() && income.value.isNullOrBlank() -> {
-                _insertStatus.value= ResultState.fail("Both Fields Were Empty")
+                _insertStatus.value= ResultState.fail("Add Income Failed")
             }
             income.value.isNullOrBlank() -> {
-                _insertStatus.value= ResultState.fail("Income Field Was Empty")
+                _insertStatus.value= ResultState.fail("Add Income Failed")
             }
             else -> {
                 fnInsertIncome()
@@ -63,17 +67,19 @@ class AddInComeViewModel(application : Application) : AndroidViewModel(applicati
                         incomeId = 0,
                         userId = Global.lUserId,
                         date = selectedDate.value,
-                        income = income.value?.toFloatOrNull()
+                        income = income.value?.toFloatOrNull(),
+                        cloudId = firestoreCloudId.value ?:"",
+                        isSynced = 0
                     )
                     var result = incomeRepository.fnInsertIncome(income)
                     if(result)
-                        _insertStatus.postValue(ResultState.success("Successfully Income Was Added"))
+                        _insertStatus.postValue(ResultState.success("successfully Income Was Added"))
                     else
-                        _insertStatus.postValue(ResultState.fail("Add Income Was Failed"))
+                        _insertStatus.postValue(ResultState.fail("Add Income Failed"))
                 }
             }
             catch (e : Exception){
-
+                Log.e("INSERT INCOME STATUS","Insert Income Status: ${e.message}")
             }
         }
     }

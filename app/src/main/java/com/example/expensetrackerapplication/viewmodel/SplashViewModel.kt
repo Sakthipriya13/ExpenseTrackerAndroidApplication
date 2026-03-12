@@ -19,6 +19,9 @@ class SplashViewModel(application: Application) : AndroidViewModel(application)
 
     val navigateToLogin = _navigateToLogin.asStateFlow()
 
+    var _cloudUserId = MutableLiveData<String>()
+    var cloudUserId : LiveData<String> = _cloudUserId
+
     // The code inside the init block runs automatically when the viewmodel is created
     init {
         viewModelScope.launch {

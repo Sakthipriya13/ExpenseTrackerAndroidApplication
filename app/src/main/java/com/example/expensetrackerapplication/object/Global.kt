@@ -1,9 +1,6 @@
 package com.example.expensetrackerapplication.`object`
 
-import androidx.lifecycle.viewModelScope
-import com.google.android.material.color.MaterialColors
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import android.util.Patterns
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.Font
@@ -207,6 +204,11 @@ object Global {
 
             alignment = HorizontalAlignment.LEFT
         }
+    }
+
+    fun fnIsEmailValid(email: String?):Boolean
+    {
+        return !email.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
 }

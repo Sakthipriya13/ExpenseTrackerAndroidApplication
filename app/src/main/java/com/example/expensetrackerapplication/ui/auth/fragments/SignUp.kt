@@ -8,11 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.SignUpBinding
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
+import com.example.expensetrackerapplication.ui_event.ResultState
 import com.example.expensetrackerapplication.viewmodel.SignUpViewModel
+import com.example.expensetrackerapplication.viewmodel.SplashViewModel
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +36,8 @@ class SignUp : Fragment() {
     private var param2: String? = null
 
     val signUpViewModel : SignUpViewModel by viewModels()
+
+    val splashViewModel : SplashViewModel by viewModels()
 
     private lateinit var signUpDataBinding : SignUpBinding
 
@@ -56,6 +64,10 @@ class SignUp : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        lifecycleScope.launch {
+            signUpViewModel._firestoreCloudId.value =  splashViewModel.cloudUserId.value
+//        }
+
         signUpViewModel.clearAllFields.observe(viewLifecycleOwner){ ob ->
             if(ob){
                 signUpDataBinding.idUserName.isFocusable=true
@@ -65,40 +77,53 @@ class SignUp : Fragment() {
 
         signUpViewModel.nameErrorStatus.observe(viewLifecycleOwner){ ob ->
             if(ob){
+                signUpDataBinding.idUserName.isFocusable = true
+                signUpDataBinding.idUserName.requestFocus()
                 fnShowMessage("Name Field Was An Empty",requireContext(),R.drawable.error_bg)
             }
         }
         signUpViewModel.mobileNoErrorStatus.observe(viewLifecycleOwner){ ob ->
             if(ob){
+                signUpDataBinding.idMobileNo.isFocusable = true
+                signUpDataBinding.idMobileNo.requestFocus()
                 fnShowMessage("Moboile No Field Was An Empty",requireContext(),R.drawable.error_bg)
             }
         }
-        signUpViewModel.emailErrorStatus.observe(viewLifecycleOwner){ ob ->
-            if(ob){
-                fnShowMessage("Email Field Was An Empty",requireContext(),R.drawable.error_bg)
+        signUpViewModel.emailErrorStatus.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ResultState.success -> {}
+                is ResultState.fail -> {
+                    signUpDataBinding.idEmail.isFocusable = true
+                    signUpDataBinding.idEmail.requestFocus()
+                    fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
+                }
             }
         }
         signUpViewModel.passwordErrorStatus.observe(viewLifecycleOwner){ ob ->
             if(ob){
+                signUpDataBinding.idPassword.isFocusable = true
+                signUpDataBinding.idPassword.requestFocus()
                 fnShowMessage("Password Field Was An Empty",requireContext(),R.drawable.error_bg)
             }
         }
         signUpViewModel.bothFieldsErrorStatus.observe(viewLifecycleOwner){ ob ->
             if(ob){
+                signUpDataBinding.idUserName.isFocusable=true
+                signUpDataBinding.idUserName.requestFocus()
                 fnShowMessage("All Fields Were Empty",requireContext(),R.drawable.error_bg)
             }
         }
-        signUpViewModel.insertStatus.observe(viewLifecycleOwner){ ob ->
-            if(ob==true)
-            {
-                Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
-                findNavController().navigate(R.id.action_signup_to_login)
-                fnShowMessage("Successfully SignUp",requireContext(),R.drawable.bg_success)
-            }
-            else
-            {
-                Log.d("DATA_INSERT_STATUS", "Data Insterted Failed")
-                fnShowMessage("SignUp Failed",requireContext(),R.drawable.error_bg)
+        signUpViewModel.insertStatus.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ResultState.success -> {
+                    Log.d("DATA_INSERT_STATUS", "Data Successfully Inserted")
+                    findNavController().navigate(R.id.action_signup_to_login)
+                    fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                }
+                is ResultState.fail -> {
+                    Log.d("DATA_INSERT_STATUS", "Data Insterted Failed")
+                    fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
+                }
             }
         }
 

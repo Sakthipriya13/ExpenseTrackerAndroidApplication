@@ -90,7 +90,7 @@
     <string name="do_you_want_to_delete_the_expense">Do You Want To Delete This Expense?</string>
     <string name="do_you_want_to_delete_the_category">Do You Want To Delete This Category?</string>
 
-    <string name="edit">Edit</string>
+    <string name="edit">EDIT</string>
 
     <string name="add_income">Add Income</string>
     <string name="income">Income</string>

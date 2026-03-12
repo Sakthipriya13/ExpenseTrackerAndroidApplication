@@ -41,6 +41,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
+    var _firestoreCloudId = MutableLiveData<String>()
+    var firestoreCloudId : LiveData<String> = _firestoreCloudId
+
     fun fnClearNewCategory(){
         _newCategory.value = ""
     }
@@ -49,41 +52,30 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     {
         viewModelScope.launch {
             try{
-//                var defaultCategories = listOf<String?>("Food","Travel","Health")
-//                var categories = mutableListOf<String?>("HouseRent","Grogeries","Savings","Entertainment","Education")
-
-//                for(i in defaultCategories)
-//                {
-//                    var categoryEntitty = CategoryEntitty(0,i,Global.lUserId)
-//                    var result = categoryRepository.fnInsertCategoriesToDb(
-//                        categoryEntitty
-//                    )
-//
-//                    Log.v("INSERT STAUS","Insert Status: "+result)
-//
-//                }
-//                for(i in categories)
-//                {
                 Log.v("CATEGORY NAME","Category Name: $newCategory.value")
                 var expenseDate = Global.fnGetCurrentDate()
-                var categoryEntitty = CategoryEntitty(0,newCategory.value,
-                    Global.lUserId,expenseDate)
-                    var result = categoryRepository.fnInsertCategoriesToDb(
-                        categoryEntitty
-                    )
+                var newCategory = CategoryEntitty(
+                    userId = Global.lUserId,
+                    cloudId = firestoreCloudId.value ?:"",
+                    isSynced = 0,
+                    categoryId = 0,
+                    signUpDate = expenseDate,
+                    categoryName=newCategory.value
+                )
+                var result = categoryRepository.fnInsertCategoriesToDb(
+                    newCategory
+                )
 
-                    if(result){
-                        fnGetAllCategories()
-                        fnClearNewCategory()
-                        _insertStatus.postValue(ResultState.success("Successfully Category Inserted"))
-                    }
-                     else{
-                        _insertStatus.postValue(ResultState.success("Category Insert Failed"))
-                    }
+                if(result){
+                    fnGetAllCategories()
+                    fnClearNewCategory()
+                    _insertStatus.postValue(ResultState.success("Successfully Category Inserted"))
+                }
+                 else{
+                    _insertStatus.postValue(ResultState.success("Category Insert Failed"))
+                }
 
-                    Log.v("INSERT STAUS","Insert Status: $result")
-
-//                }
+                Log.v("INSERT STAUS","Insert Status: $result")
             }
             catch (e : Exception){
                 Log.e("INSERT CATEGORIES FROM VIEW MODEL","Insert Categories From ViewModel: "+e.message)
@@ -98,9 +90,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             try {
                 var category_List=categoryRepository.fnGetDefaultCategoriesFromDb()
 
-                if(category_List.isNotEmpty()){
+                if(category_List.isNotEmpty()) {
+                    Log.v("CATEGORY LIST","Category List: $category_List")
                 }
-                Log.v("CATEGORY LIST","Category List: $category_List")
             }
             catch (e : Exception)
             {
@@ -119,9 +111,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             }
             catch (e : Exception)
             {
-                Log.e("GET CATEGORIES FROM VIEW MODEL","Get Categories Froms" +
-                        "s" +
-                        "s ViewModel: "+e.message)
+                Log.e("GET CATEGORIES FROM DB","Get Categories From Db: ${e.message}")
             }
         }
     }

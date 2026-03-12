@@ -7,22 +7,35 @@ import com.example.expensetrackerapplication.model.CategoryChartModel
 import com.example.expensetrackerapplication.model.ExpenseDetailsPerMonth
 import com.example.expensetrackerapplication.model.PaymentTypeChartModel
 import com.example.expensetrackerapplication.`object`.Global
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import kotlin.collections.List
 
 class ExpenseRepository(val expenseDao: ExpenseDao)
 {
-    suspend fun fnInsertExpenseDatasToDb(expenseEntity : ExpenseEntity) : Boolean
-    {
-        var result = expenseDao.fnInsertNewExpense(expenseEntity)
+    val fireStore = FirebaseFirestore.getInstance()
+    var auth = FirebaseAuth.getInstance()
 
-        if(result > 0)
-        {
-            return true
+    suspend fun fnInsertExpenseDatasToDb(expense : ExpenseEntity) : Boolean
+    {
+        return try {
+            val result = expenseDao.fnInsertNewExpense(expense)
+
+            if (result <= 0) {
+                Log.e("INSERT_EXPENSE_STATUS_LOCAL", "Insert Expense To Local Status Failed")
+                return false
+            }
+
+            true
+
         }
-        else
-        {
-            return false
+        catch (e: Exception) {
+            Log.e("INSERT_EXPENSE_STATUS", "Insert Expense To Local And Cloud Failed: ${e.message}")
+            false
         }
+
     }
 
     suspend fun fnGetExpenseDetailsPerDate(date: String?): List<ExpenseEntity>{

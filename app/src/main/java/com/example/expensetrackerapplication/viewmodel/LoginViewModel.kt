@@ -12,6 +12,7 @@ import com.example.expensetrackerapplication.data.database.AppDatabase
 import com.example.expensetrackerapplication.data.entity.UserEntity
 import com.example.expensetrackerapplication.data.repositary.UserRepository
 import com.example.expensetrackerapplication.`object`.Global
+import com.example.expensetrackerapplication.ui_event.ResultState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,6 +39,10 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
 
     var _loginStatus_fail = MutableLiveData<Boolean>(false)
     var loginStatus_fail : LiveData<Boolean> = _loginStatus_fail
+
+    var _loginStatus = MutableLiveData<ResultState>()
+    var loginStatus : LiveData<ResultState> = _loginStatus
+
 
     var _actionGoToSignUp = MutableLiveData<Boolean>()
     var actionGoToSignUp : LiveData<Boolean> = _actionGoToSignUp
@@ -82,24 +87,38 @@ class LoginViewModel( application: Application) : AndroidViewModel(application)
                 }
 
                 else -> {
-                    _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value, userPassword.value)
+                    _userDetailList.value=userRepository.fnGetUserDetailsBasedOnUserName(userName.value)
                     var result= _userDetailList.value?.isNotEmpty()
                     Log.v("USER DETAILS","User Details: ${userDetailList.value}")
-                    if(result==false){
+                    if(result==false)
+                    {
                         Global.lUserId =-1
                         Global.lUserName=""
                         Global.lUserPassword=""
                         Global.lUserMobileNo=""
                         Global.lUssrEmail=""
-                        _loginStatus_fail.value=true
+                        _loginStatus.postValue(ResultState.fail("User Not Found,Enter Valid User"))
                     }
-                    else{
-                        Global.lUserId = userDetailList.value?.firstOrNull()?.userId ?: -1
-                        Global.lUserName=userDetailList.value?.firstOrNull()?.userName ?: ""
-                        Global.lUserPassword=userDetailList.value?.firstOrNull()?.userPassword ?: ""
-                        Global.lUserMobileNo=userDetailList.value?.firstOrNull()?.userMobileNo ?: ""
-                        Global.lUssrEmail=userDetailList.value?.firstOrNull()?.userEmail ?: ""
-                        _loginStatus_success.value=true
+                    else
+                    {
+                        if(userPassword.value?.equals(userDetailList.value?.firstOrNull()?.userPassword ?: "") == true)
+                        {
+                            Global.lUserId = userDetailList.value?.firstOrNull()?.userId ?: -1
+                            Global.lUserName=userDetailList.value?.firstOrNull()?.userName ?: ""
+                            Global.lUserPassword=userDetailList.value?.firstOrNull()?.userPassword ?: ""
+                            Global.lUserMobileNo=userDetailList.value?.firstOrNull()?.userMobileNo ?: ""
+                            Global.lUssrEmail=userDetailList.value?.firstOrNull()?.userEmail ?: ""
+                            _loginStatus.postValue(ResultState.success("Successfully Login"))
+                        }
+                        else{
+                            Global.lUserId =-1
+                            Global.lUserName=""
+                            Global.lUserPassword=""
+                            Global.lUserMobileNo=""
+                            Global.lUssrEmail=""
+
+                            _loginStatus.postValue(ResultState.fail("Password Was Wrong,Enter Valid Password"))
+                        }
                     }
                 }
 

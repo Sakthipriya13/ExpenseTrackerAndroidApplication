@@ -1,6 +1,7 @@
 package com.example.expensetrackerapplication.ui.auth.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,9 @@ import com.example.expensetrackerapplication.R
 import com.example.expensetrackerapplication.databinding.SplashScreenBinding
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
 import com.example.expensetrackerapplication.viewmodel.SplashViewModel
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +83,10 @@ class SplashScreen : Fragment() {
 //            settingsViewModel.fnGetAllCategories()
 //        }
 
+        lifecycleScope.launch {
+            viewModel._cloudUserId.value=fnGetCloudUserId()
+        }
+
         lifecycleScope.launchWhenStarted {
             viewModel.navigateToLogin.collect { shouldNavigate ->
                 if(shouldNavigate)
@@ -87,9 +95,19 @@ class SplashScreen : Fragment() {
                 }
             }
         }
-
     }
-
+    suspend fun fnGetCloudUserId(): String
+    {
+        var auth = FirebaseAuth.getInstance()
+        if(auth.currentUser == null){
+            Log.i("CLOUD USER ID","Cloud User Id: NULL")
+            auth.signInAnonymously().await()
+        }
+        else{
+            Log.i("CLOUD USER ID","Cloud User Id: ${auth.currentUser!!.uid}")
+        }
+        return auth.currentUser!!.uid
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

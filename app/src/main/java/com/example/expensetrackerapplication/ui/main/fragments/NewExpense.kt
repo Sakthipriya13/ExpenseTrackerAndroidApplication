@@ -30,8 +30,12 @@ import com.example.expensetrackerapplication.`object`.Global
 import com.example.expensetrackerapplication.reusefiles.fnShowMessage
 import com.example.expensetrackerapplication.viewmodel.NewExpenseViewModel
 import com.example.expensetrackerapplication.viewmodel.SettingsViewModel
+import com.example.expensetrackerapplication.viewmodel.SplashViewModel
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -60,6 +64,9 @@ class NewExpense : Fragment() {
 
     val dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val uiFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
+    val splashViewModel : SplashViewModel by viewModels()
+
 
     override fun onResume() {
         super.onResume()
@@ -105,6 +112,10 @@ class NewExpense : Fragment() {
 //        }
 
 //        newExpenseBinding.idERemarks.onFocusChangeListener = focusListener
+
+//        lifecycleScope.launch {
+            newExpenseViewModel._fireStoreCloudId.value = splashViewModel.cloudUserId.value
+//        }
 
         newExpenseViewModel.clearAllFields.observe(viewLifecycleOwner){ ob ->
             if(ob){
@@ -296,6 +307,15 @@ class NewExpense : Fragment() {
             }
     }
 }
+
+   suspend fun fnGetCloudUserId(): String {
+       var auth = FirebaseAuth.getInstance()
+       if(auth.currentUser == null)
+       {
+            auth.signInAnonymously().await()
+       }
+       return auth.currentUser!!.uid
+   }
 
 //private fun NewExpense.fnShowCategoryList(it: View) {
 //    val inflater = LayoutInflater.from(requireContext())

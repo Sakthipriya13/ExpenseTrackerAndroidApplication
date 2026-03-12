@@ -106,28 +106,48 @@ class Login : Fragment() {
             }
         }
 
-        loginViewModel.loginStatus_fail.observe(viewLifecycleOwner){ ob ->
-            if(ob)
-            {
-                Log.e("LOGIN STATUS", "Login Status Value Was False")
-                fnShowMessage("User Not Found,Enter Valid User ",requireContext(),R.drawable.error_bg)
-                loginViewModel._userName.value=""
-                loginViewModel._userPassword.value=""
-                loginDataBinding.idUserName.isFocusable=true
-                loginDataBinding.idUserName.requestFocus()
-            }
-        }
-        loginViewModel.loginStatus_success.observe(viewLifecycleOwner){ ob ->
-            if(ob)
-            {
-                fnShowMessage("Successfully Login",requireContext(),R.drawable.bg_success)
-//                findNavController().navigate(R.id.action_login_to_main)
-                var intent = Intent(requireContext(), Main::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-            }
+        loginViewModel.loginStatus.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ResultState.success -> {
+                    fnShowMessage(state.message,requireContext(),R.drawable.bg_success)
+                    var intent = Intent(requireContext(), Main::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
 
+                is ResultState.fail -> {
+                    Log.e("LOGIN STATUS", "Login Status Value Was False")
+                    fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
+                    loginViewModel._userName.value=""
+                    loginViewModel._userPassword.value=""
+                    loginDataBinding.idUserName.isFocusable=true
+                    loginDataBinding.idUserName.requestFocus()
+                }
+            }
         }
+
+//        loginViewModel.loginStatus_fail.observe(viewLifecycleOwner){ ob ->
+//            if(ob)
+//            {
+//                Log.e("LOGIN STATUS", "Login Status Value Was False")
+//                fnShowMessage("User Not Found,Enter Valid User ",requireContext(),R.drawable.error_bg)
+//                loginViewModel._userName.value=""
+//                loginViewModel._userPassword.value=""
+//                loginDataBinding.idUserName.isFocusable=true
+//                loginDataBinding.idUserName.requestFocus()
+//            }
+//        }
+//        loginViewModel.loginStatus_success.observe(viewLifecycleOwner){ ob ->
+//            if(ob)
+//            {
+//                fnShowMessage("Successfully Login",requireContext(),R.drawable.bg_success)
+////                findNavController().navigate(R.id.action_login_to_main)
+//                var intent = Intent(requireContext(), Main::class.java)
+//                startActivity(intent)
+//                requireActivity().finish()
+//            }
+//
+//        }
 
         loginViewModel.actionGoToSignUp.observe(viewLifecycleOwner){ ob ->
             if(ob)
@@ -228,8 +248,13 @@ class ForgetPassword : BottomSheetDialogFragment(){
 
                 is ResultState.fail -> {
                     fnShowMessage(state.message,requireContext(),R.drawable.error_bg)
-                    Global.isBottomSheetSelected=false
-                    dismiss()
+                    forgetViewModel._email.value = ""
+                    forgetViewModel._newPassword.value = ""
+
+                    forgetBinding.idEEmail.isFocusable = true
+                    forgetBinding.idEEmail.requestFocus()
+//                    Global.isBottomSheetSelected=false
+//                    dismiss()
                 }
             }
         }

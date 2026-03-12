@@ -18,11 +18,18 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["UserId"])]
     )
 data class ExpenseEntity(
-    @PrimaryKey(autoGenerate = true)
-    var expenseId:Int =0,
 
     @ColumnInfo(name = "UserId")
     var userId : Int ,
+
+    @ColumnInfo(name="CloudId")
+    var cloudId : String = "",
+
+    @ColumnInfo(name="IsSynced")
+    var isSynced : Int,
+
+    @PrimaryKey(autoGenerate = true)
+    var expenseId:Int =0,
 
     @ColumnInfo(name = "ExpenseDate")
     var expenseDate : String,
@@ -56,5 +63,4 @@ data class ExpenseEntity(
 
     @ColumnInfo(name = "ExpenseStatus")
     var expenseStatus:Int
-
 )
